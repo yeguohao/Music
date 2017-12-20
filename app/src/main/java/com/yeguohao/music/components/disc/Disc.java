@@ -12,7 +12,6 @@ import com.yeguohao.music.R;
 import com.yeguohao.music.api.Instance;
 import com.yeguohao.music.base.BaseFragment;
 import com.yeguohao.music.base.BaseRecyclerAdapter;
-import com.yeguohao.music.common.SongInfo;
 import com.yeguohao.music.components.disc.dispose.DiscRecyclerDispose;
 import com.yeguohao.music.javabean.CdInfo;
 
@@ -49,14 +48,14 @@ public class Disc extends BaseFragment {
     @Override
     protected void fetch() {
         String disstid = getArguments().getString("disstid");
+        Log.e(TAG, "disstid: " + disstid );
         instance.Recommend().getCdInfo(disstid)
+                .filter(cdInfo -> cdInfo.getCode() != -1)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(cdInfo -> {
                     CdInfo.CdlistBean cdlistBean = cdInfo.getCdlist().get(0);
-
                     toolbar.setTitle(cdlistBean.getDissname());
                     recyclerAdapter.setData(cdlistBean.getSonglist());
-
                     Glide.with(getActivity()).load(cdlistBean.getLogo()).into(backdrop);
                 });
     }

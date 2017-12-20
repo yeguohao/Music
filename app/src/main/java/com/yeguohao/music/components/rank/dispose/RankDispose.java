@@ -1,6 +1,8 @@
 package com.yeguohao.music.components.rank.dispose;
 
-import android.view.ViewGroup;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,4 +31,10 @@ public class RankDispose extends RecyclerDispose<Rank.DataBean.TopListBean> {
         rank3.setText("3 " + songListBean3.getSongname() + "-" + songListBean1.getSingername());
     }
 
+    private void setText(String str, TextView textView) {
+        Spannable wordtoSpan = new SpannableString(str);
+        wordtoSpan.setSpan(new ForegroundColorSpan(0xffff0000), 0, 10, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        wordtoSpan.setSpan(new ForegroundColorSpan(0xff00ffff), 20, 35, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        textView.setText(wordtoSpan);
+    }
 }

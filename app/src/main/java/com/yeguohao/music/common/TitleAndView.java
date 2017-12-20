@@ -1,6 +1,7 @@
 package com.yeguohao.music.common;
 
-public interface Title {
+public interface TitleAndView {
 
     String getTitle(int position);
+
 }

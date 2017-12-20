@@ -1,4 +1,4 @@
-package com.yeguohao.music.common.Behavior;
+package com.yeguohao.music.common.behavior;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

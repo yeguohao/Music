@@ -9,7 +9,7 @@ import com.yeguohao.music.R;
 import com.yeguohao.music.api.Instance;
 import com.yeguohao.music.base.BaseFragment;
 import com.yeguohao.music.base.BaseRecyclerAdapter;
-import com.yeguohao.music.common.ItemDecoration.RankSpaceItemDecoration;
+import com.yeguohao.music.common.decoration.RankSpaceItemDecoration;
 import com.yeguohao.music.components.rank.dispose.RankDispose;
 
 import butterknife.BindColor;

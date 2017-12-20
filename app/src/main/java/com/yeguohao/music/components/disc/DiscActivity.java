@@ -13,7 +13,7 @@ public class DiscActivity extends AppCompatActivity {
         setContentView(R.layout.activity_disc);
 
         if (savedInstanceState == null) {
-            Disc disc = Disc.newInstance(getIntent().getStringExtra("dissid"));
+            Disc disc = Disc.newInstance(getIntent().getStringExtra("disstid"));
             getFragmentManager().beginTransaction().replace(R.id.disc_replace, disc).commit();
         }
     }

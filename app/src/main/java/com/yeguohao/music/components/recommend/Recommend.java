@@ -8,7 +8,6 @@ import com.yeguohao.music.R;
 import com.yeguohao.music.api.Instance;
 import com.yeguohao.music.base.BaseFragment;
 import com.yeguohao.music.base.BaseRecyclerAdapter;
-import com.yeguohao.music.common.ItemDecoration.RecyclerTitleItemDecoration;
 import com.yeguohao.music.components.recommend.adapter.RecommendPagerAdapter;
 import com.yeguohao.music.components.recommend.dispose.RecommendRecyclerDispose;
 import com.yeguohao.music.view.Banner;
@@ -54,7 +53,6 @@ public class Recommend extends BaseFragment {
 
         recyclerAdapter = new BaseRecyclerAdapter<>(R.layout.item_recommend, new RecommendRecyclerDispose());
         recycler.setAdapter(recyclerAdapter);
-        recycler.addItemDecoration(new RecyclerTitleItemDecoration());
     }
 
     @Override

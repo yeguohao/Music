@@ -1,4 +1,4 @@
-package com.yeguohao.music.common.ItemDecoration;
+package com.yeguohao.music.common.decoration;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;

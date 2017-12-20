@@ -41,6 +41,16 @@ public class Instance {
 
                                         ResponseBody realBody = ResponseBody.create(body.contentType(), result);
                                         return response.newBuilder().body(realBody).build();
+                                    } else if (request.url().toString().contains("http://ustbhuangyi.com/music/api/getCdInfo")) {
+                                        Response response = chain.proceed(request);
+                                        ResponseBody body = response.body();
+
+                                        Log.e(TAG, "url: " + request.url().toString() );
+                                        String result = body.string();
+                                        Log.e(TAG, "result: " + result );
+
+                                        ResponseBody realBody = ResponseBody.create(body.contentType(), result);
+                                        return response.newBuilder().body(realBody).build();
                                     }
 
                                     return chain.proceed(request);

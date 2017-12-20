@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/recommend_click"
+    android:layout_height="66dp"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/recommend_disc_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/recommend_disc_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:textColor="@color/textColorWhite"
+        app:layout_constraintLeft_toRightOf="@id/recommend_disc_image"
+        app:layout_constraintTop_toTopOf="@id/recommend_disc_image"
+        tools:text="@string/app_name" />
+
+    <TextView
+        android:id="@+id/recommend_disc_dissname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/textColorDark"
+        app:layout_constraintBottom_toBottomOf="@id/recommend_disc_image"
+        app:layout_constraintLeft_toRightOf="@id/recommend_disc_image"
+        tools:text="金坷垃是检验神曲的唯一标准" />
+
+</android.support.constraint.ConstraintLayout>

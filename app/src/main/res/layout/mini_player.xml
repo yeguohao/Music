@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/mini_player_thumbnail"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="16dp"
+        tools:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/mini_player_song"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/mini_player_thumbnail"
+        android:layout_marginStart="6dp"
+        android:layout_toEndOf="@id/mini_player_thumbnail"
+        android:textColor="@color/textColorWhite"
+        tools:text="하루만 (就一天)" />
+
+    <TextView
+        android:id="@+id/mini_player_singer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/mini_player_thumbnail"
+        android:layout_marginStart="6dp"
+        android:layout_toEndOf="@id/mini_player_thumbnail"
+        android:textColor="@color/textColorDark"
+        tools:text="BTS (防弹少年团)" />
+
+    <ImageView
+        android:id="@+id/mini_player_playlist_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/player_play_list" />
+
+    <ImageView
+        android:id="@+id/mini_player_play_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="8dp"
+        android:layout_toStartOf="@id/mini_player_playlist_icon"
+        android:src="@drawable/player_play" />
+
+</merge>

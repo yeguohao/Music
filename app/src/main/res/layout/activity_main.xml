@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.yeguohao.music.view.FixedTextTabLayout
+        android:id="@+id/main_tab"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/colorPrimary"
+        app:tabIndicatorColor="@color/textColorLight"
+        app:tabSelectedTextColor="@color/textColorLight"
+        app:tabTextColor="@color/textColorDark">
+
+        <TextView
+            style="@style/main_tab_item_textview"
+            android:text="推荐" />
+
+        <TextView
+            style="@style/main_tab_item_textview"
+            android:text="歌手" />
+
+        <TextView
+            style="@style/main_tab_item_textview"
+            android:text="排行" />
+
+        <TextView
+            style="@style/main_tab_item_textview"
+            android:text="搜索" />
+
+    </com.yeguohao.music.view.FixedTextTabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/main_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
+        android:layout_marginTop="48dp" />
+
+    <com.yeguohao.music.view.MiniPlayer
+        android:id="@+id/mini_player"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+        android:background="#333333" />
+
+</FrameLayout>

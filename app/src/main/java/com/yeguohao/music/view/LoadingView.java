@@ -46,7 +46,7 @@ public class LoadingView extends LinearLayout {
         loading.setImageResource(R.drawable.loading);
         loadingText.setText("正在载入中");
         loadingText.setTextColor(textColor);
-        loadingText.setTextSize(18);
+        loadingText.setTextSize(getResources().getDimension(R.dimen.sp14));
 
         addView(loading, -2 ,-2);
         addView(loadingText, -2 ,-2);

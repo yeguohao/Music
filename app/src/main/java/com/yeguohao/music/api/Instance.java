@@ -32,22 +32,21 @@ public class Instance {
                                 @Override
                                 public Response intercept(Chain chain) throws IOException {
                                     Request request = chain.request();
-                                    if (request.url().toString().contains("https://c.y.qq.com/v8/fcg-bin/fcg_myqq_toplist.fcg")) {
-                                        Response response = chain.proceed(request);
-                                        ResponseBody body = response.body();
+                                    Response response = chain.proceed(request);
+                                    ResponseBody body = response.body();
+                                    String result = body.string();
 
-                                        String result = new String(body.bytes(),"utf-8");
+                                    String url = request.url().toString();
+                                    if (url.contains("https://c.y.qq.com/v8/fcg-bin/fcg_myqq_toplist.fcg") ||
+                                            url.contains("https://c.y.qq.com/v8/fcg-bin/v8.fcg")) {
                                         result = result.replace("jp34(", "").replace(")", "");
 
                                         ResponseBody realBody = ResponseBody.create(body.contentType(), result);
                                         return response.newBuilder().body(realBody).build();
                                     } else if (request.url().toString().contains("http://ustbhuangyi.com/music/api/getCdInfo")) {
-                                        Response response = chain.proceed(request);
-                                        ResponseBody body = response.body();
 
-                                        Log.e(TAG, "url: " + request.url().toString() );
-                                        String result = body.string();
-                                        Log.e(TAG, "result: " + result );
+                                        Log.e(TAG, "url: " + request.url().toString());
+                                        Log.e(TAG, "result: " + result);
 
                                         ResponseBody realBody = ResponseBody.create(body.contentType(), result);
                                         return response.newBuilder().body(realBody).build();
@@ -119,5 +118,18 @@ public class Instance {
             }
         }
         return rank;
+    }
+
+    private volatile Singer singer;
+
+    public Singer Singer() {
+        if (singer == null) {
+            synchronized (Instance.class) {
+                if (singer == null) {
+                    singer = getRetrofit().create(Singer.class);
+                }
+            }
+        }
+        return singer;
     }
 }

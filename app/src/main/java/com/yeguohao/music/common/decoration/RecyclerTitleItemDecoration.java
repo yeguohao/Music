@@ -18,7 +18,6 @@ public class RecyclerTitleItemDecoration extends RecyclerView.ItemDecoration {
     private static final String TAG = "RecyclerTitleItemDecora";
 
     private final int titleHeight;
-
     private TitleAndView titleAndView;
 
     private Paint paint;
@@ -26,12 +25,11 @@ public class RecyclerTitleItemDecoration extends RecyclerView.ItemDecoration {
 
     private int top;
     private String title;
-
     private int lastBottom;
 
     public RecyclerTitleItemDecoration(Context context) {
         Resources resources = context.getResources();
-        int textSize = resources.getDimensionPixelSize(R.dimen.sp12);
+        int textSize = resources.getDimensionPixelSize(R.dimen.sp14);
         this.titleHeight = resources.getDimensionPixelOffset(R.dimen.dp20);
 
         this.paint = new Paint();
@@ -54,14 +52,14 @@ public class RecyclerTitleItemDecoration extends RecyclerView.ItemDecoration {
             View child = parent.getChildAt(i);
             int position = parent.getChildLayoutPosition(child);
             int top = child.getTop();
-
             int decorationTop = top - titleHeight;
 
+            String title = titleAndView.getTitle(position);
             c.drawRect(0, decorationTop, parent.getRight(), top, paint);
-            c.drawText(position + "", 0, decorationTop + titleHeight / 2, textPaint);
+            c.drawText(title, 0, decorationTop + titleHeight / 2, textPaint);
 
             if (i == 0) {
-                title = titleAndView.getTitle(position);
+                this.title = title;
 
                 int bottom = child.getBottom();
                 if (bottom < titleHeight && bottom > 0) {

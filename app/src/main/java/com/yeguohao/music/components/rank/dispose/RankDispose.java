@@ -1,8 +1,10 @@
 package com.yeguohao.music.components.rank.dispose;
 
+import android.app.Activity;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -10,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.yeguohao.music.R;
 import com.yeguohao.music.base.BaseRecyclerAdapter;
 import com.yeguohao.music.base.RecyclerDispose;
+import com.yeguohao.music.components.song.SongActivity;
 import com.yeguohao.music.javabean.Rank;
 
 public class RankDispose extends RecyclerDispose<Rank.DataBean.TopListBean> {
@@ -29,6 +32,13 @@ public class RankDispose extends RecyclerDispose<Rank.DataBean.TopListBean> {
         rank1.setText("1 " + songListBean1.getSongname() + "-" + songListBean1.getSingername());
         rank2.setText("2 " + songListBean2.getSongname() + "-" + songListBean1.getSingername());
         rank3.setText("3 " + songListBean3.getSongname() + "-" + songListBean1.getSingername());
+
+        holder.setItemViewClick();
+    }
+
+    @Override
+    protected void itemViewClick(BaseRecyclerAdapter.InnerViewHolder holder, int position, Rank.DataBean.TopListBean dataItem, View itemView) {
+        SongActivity.start((Activity) itemView.getContext(), SongActivity.TYPE_RANK, dataItem.getId() + "", "");
     }
 
     private void setText(String str, TextView textView) {

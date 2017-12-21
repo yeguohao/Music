@@ -23,7 +23,12 @@
         <activity
             android:name=".components.player.PlayerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <service android:name=".MediaPlayerService"/>
+
+        <service android:name=".MediaPlayerService" />
+
+        <activity
+            android:name=".components.song.SongActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

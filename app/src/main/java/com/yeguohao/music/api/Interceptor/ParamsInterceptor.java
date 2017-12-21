@@ -28,8 +28,32 @@ public class ParamsInterceptor implements Interceptor {
             lyricParams(builder);
         } else if (url.contains("fcg_myqq_toplist")) {
             fcg_myqq_toplistParams(builder);
+        } else if (url.contains("fcg_v8_toplist_cp")) {
+            topListParams(builder);
+        } else if (url.contains("fcg_v8_singer_track_cp")) {
+            songListParams(builder);
         }
         return chain.proceed(request.newBuilder().url(builder.build()).build());
+    }
+
+    private void songListParams(HttpUrl.Builder builder) {
+        builder.addQueryParameter("order", "listen")
+                .addQueryParameter("begin", "0")
+                .addQueryParameter("num", "80")
+                .addQueryParameter("songstatus", "1")
+                .addQueryParameter("jsonpCallback", JSONP_CALLBACK);
+    }
+
+    private void topListParams(HttpUrl.Builder builder) {
+        builder.removeAllQueryParameters("platform")
+                .removeAllQueryParameters("needNewCode")
+                .addQueryParameter("needNewCode", "1")
+                .addQueryParameter("platform", "h5")
+                .addQueryParameter("jsonpCallback", JSONP_CALLBACK)
+                .addQueryParameter("type", "top")
+                .addQueryParameter("page", "detail")
+                .addQueryParameter("tpl", "3")
+                .addQueryParameter("uin", "0");
     }
 
     private void commonParams(HttpUrl.Builder builder) {

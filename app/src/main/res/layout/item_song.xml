@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:paddingBottom="10dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="10dp">
+
+    <ImageView
+        android:id="@+id/song_rank_img"
+        android:layout_width="40dp"
+        android:visibility="gone"
+        android:layout_height="match_parent"
+        tools:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/song_rank_txt"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="@color/textColorLight"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/song_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/textColorWhite"
+        app:layout_constraintStart_toEndOf="@id/song_rank_img"
+        tools:text="하루만 (就一天)" />
+
+    <TextView
+        android:id="@+id/album_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/textColorDark"
+        app:layout_constraintStart_toStartOf="@id/song_name"
+        app:layout_constraintTop_toBottomOf="@id/song_name"
+        tools:text="BTS (防弹少年团)-Skool Luv Affair" />
+
+</android.support.constraint.ConstraintLayout>

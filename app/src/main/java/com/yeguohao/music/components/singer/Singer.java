@@ -42,6 +42,8 @@ public class Singer extends BaseFragment implements LetterIndexView.LetterSelect
     @Override
     protected void initView(View root) {
         adapter = new SingerRecycler();
+        RecyclerView.LayoutManager layoutManager = recycler.getLayoutManager();
+        layoutManager.setAutoMeasureEnabled(false);
         recycler.setHasFixedSize(true);
         recycler.setAdapter(adapter);
 //        recycler.addItemDecoration(new RecyclerTitleItemDecoration(getActivity()));

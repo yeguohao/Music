@@ -1,7 +1,7 @@
 package com.yeguohao.music.components.singer.adapter;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +11,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.yeguohao.music.R;
-import com.yeguohao.music.javabean.V8;
 import com.yeguohao.music.common.TitleAndView;
+import com.yeguohao.music.components.song.SongActivity;
+import com.yeguohao.music.javabean.V8;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,12 +21,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.yeguohao.music.components.player.PlayerConstance.ALBUM_IMG_URL;
 import static com.yeguohao.music.components.player.PlayerConstance.SINGER_IMG_URL;
 
 public class SingerRecycler extends RecyclerView.Adapter<SingerRecycler.SingerHolder> implements TitleAndView {
 
-    private static final String TAG = "SingerRecycler";
     private java.util.List<V8.Data.List> data = new ArrayList<>();
 
     private RequestOptions options = RequestOptions.circleCropTransform();
@@ -49,6 +48,7 @@ public class SingerRecycler extends RecyclerView.Adapter<SingerRecycler.SingerHo
         Glide.with(holder.itemView).load(String.format(SINGER_IMG_URL, dataItem.getFsinger_mid()))
                 .apply(options).into(holder.img);
         holder.singer.setText(dataItem.getFsinger_name());
+        holder.setData(dataItem);
     }
 
     public String getTitle(int position) {
@@ -72,6 +72,11 @@ public class SingerRecycler extends RecyclerView.Adapter<SingerRecycler.SingerHo
         public SingerHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        void setData(V8.Data.List dataItem) {
+            itemView.setOnClickListener(view ->
+                    SongActivity.start((Activity) itemView.getContext(), SongActivity.TYPE_SINGER, "", dataItem.getFsinger_mid()));
         }
     }
 }

@@ -56,9 +56,7 @@ public class Rank extends BaseFragment {
     }
 
     public static Rank newInstance() {
-
         Bundle args = new Bundle();
-
         Rank fragment = new Rank();
         fragment.setArguments(args);
         return fragment;

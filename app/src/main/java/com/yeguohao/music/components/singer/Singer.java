@@ -3,6 +3,7 @@ package com.yeguohao.music.components.singer;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.yeguohao.music.R;
@@ -65,6 +66,8 @@ public class Singer extends BaseFragment implements LetterIndexView.LetterSelect
                     letterPosition(lists);
                     lists.addAll(0, top10);
                     adapter.setData(lists);
+                }, throwable -> {
+                    Log.e(TAG, "fetch: " + throwable);
                 });
     }
 

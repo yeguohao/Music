@@ -2,6 +2,7 @@ package com.yeguohao.music.components.recommend;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.yeguohao.music.R;
@@ -18,6 +19,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class Recommend extends BaseFragment {
 
+    private static final String TAG = "Recommend";
     @BindView(R.id.recommend_banner)
     Banner banner;
 
@@ -62,6 +64,8 @@ public class Recommend extends BaseFragment {
                 .subscribe(bean -> {
                     pagerAdapter.setSliders(bean.getData().getSlider());
                     banner.notifyDataSetChanged();
+                }, throwable -> {
+                    Log.e(TAG, "getRecommend: " + throwable );
                 });
         instance.Recommend().getDiscList()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -69,6 +73,8 @@ public class Recommend extends BaseFragment {
                     loadingView.cancel();
                     recycler.setVisibility(View.VISIBLE);
                     recyclerAdapter.setData(discList.getData().getList());
+                }, throwable -> {
+                    Log.e(TAG, "getDiscList: " + throwable );
                 });
     }
 

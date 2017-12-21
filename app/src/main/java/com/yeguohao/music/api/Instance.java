@@ -99,4 +99,17 @@ public class Instance {
         }
         return singer;
     }
+
+    private volatile Search search;
+
+    public Search Search() {
+        if (search == null) {
+            synchronized (Instance.class) {
+                if (search == null) {
+                    search = getRetrofit().create(Search.class);
+                }
+            }
+        }
+        return search;
+    }
 }

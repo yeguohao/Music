@@ -32,8 +32,38 @@ public class ParamsInterceptor implements Interceptor {
             topListParams(builder);
         } else if (url.contains("fcg_v8_singer_track_cp")) {
             songListParams(builder);
+        } else if (url.contains("gethotkey.fcg")) {
+            hotKeyParams(builder);
+        } else if (url.contains("search_for_qq_cp")) {
+            searchParams(builder);
         }
         return chain.proceed(request.newBuilder().url(builder.build()).build());
+    }
+
+    private void searchParams(HttpUrl.Builder builder) {
+        builder.removeAllQueryParameters("needNewCode")
+                .removeAllQueryParameters("platform")
+                .addQueryParameter("needNewCode", "1")
+                .addQueryParameter("platform", "h5")
+                .addQueryParameter("uin", "0")
+                .addQueryParameter("aggr", "0")
+                .addQueryParameter("catZhida", "1")
+                .addQueryParameter("zhidaqu", "1")
+                .addQueryParameter("t", "0")
+                .addQueryParameter("flag", "1")
+                .addQueryParameter("sem", "1")
+                .addQueryParameter("ie", "utf-8")
+                .addQueryParameter("remoteplace", "txt.mqq.all")
+                .addQueryParameter("jsonpCallback", JSONP_CALLBACK);
+    }
+
+    private void hotKeyParams(HttpUrl.Builder builder) {
+        builder.removeAllQueryParameters("needNewCode")
+                .removeAllQueryParameters("platform")
+                .addQueryParameter("needNewCode", "1")
+                .addQueryParameter("platform", "h5")
+                .addQueryParameter("uin", "0")
+                .addQueryParameter("jsonpCallback", JSONP_CALLBACK);
     }
 
     private void songListParams(HttpUrl.Builder builder) {

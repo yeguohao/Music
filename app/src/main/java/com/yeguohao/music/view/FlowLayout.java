@@ -24,6 +24,10 @@ public class FlowLayout extends ViewGroup {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+        initLeftTopArray();
+    }
+
+    private void initLeftTopArray() {
         viewLines = new LeftTop[getChildCount()];
         for (int i = 0; i < viewLines.length; i++) {
             viewLines[i] = new LeftTop(0, 0);
@@ -41,6 +45,8 @@ public class FlowLayout extends ViewGroup {
         int height = getPaddingTop();
         int childCount = getChildCount();
         int lineHeight = height;
+
+        if (viewLines.length < childCount) initLeftTopArray();
 
         for (int i = 0; i < childCount; i++) {
             View child = getChildAt(i);
@@ -83,6 +89,11 @@ public class FlowLayout extends ViewGroup {
     @Override
     protected LayoutParams generateLayoutParams(LayoutParams p) {
         return new MarginLayoutParams(p);
+    }
+
+    @Override
+    protected LayoutParams generateDefaultLayoutParams() {
+        return new MarginLayoutParams(-2, -2);
     }
 
     private class LeftTop {

@@ -3,6 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginEnd="16dp"
+    android:layout_marginBottom="8dp"
     android:background="@drawable/search_edit_background"
     android:gravity="center"
     android:paddingEnd="3dp"

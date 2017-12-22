@@ -84,7 +84,6 @@ public class Search extends BaseFragment implements View.OnClickListener {
     }
 
     private void searchResult(SearchInfo searchInfo) {
-        Log.e(TAG, "searchResult: " + searchInfo.getData().getSong().getList().size());
         adapter.setData(searchInfo.getData().getSong().getList());
     }
 
@@ -96,7 +95,7 @@ public class Search extends BaseFragment implements View.OnClickListener {
             child.setText(bean.getK());
             child.setOnClickListener(this);
 
-            hotGroup.addView(child, -2, -2);
+            hotGroup.addView(child);
         }
     }
 
@@ -117,9 +116,7 @@ public class Search extends BaseFragment implements View.OnClickListener {
     private void startSearch(String encodeKey) {
         instance.Search().search(encodeKey)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::searchResult, throwable -> {
-                    Log.e(TAG, "searchOpen: " + throwable);
-                });
+                .subscribe(this::searchResult, throwable -> Log.e(TAG, "searchOpen: " + throwable));
     }
 
     private void searchRecyclerVisible() {

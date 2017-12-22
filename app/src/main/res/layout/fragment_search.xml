@@ -13,7 +13,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/search_edit_background"
         android:drawableStart="@drawable/search"
-        android:textSize="10sp"
+        android:textSize="12sp"
         android:hint="搜索歌手、歌曲" />
 
     <ImageView

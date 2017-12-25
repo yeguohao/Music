@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -43,7 +45,6 @@ public class FixedTextTabLayout extends ViewGroup {
         initAttr(context, attrs, defStyleAttr);
     }
 
-
     private void init() {
         paint = new Paint();
     }
@@ -62,15 +63,14 @@ public class FixedTextTabLayout extends ViewGroup {
         super.onFinishInflate();
         childCount = getChildCount();
         p = 100f / childCount;
-
         underSlideView = new SlideColorView(getContext(), tabIndicatorColor, 0);
         addView(underSlideView, new MarginLayoutParams(LayoutParams.MATCH_PARENT, 3));
-
         addListener();
-
         TextView textView = (TextView) getChildAt(0);
         paint.setTextSize(textView.getTextSize());
-        setSelectedView(0);
+
+        setSelectedView(currentPagePosition);
+        setLocation(currentPagePosition);
     }
 
     private void addListener() {
@@ -117,17 +117,13 @@ public class FixedTextTabLayout extends ViewGroup {
         for (int i = 0; i < childCount; i++) {
             View child = getChildAt(i);
             if (child == underSlideView) continue;
-
             int left = i * childWidth;
             int right = left + childWidth;
-
             child.layout(left, t, right, b);
-
             if (i == 0) {
                 setLocation(0);
             }
         }
-
         underSlideView.layout(l, b - 30, r, b - 27);
     }
 
@@ -156,12 +152,12 @@ public class FixedTextTabLayout extends ViewGroup {
     private void setLocation(int position) {
         TextView textView = (TextView) getChildAt(position);
 
-        Log.e(TAG, "textView.getLeft(): " + textView.getLeft());
-        Log.e(TAG, "textView.getRight(): " + textView.getRight());
         underSlideView.setTextLeft(textView.getLeft());
         underSlideView.setTextRight(textView.getRight());
         underSlideView.setShowWidth((int) paint.measureText(textView.getText().toString()));
     }
+
+    private int currentPagePosition;
 
     public void setupWithViewPager(ViewPager viewPager) {
         this.viewPager = viewPager;
@@ -174,6 +170,7 @@ public class FixedTextTabLayout extends ViewGroup {
 
             @Override
             public void onPageSelected(int position) {
+                currentPagePosition = position;
                 setLocation(position);
                 setSelectedView(position);
             }
@@ -185,4 +182,18 @@ public class FixedTextTabLayout extends ViewGroup {
         });
     }
 
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        super.onRestoreInstanceState(state);
+        currentPagePosition = ((Bundle) state).getInt("currentPagerPosition", 0);
+    }
+
+    @Nullable
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        super.onSaveInstanceState();
+        Bundle bundle = new Bundle();
+        bundle.putInt("currentPagerPosition", currentPagePosition);
+        return bundle;
+    }
 }

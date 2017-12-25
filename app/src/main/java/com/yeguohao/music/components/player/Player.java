@@ -1,25 +1,18 @@
 package com.yeguohao.music.components.player;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
 import com.yeguohao.music.R;
 import com.yeguohao.music.base.BaseFragment;
 import com.yeguohao.music.common.SongInfo;
 import com.yeguohao.music.components.player.adapter.PlayerPagerAdapter;
-import com.yeguohao.music.view.Banner;
 import com.yeguohao.music.view.PlayerControl;
 import com.yeguohao.music.view.PlayerProgress;
 
@@ -70,9 +63,7 @@ public class Player extends BaseFragment {
     }
 
     public static Player newInstance() {
-
         Bundle args = new Bundle();
-
         Player fragment = new Player();
         fragment.setArguments(args);
         return fragment;

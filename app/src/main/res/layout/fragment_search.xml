@@ -13,8 +13,8 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/search_edit_background"
         android:drawableStart="@drawable/search"
-        android:textSize="10sp"
-        android:hint="搜索歌手、歌曲" />
+        android:hint="搜索歌手、歌曲"
+        android:textSize="12sp" />
 
     <ImageView
         android:id="@+id/search_close"
@@ -45,17 +45,27 @@
 
     </com.yeguohao.music.view.FlowLayout>
 
+    <com.yeguohao.music.view.SearchHistory
+        android:id="@+id/search_history"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_hot_group" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/search_recycler"
         android:layout_width="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_height="0dp"
         android:layout_marginTop="32dp"
         android:background="@color/colorPrimary"
         android:visibility="invisible"
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_edit" />
 
 </android.support.constraint.ConstraintLayout>

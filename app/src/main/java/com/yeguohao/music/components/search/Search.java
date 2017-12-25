@@ -19,6 +19,7 @@ import com.yeguohao.music.components.search.dispose.SearchDispose;
 import com.yeguohao.music.javabean.HotKey;
 import com.yeguohao.music.javabean.SearchInfo;
 import com.yeguohao.music.view.FlowLayout;
+import com.yeguohao.music.view.SearchHistory;
 
 import java.net.URLEncoder;
 import java.util.List;
@@ -41,6 +42,9 @@ public class Search extends BaseFragment implements View.OnClickListener {
 
     @BindView(R.id.search_close)
     ImageView close;
+
+    @BindView(R.id.search_history)
+    SearchHistory history;
 
     private BaseRecyclerAdapter adapter;
 
@@ -67,24 +71,26 @@ public class Search extends BaseFragment implements View.OnClickListener {
                         searchIconGone();
                         searchRecyclerInvisible();
                     } else {
+                        SearchHistory.SearchRecord.getSearchRecord().push(key.toString());
                         String encodeKey = URLEncoder.encode(key.toString(), "utf-8");
                         searchIconVisible();
                         searchRecyclerVisible();
                         startSearch(encodeKey);
                     }
                 });
+
+        history.setListener(searchKey -> editText.setText(searchKey));
     }
 
     @Override
     protected void fetch() {
-        new Instance().Search().getHotKey()
+        instance.Search().getHotKey()
                 .filter(hotKey -> hotKey.getCode() == 0)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::hotKeyResult);
     }
 
     private void searchResult(SearchInfo searchInfo) {
-        Log.e(TAG, "searchResult: " + searchInfo.getData().getSong().getList().size());
         adapter.setData(searchInfo.getData().getSong().getList());
     }
 
@@ -96,8 +102,14 @@ public class Search extends BaseFragment implements View.OnClickListener {
             child.setText(bean.getK());
             child.setOnClickListener(this);
 
-            hotGroup.addView(child, -2, -2);
+            hotGroup.addView(child);
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        history.pause();
     }
 
     public static Search newInstance() {
@@ -117,9 +129,7 @@ public class Search extends BaseFragment implements View.OnClickListener {
     private void startSearch(String encodeKey) {
         instance.Search().search(encodeKey)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::searchResult, throwable -> {
-                    Log.e(TAG, "searchOpen: " + throwable);
-                });
+                .subscribe(this::searchResult, throwable -> Log.e(TAG, "searchOpen: " + throwable));
     }
 
     private void searchRecyclerVisible() {

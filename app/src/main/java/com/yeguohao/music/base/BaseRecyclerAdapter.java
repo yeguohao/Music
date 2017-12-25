@@ -29,6 +29,11 @@ public class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRecyclerAda
         notifyDataSetChanged();
     }
 
+    public void addData(List<T> data) {
+        this.data = data;
+        notifyDataSetChanged();
+    }
+
     @Override
     public BaseRecyclerAdapter.InnerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (inflater == null) {
@@ -81,6 +86,12 @@ public class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRecyclerAda
 
         public void setItemViewClick() {
             itemView.setOnClickListener(view -> dispose.itemViewClick(this, getLayoutPosition(), t, view));
+        }
+
+        public void removeItem() {
+            if (data.remove(t)) {
+                notifyDataSetChanged();
+            }
         }
 
     }

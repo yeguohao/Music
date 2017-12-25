@@ -3,8 +3,8 @@ package com.yeguohao.music;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
-import com.yeguohao.music.components.player.Player;
 import com.yeguohao.music.components.player.PlayerActivity;
 import com.yeguohao.music.view.FixedTextTabLayout;
 import com.yeguohao.music.view.MiniPlayer;
@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
     @BindView(R.id.main_tab)
     FixedTextTabLayout tab;
 
@@ -58,5 +59,23 @@ public class MainActivity extends AppCompatActivity {
                 PlayerActivity.startActivity(MainActivity.this);
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause() called");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop() called");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy() called");
     }
 }

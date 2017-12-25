@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="20dp" >
+
+    <com.yeguohao.music.view.TempTextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="#f00"
+        android:gravity="start|center_vertical"
+        android:paddingStart="5dp"
+        android:text="热门"
+        android:textColor="@color/textColorDark"
+        android:textSize="14sp"/>
+
+</FrameLayout>

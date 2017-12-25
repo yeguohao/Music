@@ -10,6 +10,7 @@ import com.yeguohao.music.R;
 import com.yeguohao.music.api.Instance;
 import com.yeguohao.music.base.BaseFragment;
 import com.yeguohao.music.common.A;
+import com.yeguohao.music.common.decoration.RecyclerTitleItemDecoration1;
 import com.yeguohao.music.components.singer.adapter.SingerRecycler;
 import com.yeguohao.music.javabean.V8;
 import com.yeguohao.music.view.LetterIndexView;
@@ -46,7 +47,7 @@ public class Singer extends BaseFragment implements LetterIndexView.LetterSelect
         layoutManager.setAutoMeasureEnabled(false);
         recycler.setHasFixedSize(true);
         recycler.setAdapter(adapter);
-//        recycler.addItemDecoration(new RecyclerTitleItemDecoration(getActivity()));
+        recycler.addItemDecoration(new RecyclerTitleItemDecoration1());
         letterIndex.setLetterSelectedListener(this);
     }
 

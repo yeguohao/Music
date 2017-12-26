@@ -64,6 +64,9 @@ public class PlayerControl extends ConstraintLayout {
         ui();
         play.setOnClickListener(view -> songInfo.setPause(!songInfo.isPause()));
         songInfo.setPauseListener(isPause -> ui());
+        play.setOnClickListener(view -> {
+
+        });
     }
 
     private void ui() {

@@ -14,8 +14,9 @@ import static com.yeguohao.music.components.player.PlayerConstance.STORE_FILE_NA
 
 public class SongInfo {
 
-    private static final SongInfo INFO = new SongInfo();
+    private static final String MUSIC_BASE_URL = "http://dl.stream.qqmusic.qq.com/C400%s.m4a?fromtag=38&vkey=36314121DB6072576BCACB56493FED8AB2962A547DB5B172005A1CFAD7A08E7CF3CA178D0FA10E320401382F45F3B0AEAF83DC6C0AC81089&guid=6963862490";
 
+    private static final SongInfo INFO = new SongInfo();
     public static SongInfo newInstance() {
         return INFO;
     }

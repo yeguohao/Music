@@ -4,17 +4,20 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.yeguohao.music.R;
+import com.yeguohao.music.common.MediaPlayerUtil;
 import com.yeguohao.music.common.SongInfo;
 
 import butterknife.BindBitmap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PlayerControl extends ConstraintLayout {
+public class PlayerControl extends ConstraintLayout implements SongInfo.PauseChanged {
 
+    private static final String TAG = "PlayerControl";
     @BindBitmap(R.drawable.player_play)
     Bitmap playBitmap;
 
@@ -43,6 +46,7 @@ public class PlayerControl extends ConstraintLayout {
     ImageView favorite;
 
     private SongInfo songInfo = SongInfo.newInstance();
+    private MediaPlayerUtil playerUtil = MediaPlayerUtil.getPlayerUtil();
 
     public PlayerControl(Context context) {
         this(context, null);
@@ -61,21 +65,21 @@ public class PlayerControl extends ConstraintLayout {
     }
 
     private void initView() {
-        ui();
         play.setOnClickListener(view -> songInfo.setPause(!songInfo.isPause()));
-        songInfo.setPauseListener(isPause -> ui());
-    }
-
-    private void ui() {
-        if (songInfo.isPause()) {
-            play.setImageBitmap(playBitmap);
-        } else {
-            play.setImageBitmap(pauseBitmap);
-        }
-
+        songInfo.setPauseListener(this);
     }
 
     private void initLayout(Context context) {
         inflate(context, R.layout.player_control, this);
+    }
+
+    @Override
+    public void onPauseChange(boolean isPause) {
+        Log.e(TAG, "onPauseChange: " + isPause);
+        if (isPause) {
+            play.setImageBitmap(playBitmap);
+        } else {
+            play.setImageBitmap(pauseBitmap);
+        }
     }
 }

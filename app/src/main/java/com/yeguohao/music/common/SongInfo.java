@@ -15,21 +15,31 @@ import static com.yeguohao.music.components.player.PlayerConstance.STORE_FILE_NA
 public class SongInfo {
 
     private static final SongInfo INFO = new SongInfo();
-
     public static SongInfo newInstance() {
         return INFO;
+    }
+
+    private class Song {
+        private String songName;
+        private String singerName;
+        private String songMid;
+        private String albumMid;
     }
 
     private String songName;
     private String singerName;
     private String songMid;
     private String albumMid;
+    private long playbackProgress;
     private boolean isPause;
+    private int currentSongIndex;
+    private Song currentSong;
 
+    private List<Song> songs = new ArrayList<>();
     private List<PauseChanged> pauseListener = new ArrayList<>();
 
     public static void restoreInfo(Context context) {
-        SharedPreferences preferences = context.getSharedPreferences(STORE_FILE_NAME,Context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences(STORE_FILE_NAME, Context.MODE_PRIVATE);
 
         SongInfo info = newInstance();
         info.setSongName(preferences.getString(SONG, ""));
@@ -40,7 +50,7 @@ public class SongInfo {
     }
 
     public static void storeInfo(Context context) {
-        SharedPreferences preferences = context.getSharedPreferences(STORE_FILE_NAME,Context.MODE_PRIVATE);
+        SharedPreferences preferences = context.getSharedPreferences(STORE_FILE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
 
         SongInfo info = newInstance();
@@ -55,6 +65,19 @@ public class SongInfo {
 
     private void dumpListener() {
         pauseListener.clear();
+    }
+
+    public void setSongs(List<Song> songs) {
+        this.songs = songs;
+    }
+
+    public void addSong(Song song) {
+        currentSong = song;
+        this.songs.add(song);
+    }
+
+    public void seek(int index) {
+
     }
 
     public String getSongName() {
@@ -89,6 +112,14 @@ public class SongInfo {
         this.albumMid = albumMid;
     }
 
+    public void setPlaybackProgress(long playbackProgress) {
+        this.playbackProgress = playbackProgress;
+    }
+
+    public long getPlaybackProgress() {
+        return playbackProgress;
+    }
+
     public boolean isPause() {
         return isPause;
     }
@@ -101,6 +132,7 @@ public class SongInfo {
     }
 
     public void setPauseListener(PauseChanged listener) {
+        listener.onPauseChange(isPause);
         pauseListener.add(listener);
     }
 

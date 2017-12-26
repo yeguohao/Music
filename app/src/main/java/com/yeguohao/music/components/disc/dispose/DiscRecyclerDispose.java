@@ -27,11 +27,11 @@ public class DiscRecyclerDispose extends RecyclerDispose<CdInfo.CdlistBean.Songl
     @Override
     protected void itemViewClick(BaseRecyclerAdapter.InnerViewHolder holder, int position, CdInfo.CdlistBean.SonglistBean dataItem, View itemView) {
         SongInfo info = SongInfo.newInstance();
-        info.setPause(false);
         info.setSongName(dataItem.getSongname());
         info.setSongMid(dataItem.getSongmid());
         info.setSingerName(dataItem.getSinger().get(0).getName());
         info.setAlbumMid(dataItem.getAlbummid());
+        info.setPause(false);
 
         PlayerActivity.startActivity((Activity) itemView.getContext());
     }

@@ -1,51 +1,43 @@
 package com.yeguohao.music.common.decoration;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.ArrayMap;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
-import com.yeguohao.music.R;
 import com.yeguohao.music.common.TitleAndView;
-
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class RecyclerTitleItemDecoration1 extends RecyclerView.ItemDecoration {
 
-    private static final String TAG = "RecyclerTitleItemDecora";
-
     private TitleAndView titleAndView;
     private String fixedTitle;
-    private FrameLayout titleView;
 
+    private int titleHeight;
+    private float descent;
     private Paint paint = new Paint();
 
     private ArrayMap<Integer, String> arrayMap = new ArrayMap<>();
+    private int fixedTop;
+    private int fixedBottom;
+    private int marginTop;
+
+    public RecyclerTitleItemDecoration1() {
+        paint.setTextSize(40);
+        Paint.FontMetrics fontMetrics = paint.getFontMetrics();
+        descent = fontMetrics.descent;
+        titleHeight = (int) (fontMetrics.descent-fontMetrics.ascent);
+        marginTop = titleHeight;
+    }
 
     @Override
-    public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
-        if (titleAndView == null) {
-            if (parent.getAdapter() instanceof TitleAndView) {
-                titleAndView = (TitleAndView) parent.getAdapter();
-            } else return;
-        }
-
-        int titleHeight = titleView.getMeasuredHeight();
-
-        int fixedTop = 0;
-        int fixedBottom = titleHeight;
+    public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+        fixedTop = 0;
+        fixedBottom = titleHeight;
         for (int i = 0; i < parent.getChildCount(); i++) {
             View child = parent.getChildAt(i);
             int position = parent.getChildLayoutPosition(child);
@@ -53,7 +45,7 @@ public class RecyclerTitleItemDecoration1 extends RecyclerView.ItemDecoration {
             if (title != null) {
                 int top = child.getTop();
                 int decorationTop = top - titleHeight;
-                drawText(c, decorationTop, title);
+                drawText(c,parent, decorationTop, title);
 
                 int childDecorationTop = top - titleHeight;
                 int childDecorationBottom = top;
@@ -68,10 +60,16 @@ public class RecyclerTitleItemDecoration1 extends RecyclerView.ItemDecoration {
                 } else if (i == 0) {
                     fixedTitle = title;
                 }
+            } else if (i == 0) {
+                fixedTitle = titleAndView.getTitle(position);
             }
         }
+    }
+
+    @Override
+    public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
         if (fixedTitle != null) {
-            drawText(c, fixedTop, fixedTitle);
+            drawText(c, parent, fixedTop, fixedTitle);
         }
     }
 
@@ -82,44 +80,26 @@ public class RecyclerTitleItemDecoration1 extends RecyclerView.ItemDecoration {
                 titleAndView = (TitleAndView) parent.getAdapter();
             } else return;
         }
-
-        if (titleView == null) {
-            titleView = inflateTitleView(parent);
-        }
-
         int position = parent.getChildLayoutPosition(view);
         String title = titleAndView.getTitle(position);
         if (!arrayMap.containsValue(title)) {
             arrayMap.put(position, title);
-            outRect.set(0, titleView.getMeasuredHeight(), 0, 0);
+            outRect.set(0, titleHeight, 0, 0);
+        } else if (title.equals(arrayMap.get(position))){
+            outRect.set(0, titleHeight, 0, 0);
+        } else {
+            outRect.set(0, marginTop, 0, 0);
         }
     }
 
-    private void drawText(Canvas canvas, int top, String title) {
-        Log.e(TAG, "drawText: " + top);
-        paint.setColor(Color.RED);
-        paint.setTextSize(50);
-        TextView textView = (TextView) titleView.getChildAt(0);
-        textView.setText(title);
-        canvas.save();
-        canvas.clipRect(0, top, titleView.getMeasuredWidth(), titleView.getMeasuredHeight());
-        titleView.draw(canvas);
-        canvas.restore();
-    }
-
-    private FrameLayout inflateTitleView(RecyclerView parent) {
-        FrameLayout titleView = (FrameLayout) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.decoration_layout, parent, false);
-        int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(300, View.MeasureSpec.EXACTLY);
-        int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(300, View.MeasureSpec.EXACTLY);
-
-        ViewGroup.LayoutParams params = titleView.getLayoutParams();
-        int childWidthMeasureSpec = ViewGroup.getChildMeasureSpec(widthMeasureSpec, 0, params.width);
-        int childHeightMeasureSpec = ViewGroup.getChildMeasureSpec(heightMeasureSpec, 0, params.height);
-
-        titleView.measure(childWidthMeasureSpec, childHeightMeasureSpec);
-        Log.e(TAG, "inflateTitleView: " + titleView.getMeasuredHeight());
-        return titleView;
+    private void drawText(Canvas canvas, RecyclerView parent, int top, String title) {
+        int height = top + titleHeight;
+        paint.setTextAlign(Paint.Align.CENTER);
+        RectF rectF = new RectF(0,top,parent.getRight(),height);
+        paint.setColor(Color.YELLOW);
+        canvas.drawRect(rectF, paint);
+        paint.setColor(Color.BLACK);
+        canvas.drawText(title, rectF.left + rectF.width() / 2, rectF.bottom - descent, paint);
     }
 
     private boolean isFullVisFirstItem(RecyclerView recyclerView) {

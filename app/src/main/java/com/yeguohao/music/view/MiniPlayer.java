@@ -1,7 +1,5 @@
 package com.yeguohao.music.view;
 
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
@@ -17,14 +15,20 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.yeguohao.music.R;
-import com.yeguohao.music.common.SongInfo;
+import com.yeguohao.music.common.MediaPlayerListener;
+import com.yeguohao.music.common.MediaPlayerUtil;
 
 import butterknife.BindBitmap;
 import butterknife.ButterKnife;
 
+import static com.yeguohao.music.common.MediaPlayerUtil.AT_ONCE;
+import static com.yeguohao.music.common.MediaPlayerUtil.NEXT;
+import static com.yeguohao.music.common.MediaPlayerUtil.PAUSE;
+import static com.yeguohao.music.common.MediaPlayerUtil.PREV;
+import static com.yeguohao.music.common.MediaPlayerUtil.START;
 import static com.yeguohao.music.components.player.PlayerConstance.ALBUM_IMG_URL;
 
-public class MiniPlayer extends RelativeLayout {
+public class MiniPlayer extends RelativeLayout implements MediaPlayerListener {
 
     @BindBitmap(R.drawable.player_play)
     Bitmap playBitmap;
@@ -35,18 +39,19 @@ public class MiniPlayer extends RelativeLayout {
     private ImageView play;
     private ImageView playList;
     private ImageView songThumbnail;
-    private TextView song;
+    private TextView songText;
     private TextView singer;
 
     private String songStr;
     private String singerStr;
     private String albummId;
 
-    private SongInfo songInfo;
-
     private MiniPlayerListener miniPlayerListener;
-
     private ViewPropertyAnimator propertyAnimator;
+
+    private MediaPlayerUtil playerUtil = MediaPlayerUtil.getPlayerUtil();
+
+    private boolean isPause;
 
     public MiniPlayer(@NonNull Context context) {
         this(context, null);
@@ -59,20 +64,44 @@ public class MiniPlayer extends RelativeLayout {
     public MiniPlayer(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         ButterKnife.bind(this);
-
-        songInfo = SongInfo.newInstance();
         initLayout(context);
-        restore();
     }
 
     private void initLayout(Context context) {
         inflate(context, R.layout.mini_player, this);
     }
 
-    private void restore() {
-        songStr = songInfo.getSongName();
-        singerStr = songInfo.getSingerName();
-        albummId = songInfo.getAlbumMid();
+    @Override
+    public void songChanged(MediaPlayerUtil.Song song) {
+        songStr = song.getSongName();
+        singerStr = song.getSingerName();
+        albummId = song.getAlbumMid();
+        updateView();
+    }
+
+    @Override
+    public void start() {
+        isPause = false;
+        play.setImageBitmap(pauseBitmap);
+        startRotate();
+        if (miniPlayerListener != null) miniPlayerListener.onPlay();
+    }
+
+    @Override
+    public void pause() {
+        isPause = true;
+        play.setImageBitmap(playBitmap);
+        stopRotate();
+        if (miniPlayerListener != null) miniPlayerListener.onPause();
+    }
+
+    private void updateView() {
+        if (songText != null) {
+            songText.setText(songStr);
+            singer.setText(singerStr);
+            RequestOptions options = RequestOptions.circleCropTransform().error(R.drawable.player_play);
+            Glide.with(this).load(String.format(ALBUM_IMG_URL, albummId)).apply(options).into(songThumbnail);
+        }
     }
 
     @Override
@@ -81,49 +110,29 @@ public class MiniPlayer extends RelativeLayout {
         play = findViewById(R.id.mini_player_play_icon);
         playList = findViewById(R.id.mini_player_playlist_icon);
         songThumbnail = findViewById(R.id.mini_player_thumbnail);
-        if (songInfo.isPause()) {
-            pause();
-        } else {
-            play();
-        }
-
-        song = findViewById(R.id.mini_player_song);
+        songText = findViewById(R.id.mini_player_song);
         singer = findViewById(R.id.mini_player_singer);
-
-        song.setText(songStr);
+        songText.setText(songStr);
         singer.setText(singerStr);
 
-        RequestOptions options = RequestOptions.circleCropTransform()
-                .error(R.drawable.player_play);
-        Glide.with(this).load(String.format(ALBUM_IMG_URL, albummId)).apply(options).into(songThumbnail);
-
-        RxView.clicks(play).subscribe(view -> {
-            if (songInfo.isPause()) {
-                play();
-                miniPlayerListener.onPlay();
-            } else {
-                pause();
-                miniPlayerListener.onPause();
-            }
-            songInfo.setPause(!songInfo.isPause());
-        });
         RxView.clicks(playList).subscribe(view -> miniPlayerListener.onOpenSongList());
         RxView.clicks(songThumbnail).subscribe(view -> miniPlayerListener.onOpenPlayer());
-    }
-
-    private void play() {
-        play.setImageBitmap(pauseBitmap);
-        startRotate();
-    }
-
-    private void pause() {
-        play.setImageBitmap(playBitmap);
-        stopRotate();
+        RxView.clicks(play).subscribe(view -> {
+            if (isPause) {
+                playerUtil.sent(START);
+            } else {
+                playerUtil.sent(PAUSE);
+            }
+        });
+        playerUtil.on(START | PAUSE | NEXT | PREV | AT_ONCE, this);
     }
 
     private void startRotate() {
         if (propertyAnimator == null) {
-            propertyAnimator = songThumbnail.animate().rotationBy(359).setInterpolator(new LinearInterpolator())
+            propertyAnimator = songThumbnail
+                    .animate()
+                    .rotationBy(359)
+                    .setInterpolator(new LinearInterpolator())
                     .setDuration(6000).setStartDelay(0).withEndAction(() -> {
                         propertyAnimator = null;
                         startRotate();

@@ -34,13 +34,19 @@ public class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRecyclerAda
         notifyDataSetChanged();
     }
 
+    public List<T> getData() {
+        return data;
+    }
+
     @Override
     public BaseRecyclerAdapter.InnerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (inflater == null) {
             inflater = LayoutInflater.from(parent.getContext());
         }
         View itemView = inflater.inflate(layout, parent, false);
-        return new InnerViewHolder(itemView, dispose);
+        InnerViewHolder holder = new InnerViewHolder(itemView, dispose);
+        holder.setAdapter(this);
+        return holder;
     }
 
     @Override
@@ -57,6 +63,7 @@ public class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRecyclerAda
 
         private RecyclerDispose<T> dispose;
         private T t;
+        private BaseRecyclerAdapter<T> adapter;
 
         InnerViewHolder(View itemView, RecyclerDispose<T> dispose) {
             super(itemView);
@@ -66,6 +73,14 @@ public class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRecyclerAda
         void setData(T t) {
             this.t = t;
             dispose.refreshUI(this, getLayoutPosition(), t);
+        }
+
+        public void setAdapter(BaseRecyclerAdapter<T> adapter) {
+            this.adapter = adapter;
+        }
+
+        public BaseRecyclerAdapter<T> getAdapter() {
+            return adapter;
         }
 
         public TextView getTextView(int viewId) {

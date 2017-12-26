@@ -9,9 +9,9 @@ import java.io.File;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class DownUtil {
+class DownUtil {
 
-    public static int getAppVersion(Context context) {
+    static int getAppVersion(Context context) {
         try {
             PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             return info.versionCode;
@@ -21,7 +21,7 @@ public class DownUtil {
         return 1;
     }
 
-    public static File getDiskCacheDir(Context context, String uniqueName) {
+    static File getDiskCacheDir(Context context, String uniqueName) {
         String cachePath;
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
                 || !Environment.isExternalStorageRemovable()) {
@@ -32,7 +32,7 @@ public class DownUtil {
         return new File(cachePath + File.separator + uniqueName);
     }
 
-    public static String hashKeyForDisk(String key) {
+    static String hashKeyForDisk(String key) {
         String cacheKey;
         try {
             final MessageDigest mDigest = MessageDigest.getInstance("MD5");
@@ -46,8 +46,8 @@ public class DownUtil {
 
     private static String bytesToHexString(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < bytes.length; i++) {
-            String hex = Integer.toHexString(0xFF & bytes[i]);
+        for (byte aByte : bytes) {
+            String hex = Integer.toHexString(0xFF & aByte);
             if (hex.length() == 1) {
                 sb.append('0');
             }

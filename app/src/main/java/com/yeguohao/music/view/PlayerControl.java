@@ -6,14 +6,24 @@ import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
+import com.jakewharton.rxbinding2.view.RxView;
 import com.yeguohao.music.R;
-import com.yeguohao.music.common.SongInfo;
+import com.yeguohao.music.common.MediaPlayerListener;
+import com.yeguohao.music.common.MediaPlayerUtil;
 
 import butterknife.BindBitmap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PlayerControl extends ConstraintLayout {
+import static com.yeguohao.music.common.MediaPlayerUtil.AT_ONCE;
+import static com.yeguohao.music.common.MediaPlayerUtil.FAVORITE;
+import static com.yeguohao.music.common.MediaPlayerUtil.MODE;
+import static com.yeguohao.music.common.MediaPlayerUtil.NEXT;
+import static com.yeguohao.music.common.MediaPlayerUtil.PAUSE;
+import static com.yeguohao.music.common.MediaPlayerUtil.PREV;
+import static com.yeguohao.music.common.MediaPlayerUtil.START;
+
+public class PlayerControl extends ConstraintLayout implements MediaPlayerListener {
 
     @BindBitmap(R.drawable.player_play)
     Bitmap playBitmap;
@@ -42,7 +52,9 @@ public class PlayerControl extends ConstraintLayout {
     @BindView(R.id.player_favorite)
     ImageView favorite;
 
-    private SongInfo songInfo = SongInfo.newInstance();
+    private boolean isPause;
+
+    private MediaPlayerUtil playerUtil = MediaPlayerUtil.getPlayerUtil();
 
     public PlayerControl(Context context) {
         this(context, null);
@@ -55,30 +67,51 @@ public class PlayerControl extends ConstraintLayout {
     public PlayerControl(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initLayout(context);
-
         ButterKnife.bind(this);
         initView();
     }
 
     private void initView() {
-        ui();
-        play.setOnClickListener(view -> songInfo.setPause(!songInfo.isPause()));
-        songInfo.setPauseListener(isPause -> ui());
-        play.setOnClickListener(view -> {
-
+        RxView.clicks(play).subscribe(view -> {
+            if (isPause) {
+                playerUtil.sent(START);
+            } else {
+                playerUtil.sent(PAUSE);
+            }
         });
-    }
-
-    private void ui() {
-        if (songInfo.isPause()) {
-            play.setImageBitmap(playBitmap);
-        } else {
-            play.setImageBitmap(pauseBitmap);
-        }
-
+        RxView.clicks(next).subscribe(view-> playerUtil.sent(NEXT));
+        RxView.clicks(prev).subscribe(view-> playerUtil.sent(PREV));
     }
 
     private void initLayout(Context context) {
         inflate(context, R.layout.player_control, this);
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        playerUtil.on(START | PAUSE | FAVORITE | MODE | AT_ONCE, this);
+    }
+
+    @Override
+    public void start() {
+        isPause = false;
+        play.setImageBitmap(pauseBitmap);
+    }
+
+    @Override
+    public void pause() {
+        isPause = true;
+        play.setImageBitmap(playBitmap);
+    }
+
+    @Override
+    public void favorite(boolean isFavorite) {
+
+    }
+
+    @Override
+    public void modeChanged(int mode) {
+
     }
 }

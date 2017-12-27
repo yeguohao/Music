@@ -30,10 +30,19 @@ public class MusicDown {
 
     private DiskLruCache lruCache;
 
+    public static final String CACHE_FILENAME = "music_cache";
+
+    public MusicDown(Context context) {
+        try {
+            lruCache = DiskLruCache.open(getDiskCacheDir(context, CACHE_FILENAME), getAppVersion(context), 1, MAX_SIZE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void down(Context context, String url, String fileDir, String fileName, MusicDownListener listener) {
         try {
             String key = hashKeyForDisk(url + fileName);
-            lruCache = DiskLruCache.open(getDiskCacheDir(context, fileName), getAppVersion(context), 1, MAX_SIZE);
             DiskLruCache.Value value = lruCache.get(key);
             if (value == null) {
                 fetchDataFromNetwork(url, key, fileDir + "/" + fileName, listener);
@@ -47,7 +56,9 @@ public class MusicDown {
 
     private void fetchDataFromCache(DiskLruCache.Value key, MusicDownListener listener) {
         if (listener != null) {
-            listener.downDone(key.getFile(0).getAbsolutePath());
+            File file = key.getFile(0);
+            Log.e(TAG, "fetchDataFromCache: " + file.getAbsolutePath() + File.pathSeparator + file.getName());
+            listener.downDone(file.getAbsolutePath() + "/" + file.getName());
         }
     }
 
@@ -58,11 +69,9 @@ public class MusicDown {
                 .build();
         try {
             Response response = client.newCall(request).execute();
-            Log.e(TAG, "code: " + response.code());
-            Log.e(TAG, "Length: " + response.header("Content-Length"));
-            if (response.code() == 200 || response.code() == 206) {
+            int code = response.code();
+            if (code == 200 || code == 206) {
                 String type = response.body().contentType().subtype();
-                Log.e(TAG, "fileName: " + fileName + "." + type);
                 File file = new File(fileName + "." + type);
                 if (!file.exists()) {
                     try {
@@ -86,6 +95,10 @@ public class MusicDown {
                 if (listener != null) {
                     listener.downDone(fileName + "." + type);
                 }
+            } else {
+                if (listener != null) {
+                    listener.onFailed(code);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -94,5 +107,7 @@ public class MusicDown {
 
     public interface MusicDownListener {
         void downDone(String path);
+
+        void onFailed(int code);
     }
 }

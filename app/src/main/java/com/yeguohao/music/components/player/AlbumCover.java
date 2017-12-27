@@ -12,11 +12,9 @@ import com.yeguohao.music.R;
 import com.yeguohao.music.base.BaseFragment;
 import com.yeguohao.music.common.MediaPlayerListener;
 import com.yeguohao.music.common.MediaPlayerUtil;
-import com.yeguohao.music.common.SongInfo;
 
 import butterknife.BindView;
 
-import static com.yeguohao.music.common.MediaPlayerUtil.*;
 import static com.yeguohao.music.components.player.PlayerConstance.ALBUM_IMG_URL;
 
 public class AlbumCover extends BaseFragment implements MediaPlayerListener {
@@ -34,11 +32,10 @@ public class AlbumCover extends BaseFragment implements MediaPlayerListener {
 
     @Override
     protected void initView(View root) {
-        playerUtil.on(START | PAUSE | NEXT | PREV | AT_ONCE, this);
     }
 
     @Override
-    public void songChanged(MediaPlayerUtil.Song song) {
+    public void songChanged(Song song) {
         Glide.with(this).load(String.format(ALBUM_IMG_URL, song.getAlbumMid())).apply(RequestOptions.circleCropTransform()).into(albumCover);
     }
 

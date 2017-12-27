@@ -17,15 +17,11 @@ import com.jakewharton.rxbinding2.view.RxView;
 import com.yeguohao.music.R;
 import com.yeguohao.music.common.MediaPlayerListener;
 import com.yeguohao.music.common.MediaPlayerUtil;
+import com.yeguohao.music.components.player.Song;
 
 import butterknife.BindBitmap;
 import butterknife.ButterKnife;
 
-import static com.yeguohao.music.common.MediaPlayerUtil.AT_ONCE;
-import static com.yeguohao.music.common.MediaPlayerUtil.NEXT;
-import static com.yeguohao.music.common.MediaPlayerUtil.PAUSE;
-import static com.yeguohao.music.common.MediaPlayerUtil.PREV;
-import static com.yeguohao.music.common.MediaPlayerUtil.START;
 import static com.yeguohao.music.components.player.PlayerConstance.ALBUM_IMG_URL;
 
 public class MiniPlayer extends RelativeLayout implements MediaPlayerListener {
@@ -51,8 +47,6 @@ public class MiniPlayer extends RelativeLayout implements MediaPlayerListener {
 
     private MediaPlayerUtil playerUtil = MediaPlayerUtil.getPlayerUtil();
 
-    private boolean isPause;
-
     public MiniPlayer(@NonNull Context context) {
         this(context, null);
     }
@@ -71,37 +65,30 @@ public class MiniPlayer extends RelativeLayout implements MediaPlayerListener {
         inflate(context, R.layout.mini_player, this);
     }
 
-    @Override
-    public void songChanged(MediaPlayerUtil.Song song) {
+    public void resume() {
+        Song song = playerUtil.getCurrentSong();
+        if (song == null) return;
         songStr = song.getSongName();
         singerStr = song.getSingerName();
         albummId = song.getAlbumMid();
         updateView();
     }
 
-    @Override
-    public void start() {
-        isPause = false;
-        play.setImageBitmap(pauseBitmap);
-        startRotate();
-        if (miniPlayerListener != null) miniPlayerListener.onPlay();
-    }
-
-    @Override
-    public void pause() {
-        isPause = true;
-        play.setImageBitmap(playBitmap);
-        stopRotate();
-        if (miniPlayerListener != null) miniPlayerListener.onPause();
-    }
-
     private void updateView() {
-        if (songText != null) {
-            songText.setText(songStr);
-            singer.setText(singerStr);
-            RequestOptions options = RequestOptions.circleCropTransform().error(R.drawable.player_play);
-            Glide.with(this).load(String.format(ALBUM_IMG_URL, albummId)).apply(options).into(songThumbnail);
+        songText.setText(songStr);
+        singer.setText(singerStr);
+        if (playerUtil.isPlay()) {
+            play.setImageBitmap(pauseBitmap);
+            startRotate();
+            if (miniPlayerListener != null) miniPlayerListener.onPlay();
+        } else {
+            play.setImageBitmap(playBitmap);
+            stopRotate();
+            if (miniPlayerListener != null) miniPlayerListener.onPause();
         }
+
+        RequestOptions options = RequestOptions.circleCropTransform().error(R.drawable.player_play);
+        Glide.with(this).load(String.format(ALBUM_IMG_URL, albummId)).apply(options).into(songThumbnail);
     }
 
     @Override
@@ -118,13 +105,12 @@ public class MiniPlayer extends RelativeLayout implements MediaPlayerListener {
         RxView.clicks(playList).subscribe(view -> miniPlayerListener.onOpenSongList());
         RxView.clicks(songThumbnail).subscribe(view -> miniPlayerListener.onOpenPlayer());
         RxView.clicks(play).subscribe(view -> {
-            if (isPause) {
-                playerUtil.sent(START);
+            if (playerUtil.isPlay()) {
+                playerUtil.pause();
             } else {
-                playerUtil.sent(PAUSE);
+                playerUtil.start();
             }
         });
-        playerUtil.on(START | PAUSE | NEXT | PREV | AT_ONCE, this);
     }
 
     private void startRotate() {

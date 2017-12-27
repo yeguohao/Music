@@ -8,8 +8,8 @@ import com.yeguohao.music.R;
 import com.yeguohao.music.base.BaseRecyclerAdapter;
 import com.yeguohao.music.base.RecyclerDispose;
 import com.yeguohao.music.common.MediaPlayerUtil;
-import com.yeguohao.music.common.SongInfo;
 import com.yeguohao.music.components.player.PlayerActivity;
+import com.yeguohao.music.components.player.Song;
 import com.yeguohao.music.javabean.CdInfo;
 
 import java.util.ArrayList;
@@ -30,17 +30,18 @@ public class DiscRecyclerDispose extends RecyclerDispose<CdInfo.CdlistBean.Songl
 
     @Override
     protected void itemViewClick(BaseRecyclerAdapter.InnerViewHolder holder, int position, CdInfo.CdlistBean.SonglistBean dataItem, View itemView) {
-        List<MediaPlayerUtil.Song> songs = new ArrayList<>();
+        List<Song> songs = new ArrayList<>();
         List<CdInfo.CdlistBean.SonglistBean> datas = holder.getAdapter().getData();
         for (CdInfo.CdlistBean.SonglistBean bean : datas) {
-            MediaPlayerUtil.Song info = new MediaPlayerUtil.Song();
+            Song info = new Song();
             info.setSongName(dataItem.getSongname());
             info.setSongMid(dataItem.getSongmid());
             info.setSingerName(dataItem.getSinger().get(0).getName());
             info.setAlbumMid(dataItem.getAlbummid());
             songs.add(info);
         }
-        MediaPlayerUtil.getPlayerUtil().setSongs(songs, position);
+        MediaPlayerUtil.getPlayerUtil().addSongs(songs);
+        MediaPlayerUtil.getPlayerUtil().load(position);
         PlayerActivity.startActivity((Activity) itemView.getContext());
     }
 }

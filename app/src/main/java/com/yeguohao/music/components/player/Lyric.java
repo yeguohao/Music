@@ -9,18 +9,11 @@ import android.widget.TextView;
 import com.yeguohao.music.R;
 import com.yeguohao.music.api.Instance;
 import com.yeguohao.music.base.BaseFragment;
-import com.yeguohao.music.base.BaseRecyclerAdapter;
 import com.yeguohao.music.common.MediaPlayerListener;
 import com.yeguohao.music.common.MediaPlayerUtil;
-import com.yeguohao.music.common.SongInfo;
 import com.yeguohao.music.components.player.adapter.LyricRecyclerAdapter;
-import com.yeguohao.music.components.player.dispose.LyricDispose;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
-
-import static com.yeguohao.music.common.MediaPlayerUtil.*;
 
 public class Lyric extends BaseFragment implements MediaPlayerListener {
 
@@ -52,11 +45,10 @@ public class Lyric extends BaseFragment implements MediaPlayerListener {
 
     @Override
     protected void fetch() {
-        playerUtil.on(NEXT | PREV | PROGRESS | AT_ONCE, this);
     }
 
     @Override
-    public void songChanged(MediaPlayerUtil.Song song) {
+    public void songChanged(Song song) {
         tips.setText("正在加载");
         tips.setVisibility(View.VISIBLE);
         adapter.clear();

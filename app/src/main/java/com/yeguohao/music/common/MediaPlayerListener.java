@@ -1,6 +1,8 @@
 package com.yeguohao.music.common;
 
 
+import com.yeguohao.music.components.player.Song;
+
 public interface MediaPlayerListener {
 
     default void start() {
@@ -19,7 +21,7 @@ public interface MediaPlayerListener {
 
     }
 
-    default void songChanged(MediaPlayerUtil.Song song) {
+    default void songChanged(Song song) {
 
     }
 

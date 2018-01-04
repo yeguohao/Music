@@ -1,6 +1,8 @@
 package com.yeguohao.music.components.player.adapter;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,16 +10,28 @@ import android.widget.TextView;
 
 import com.yeguohao.music.R;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LyricRecyclerAdapter extends RecyclerView.Adapter<LyricRecyclerAdapter.LyricHolder> {
 
-    private Map<String, String> data = new LinkedHashMap<>();
-    private String[] index;
+    private static final String TAG = "LyricRecyclerAdapter";
+    private Map<String, String> data = new HashMap<>();
+    private List<String> indexes = new ArrayList<>();
 
-    public void setData(Map<String, String> data, String[] index) {
-        this.index = index;
+    private int selectedPosition = -1;
+    private int colorWhite;
+    private int colorDark;
+
+    public LyricRecyclerAdapter(Activity activity) {
+        colorWhite = activity.getResources().getColor(R.color.textColorWhite);
+        colorDark = activity.getResources().getColor(R.color.textColorDark);
+    }
+
+    public void setData(Map<String, String> data, List<String> index) {
+        this.indexes = index;
         this.data.clear();
         this.data.putAll(data);
         notifyDataSetChanged();
@@ -25,8 +39,15 @@ public class LyricRecyclerAdapter extends RecyclerView.Adapter<LyricRecyclerAdap
 
     public void clear() {
         this.data.clear();
-        this.index = null;
+        this.indexes = null;
         notifyDataSetChanged();
+    }
+
+    public void setSelectedLyric(int selectedPosition) {
+        if (this.selectedPosition != selectedPosition) {
+            this.selectedPosition = selectedPosition;
+            notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -38,7 +59,13 @@ public class LyricRecyclerAdapter extends RecyclerView.Adapter<LyricRecyclerAdap
 
     @Override
     public void onBindViewHolder(LyricHolder holder, int position) {
-        holder.textView.setText(data.get(index[position]));
+        if (selectedPosition == position) {
+            Log.e(TAG, "onBindViewHolder: " + position );
+            holder.textView.setTextColor(colorWhite);
+        } else {
+            holder.textView.setTextColor(colorDark);
+        }
+        holder.textView.setText(data.get(indexes.get(position)));
     }
 
     @Override

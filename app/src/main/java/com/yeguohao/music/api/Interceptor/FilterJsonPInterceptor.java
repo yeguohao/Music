@@ -13,13 +13,15 @@ public class FilterJsonPInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         String jsonPCallBack = request.url().queryParameter("jsonpCallback");
+        Response response = chain.proceed(request);
+        ResponseBody body = response.body();
+        String result = body.string();
+        if (request.url().toString().contains("getDiscList")) {
+            result = result.replace("\\", "");
+            result = result.substring(1, result.length());
+        }
         if (jsonPCallBack != null) {
-            Response response = chain.proceed(request);
-            ResponseBody body = response.body();
-            String result = body.string();
-
             result = result.replace(jsonPCallBack + "(", "").replace(")", "");
-
             ResponseBody realBody = ResponseBody.create(body.contentType(), result);
             return response.newBuilder().body(realBody).build();
         }

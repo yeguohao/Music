@@ -15,32 +15,34 @@
 
     <com.yeguohao.music.view.OverHiddenTextView
         android:id="@+id/rank_1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:singleLine="true"
+        android:layout_marginStart="115dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         app:layout_constraintBottom_toTopOf="@id/rank_2"
-        app:layout_constraintStart_toEndOf="@id/rank_img"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="凤凰于飞 (Live)-林俊杰" />
 
     <com.yeguohao.music.view.OverHiddenTextView
         android:id="@+id/rank_2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:singleLine="true"
+        android:layout_marginStart="115dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         app:layout_constraintBottom_toTopOf="@id/rank_3"
-        app:layout_constraintStart_toStartOf="@id/rank_1"
         app:layout_constraintTop_toBottomOf="@id/rank_1"
         tools:text="躲猫猫-TFBOYS" />
 
     <com.yeguohao.music.view.OverHiddenTextView
         android:id="@+id/rank_3"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:singleLine="true"
+        android:layout_marginStart="115dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/rank_1"
         app:layout_constraintTop_toBottomOf="@id/rank_2"
         tools:text="一人饮酒醉 (Live)-华晨宇" />
 

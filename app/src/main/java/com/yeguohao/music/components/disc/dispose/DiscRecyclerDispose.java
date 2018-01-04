@@ -34,10 +34,10 @@ public class DiscRecyclerDispose extends RecyclerDispose<CdInfo.CdlistBean.Songl
         List<CdInfo.CdlistBean.SonglistBean> datas = holder.getAdapter().getData();
         for (CdInfo.CdlistBean.SonglistBean bean : datas) {
             Song info = new Song();
-            info.setSongName(dataItem.getSongname());
-            info.setSongMid(dataItem.getSongmid());
-            info.setSingerName(dataItem.getSinger().get(0).getName());
-            info.setAlbumMid(dataItem.getAlbummid());
+            info.setSongName(bean.getSongname());
+            info.setSongMid(bean.getSongmid());
+            info.setSingerName(bean.getSinger().get(0).getName());
+            info.setAlbumMid(bean.getAlbummid());
             songs.add(info);
         }
         MediaPlayerUtil.getPlayerUtil().addSongs(songs);

@@ -22,7 +22,7 @@ import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class Singer extends BaseFragment implements LetterIndexView.LetterSelectedListener {
+public class Singer extends BaseFragment implements LetterIndexView.LetterSelectedListener, RecyclerTitleItemDecoration1.OnFixedTextChangedListener {
 
     private static final String TAG = "Singer";
     @BindView(R.id.singer_recycler)
@@ -47,7 +47,9 @@ public class Singer extends BaseFragment implements LetterIndexView.LetterSelect
         layoutManager.setAutoMeasureEnabled(false);
         recycler.setHasFixedSize(true);
         recycler.setAdapter(adapter);
-        recycler.addItemDecoration(new RecyclerTitleItemDecoration1());
+        RecyclerTitleItemDecoration1 itemDecoration1 = new RecyclerTitleItemDecoration1();
+        itemDecoration1.setListener(this);
+        recycler.addItemDecoration(itemDecoration1);
         letterIndex.setLetterSelectedListener(this);
     }
 
@@ -96,13 +98,28 @@ public class Singer extends BaseFragment implements LetterIndexView.LetterSelect
     @Override
     public void onLetterSelected(String letter) {
         LinearLayoutManager llm = (LinearLayoutManager) recycler.getLayoutManager();
-        if (letter.equals("热")) {
-            llm.scrollToPositionWithOffset(0, 0);
+        int position = letterPosition[getIndexByLetter(letter)];
+        if (position != 0) llm.scrollToPositionWithOffset(position, 0);
+        else letterIndex.nextPosition();
+    }
+
+    private int getIndexByLetter(String letter) {
+        if (letter.contains("热") || letter.contains("9")) {
+            return 0;
         } else {
             int index = A.StringToA(letter) % 65;
-            int position = letterPosition[index];
-            if (position != 0) llm.scrollToPositionWithOffset(position, 0);
-            else letterIndex.nextPosition();
+            return letterPosition[index];
         }
+    }
+
+    @Override
+    public void onChanged(String letter) {
+        int index;
+        if (letter.contains("热") || letter.contains("9")) {
+            index = 0;
+        } else {
+            index = (A.StringToA(letter) % 65) + 1;
+        }
+        letterIndex.setSelectedIndex(index);
     }
 }

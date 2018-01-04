@@ -4,8 +4,11 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
+import android.util.Log;
 
 import com.yeguohao.music.components.player.Song;
 
@@ -13,7 +16,9 @@ import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import static com.yeguohao.music.components.player.PlayerConstance.MUSIC_DOWN_BASE_URL;
 import static com.yeguohao.music.components.player.PlayerConstance.RANDOM;
@@ -32,7 +37,7 @@ public class MediaPlayerUtil implements MusicDown.MusicDownListener {
     private static MediaPlayerUtil playerUtil = new MediaPlayerUtil();
 
     private Application application;
-    private MusicDown musicDown = new MusicDown();
+    private MusicDown musicDown;
     private MediaPlayer player = new MediaPlayer();
     private Handler mainThreadHandler = new Handler(Looper.getMainLooper());
     private SharedPreferences preferences;
@@ -40,47 +45,110 @@ public class MediaPlayerUtil implements MusicDown.MusicDownListener {
     private List<Song> songs = new ArrayList<>();
     private Song currentSong;
     private int mode = SEQUENCE;
-    private boolean favorite;
 
     private int state = NOT_LOADED;
     private int curInx;
+    private int curTime;
+
+    private List<OnStateListener> stateListeners = new ArrayList<>();
+    private List<MediaPlayer.OnCompletionListener> completionListeners = new ArrayList<>();
 
     private Recently recently = new Recently();
-
-    private Thread progressThread = new Thread() {
+    private CountDownTimer countDownTimer = new CountDownTimer(1000 * 60 * 60 * 24 * 7, 100) {
         @Override
-        public void run() {
-            while (player.isPlaying()) {
-                int curPos = player.getCurrentPosition();
-                int duration = player.getDuration();
-                mainThreadHandler.post(() -> {
-                    if (progressListener != null) {
-                        progressListener.onProgress(curPos, duration);
-                    }
-                });
-                try {
-                    Thread.sleep(300);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
+        public void onTick(long millisUntilFinished) {
+            tick();
+        }
+
+        @Override
+        public void onFinish() {
+
         }
     };
 
+    private void tick() {
+        int currentPosition = player.getCurrentPosition();
+        int duration = player.getDuration();
+        curTime = currentPosition;
+
+        int percent = (int) ((double) currentPosition / (double) duration * 100);
+        for (OnStateListener stateListener : stateListeners) {
+            stateListener.onPlayProgress(percent, currentPosition);
+        }
+    }
+
+    private String absolutePath;
+
     private MediaPlayerUtil() {
+    }
+
+    public void storeState() {
+        SharedPreferences.Editor editor = preferences.edit();
+        Set<String> set = new LinkedHashSet<>();
+        for (Song song : songs) {
+            song.put(editor);
+            set.add(song.getSongMid());
+        }
+        editor.putInt("mode", mode)
+                .putInt("last_time", player.getCurrentPosition())
+                .putInt("last_index", curInx)
+                .putStringSet("songs", set)
+                .apply();
+    }
+
+    public void restoreState() {
+        mode = preferences.getInt("mode", SEQUENCE);
+        Set<String> set = preferences.getStringSet("songs", null);
+        if (set != null) {
+            for (String mid : set) {
+                Song song = new Song();
+                song.setSongMid(mid);
+                song.get(preferences);
+                songs.add(song);
+            }
+        }
+        curInx = preferences.getInt("last_index", 0);
+        if (songs.isEmpty()) return;
+        currentSong = songs.get(curInx);
+        loadInitial(currentSong.getSongMid(), preferences.getInt("last_time", 0));
     }
 
     public static MediaPlayerUtil getPlayerUtil() {
         return playerUtil;
     }
 
-    public void setApplication(Application application) {
-        this.application = application;
-        preferences = application.getSharedPreferences("aabbcc", Context.MODE_PRIVATE);
+    public void setCompletionListener(MediaPlayer.OnCompletionListener listener) {
+        completionListeners.add(listener);
     }
 
-    @Override
-    public void downDone(String path) {
+    public void setApplication(Application application) {
+        this.application = application;
+        preferences = application.getSharedPreferences("state", Context.MODE_PRIVATE);
+        musicDown = new MusicDown(application);
+        player.setOnCompletionListener(mp -> mainThreadHandler.post(() -> {
+            for (MediaPlayer.OnCompletionListener listener : completionListeners) {
+                listener.onCompletion(mp);
+            }
+        }));
+        restoreState();
+    }
+
+    private void loadInitial(String songMid, int curTime) {
+        if (TextUtils.isEmpty(songMid)) return;
+        this.curTime = curTime;
+        FileDescriptor fd = getFdByPath(absolutePath + "/" + songMid);
+        if (fd == null) return;
+        try {
+            player.setDataSource(fd);
+            player.prepare();
+            player.seekTo(curTime);
+            state = LOADED;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private FileDescriptor getFdByPath(String path) {
         FileDescriptor fd = null;
         try {
             FileInputStream fis = new FileInputStream(path);
@@ -88,7 +156,19 @@ public class MediaPlayerUtil implements MusicDown.MusicDownListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        FileDescriptor finalFd = fd;
+        return fd;
+    }
+
+    @Override
+    public void downDone(String path) {
+        if (!path.contains(currentSong.getSongMid())) return;
+        FileDescriptor finalFd = getFdByPath(path);
+        if (finalFd == null) {
+            for (OnStateListener stateListener : stateListeners) {
+                stateListener.onPlayFailed();
+            }
+            return;
+        }
 
         mainThreadHandler.post(() -> {
             try {
@@ -96,6 +176,10 @@ public class MediaPlayerUtil implements MusicDown.MusicDownListener {
                 player.setDataSource(finalFd);
                 player.prepare();
                 state = LOADED;
+                currentSong.setDuration(player.getDuration());
+                for (OnStateListener stateListener : stateListeners) {
+                    stateListener.onLoaded();
+                }
                 start();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -129,30 +213,34 @@ public class MediaPlayerUtil implements MusicDown.MusicDownListener {
 
     public void start() {
         player.start();
-        progressThread.start();
+        tick();
+        countDownTimer.start();
     }
 
     public void pause() {
         if (player.isPlaying()) {
             player.pause();
+            countDownTimer.cancel();
         }
     }
 
-    public Song next() {
+    public Song nextSong() {
+        pause();
         state = NOT_LOADED;
         int inx = getIndex(NEXT);
         load(inx);
         return songs.get(inx);
     }
 
-    public Song prev() {
+    public Song prevSong() {
+        pause();
         state = NOT_LOADED;
         int inx = getIndex(PREV);
         load(inx);
         return songs.get(inx);
     }
 
-    public void toggleMode(int mode) {
+    public void setMode(int mode) {
         this.mode = mode;
     }
 
@@ -164,15 +252,17 @@ public class MediaPlayerUtil implements MusicDown.MusicDownListener {
         if (index < 0 || index >= songs.size() || (index == curInx && state == LOADED)) {
             return;
         }
+        pause();
+        curInx = index;
         state = LOADING;
         currentSong = songs.get(index);
-        String dir = application.getFilesDir().getAbsolutePath();
+        absolutePath = application.getFilesDir().getAbsolutePath();
         String url = String.format(MUSIC_DOWN_BASE_URL, currentSong.getSongMid());
-        String fileName = currentSong.getSongMid();
+        String songMid = currentSong.getSongMid();
         new Thread() {
             @Override
             public void run() {
-                musicDown.down(application, url, dir, fileName, MediaPlayerUtil.this);
+                musicDown.down(application, url, absolutePath, songMid, MediaPlayerUtil.this);
             }
         }.start();
     }
@@ -190,6 +280,15 @@ public class MediaPlayerUtil implements MusicDown.MusicDownListener {
         return currentSong;
     }
 
+    public int getCurTime() {
+        Log.e(TAG, "getCurrentPosition: " + player.getCurrentPosition());
+        return curTime;
+    }
+
+    public int getDuration() {
+        return currentSong.getDuration();
+    }
+
     public int getMode() {
         return mode;
     }
@@ -203,28 +302,27 @@ public class MediaPlayerUtil implements MusicDown.MusicDownListener {
     }
 
     public boolean isFavorite() {
-        return favorite;
+        return currentSong.isFavorite();
     }
 
     public void setFavorite(boolean favorite) {
-        this.favorite = favorite;
+        currentSong.setFavorite(favorite);
     }
 
     public int getState() {
         return state;
     }
 
-    private OnPlayProgressListener progressListener;
-
-    public void setProgressListener(OnPlayProgressListener progressListener) {
-        this.progressListener = progressListener;
+    public void setStateListener(OnStateListener stateListener) {
+        stateListeners.add(stateListener);
     }
 
-    public interface OnPlayProgressListener {
-        void onProgress(int curPos, int duration);
-    }
+    public interface OnStateListener {
 
-    public interface OnErrorListener {
+        void onLoaded();
 
+        void onPlayProgress(int percent, int currentPosition);
+
+        void onPlayFailed();
     }
 }

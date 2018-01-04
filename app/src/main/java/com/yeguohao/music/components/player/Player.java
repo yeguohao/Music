@@ -1,25 +1,24 @@
 package com.yeguohao.music.components.player;
 
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.jakewharton.rxbinding2.widget.RxSeekBar;
 import com.yeguohao.music.R;
 import com.yeguohao.music.base.BaseFragment;
 import com.yeguohao.music.common.MediaPlayerUtil;
+import com.yeguohao.music.common.ProgressPercent;
+import com.yeguohao.music.common.TimeFormat;
 import com.yeguohao.music.components.player.adapter.PlayerPagerAdapter;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import butterknife.BindBitmap;
 import butterknife.BindView;
@@ -27,10 +26,12 @@ import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
 import static com.yeguohao.music.components.player.PlayerConstance.ALBUM_IMG_URL;
+import static com.yeguohao.music.components.player.PlayerConstance.LOOP;
+import static com.yeguohao.music.components.player.PlayerConstance.RANDOM;
+import static com.yeguohao.music.components.player.PlayerConstance.SEQUENCE;
 
-public class Player extends BaseFragment {
+public class Player extends BaseFragment implements MediaPlayerUtil.OnStateListener, MediaPlayer.OnCompletionListener {
 
-    private static final String TAG = "Player";
     @BindView(R.id.player_background)
     ImageView background;
 
@@ -53,10 +54,19 @@ public class Player extends BaseFragment {
     Bitmap favoriteBitamp;
 
     @BindBitmap(R.drawable.player_favorite_border)
-    Bitmap favoriteBorderBitamp;
+    Bitmap favoriteBorderBitmap;
+
+    @BindBitmap(R.drawable.sequence)
+    Bitmap sequenceBitmap;
+
+    @BindBitmap(R.drawable.loop)
+    Bitmap loopBitmap;
+
+    @BindBitmap(R.drawable.random)
+    Bitmap randomBitmap;
 
     @BindView(R.id.player_mode)
-    ImageView mode;
+    ImageView modeImageView;
 
     @BindView(R.id.player_prev)
     ImageView prev;
@@ -68,10 +78,10 @@ public class Player extends BaseFragment {
     ImageView next;
 
     @BindView(R.id.player_favorite)
-    ImageView favorite;
+    ImageView favoriteImageView;
 
     @BindView(R.id.player_current_time)
-    TextView curTime;
+    TextView currentTime;
 
     @BindView(R.id.player_total_time)
     TextView totalTime;
@@ -79,7 +89,13 @@ public class Player extends BaseFragment {
     @BindView(R.id.player_progress)
     SeekBar progress;
 
+    private static final String TAG = "Player";
+
     private MediaPlayerUtil playerUtil = MediaPlayerUtil.getPlayerUtil();
+    private TimeFormat timeFormat = new TimeFormat();
+    private ProgressPercent progressPercent = new ProgressPercent();
+
+    private boolean seekUser;
 
     @Override
     protected int layout() {
@@ -91,53 +107,67 @@ public class Player extends BaseFragment {
         Song songInfo = playerUtil.getCurrentSong();
         songText.setText(songInfo.getSongName());
         singer.setText(songInfo.getSingerName());
-        if (playerUtil.isPlay() || playerUtil.getState() == MediaPlayerUtil.LOADING) {
-            play.setImageBitmap(pauseBitmap);
-        } else {
-            play.setImageBitmap(playBitmap);
-        }
-        progress.setMax(100);
-        RxSeekBar.changes(progress).subscribe(integer -> {
-            if (integer == 100) {
-                switchSong(playerUtil.next());
-            } else {
-                playerUtil.seekTo(integer);
+        totalTime.setText(timeFormat.timeStamp2Date(songInfo.getDuration()));
+
+        progress.setProgress(progressPercent.percent(playerUtil.getCurTime(), songInfo.getDuration()));
+        setPlayBitmapByPlayState();
+        setTextByPlayProgress();
+        setModeBitmapByMode();
+        setFavoriteBitmapByFavorite();
+        setBackgroundImage(songInfo.getAlbumMid());
+
+        playerUtil.setStateListener(this);
+        playerUtil.setCompletionListener(this);
+        viewPager.setAdapter(new PlayerPagerAdapter(getChildFragmentManager()));
+        progress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            private int seekPosition;
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (fromUser) {
+                    double total = playerUtil.getDuration();
+                    double fen = progress / 100d;
+                    seekPosition = (int) (total * fen);
+                    currentTime.setText(timeFormat.timeStamp2Date(seekPosition));
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                seekUser = true;
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                seekUser = false;
+                playerUtil.seekTo(seekPosition);
             }
         });
-        playerUtil.setProgressListener((curPos, duration) -> {
-            int percent = curPos / duration * 100;
-            Log.e(TAG, "percent: " + percent);
-            progress.setProgress(percent);
-            curTime.setText(format(curPos));
-            totalTime.setText(format(duration));
-        });
-        viewPager.setAdapter(new PlayerPagerAdapter(getChildFragmentManager()));
-    }
-
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss");
-    private String format(long millis) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(millis);
-        return dateFormat.format(calendar.getTime());
-    }
-
-    @Override
-    protected void fetch() {
-        Song songInfo = playerUtil.getCurrentSong();
-        RequestOptions options = RequestOptions.bitmapTransform(new BlurTransformation(200)).error(R.color.textColorDark).diskCacheStrategy(DiskCacheStrategy.ALL);
-        Glide.with(this).load(String.format(ALBUM_IMG_URL, songInfo.getAlbumMid())).apply(options).into(background);
-
     }
 
     @OnClick({R.id.player_mode, R.id.player_prev, R.id.player_play, R.id.player_next, R.id.player_favorite})
     void controlClicks(View view) {
         switch (view.getId()) {
             case R.id.player_mode: {
-
+                int mode;
+                if (playerUtil.getMode() == SEQUENCE) {
+                    mode = LOOP;
+                } else if (playerUtil.getMode() == LOOP) {
+                    mode = RANDOM;
+                } else {
+                    mode = SEQUENCE;
+                }
+                playerUtil.setMode(mode);
+                setModeBitmapByMode();
                 break;
             }
             case R.id.player_prev: {
-                switchSong(playerUtil.prev());
+                if (playerUtil.getMode() == LOOP) {
+                    loopSong();
+                } else {
+                    switchSong(playerUtil.prevSong());
+                }
                 break;
             }
             case R.id.player_play: {
@@ -151,33 +181,82 @@ public class Player extends BaseFragment {
                 break;
             }
             case R.id.player_next: {
-                switchSong(playerUtil.next());
+                if (playerUtil.getMode() == LOOP) {
+                    loopSong();
+                } else {
+                    switchSong(playerUtil.nextSong());
+                }
                 break;
             }
             case R.id.player_favorite: {
                 if (playerUtil.isFavorite()) {
-                    favorite.setImageBitmap(favoriteBorderBitamp);
                     playerUtil.setFavorite(false);
                 } else {
-                    favorite.setImageBitmap(favoriteBitamp);
                     playerUtil.setFavorite(true);
                 }
+                setFavoriteBitmapByFavorite();
                 break;
             }
         }
     }
 
+    private void loopSong() {
+        progress.setProgress(0);
+        currentTime.setText(R.string.initial_time);
+        playerUtil.pause();
+        playerUtil.seekTo(0);
+        playerUtil.start();
+    }
+
     // 切换歌曲之后界面需要作出相应改变
     private void switchSong(Song song) {
         progress.setProgress(0);
-        if (playerUtil.isFavorite()) {
-            favorite.setImageBitmap(favoriteBitamp);
-        } else {
-            favorite.setImageBitmap(favoriteBorderBitamp);
-        }
+        setFavoriteBitmapByFavorite();
+        setBackgroundImage(song.getAlbumMid());
 
+        play.setImageBitmap(pauseBitmap);
+        currentTime.setText(R.string.initial_time);
+        totalTime.setText(R.string.initial_time);
         songText.setText(song.getSongName());
         singer.setText(song.getSingerName());
+    }
+
+    private void setModeBitmapByMode() {
+        Bitmap bitmap;
+        int mode = playerUtil.getMode();
+        if (mode == SEQUENCE) {
+            bitmap = sequenceBitmap;
+        } else if (mode == LOOP) {
+            bitmap = loopBitmap;
+        } else {
+            bitmap = randomBitmap;
+        }
+        modeImageView.setImageBitmap(bitmap);
+    }
+
+    private void setFavoriteBitmapByFavorite() {
+        if (playerUtil.isFavorite()) {
+            favoriteImageView.setImageBitmap(favoriteBitamp);
+        } else {
+            favoriteImageView.setImageBitmap(favoriteBorderBitmap);
+        }
+    }
+
+    private void setTextByPlayProgress() {
+        currentTime.setText(timeFormat.timeStamp2Date(playerUtil.getCurTime()));
+    }
+
+    private void setPlayBitmapByPlayState() {
+        if (playerUtil.isPlay() || playerUtil.getState() == MediaPlayerUtil.LOADING) {
+            play.setImageBitmap(pauseBitmap);
+        } else {
+            play.setImageBitmap(playBitmap);
+        }
+    }
+
+    private void setBackgroundImage(String albumMid) {
+        RequestOptions options = RequestOptions.bitmapTransform(new BlurTransformation(200)).error(R.color.textColorDark).diskCacheStrategy(DiskCacheStrategy.ALL);
+        Glide.with(this).load(String.format(ALBUM_IMG_URL, albumMid)).apply(options).into(background);
     }
 
     public static Player newInstance() {
@@ -185,5 +264,29 @@ public class Player extends BaseFragment {
         Player fragment = new Player();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onLoaded() {
+        totalTime.setText(timeFormat.timeStamp2Date(playerUtil.getDuration()));
+    }
+
+    @Override
+    public void onPlayProgress(int percent, int currentPosition) {
+        if (!seekUser) {
+            progress.setProgress(percent);
+            currentTime.setText(timeFormat.timeStamp2Date(currentPosition));
+        }
+    }
+
+    @Override
+    public void onPlayFailed() {
+        Toast.makeText(getActivity(), "播放错误", Toast.LENGTH_SHORT).show();
+        switchSong(playerUtil.nextSong());
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        switchSong(playerUtil.nextSong());
     }
 }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -25,7 +24,7 @@ public class LetterIndexView extends LinearLayout {
     private TextView selectedTextView;
 
     private LetterSelectedListener letterSelectedListener;
-    private OnClickListener listener = this::selected;
+    private OnClickListener listener = v -> this.selected(v, true);
 
     public LetterIndexView(Context context) {
         this(context, null);
@@ -48,6 +47,10 @@ public class LetterIndexView extends LinearLayout {
 
     public void setLetterSelectedListener(LetterSelectedListener letterSelectedListener) {
         this.letterSelectedListener = letterSelectedListener;
+    }
+
+    public void setSelectedIndex(int selectedIndex) {
+        selected(getChildAt(selectedIndex), false);
     }
 
     private void initChild() {
@@ -74,13 +77,13 @@ public class LetterIndexView extends LinearLayout {
         }
     }
 
-    private void selected(View view) {
+    private void selected(View view, boolean notice) {
         if (view != selectedTextView) {
             selectedTextView.setTextColor(unselectedColor);
             selectedTextView = (TextView) view;
             selectedTextView.setTextColor(selectedColor);
 
-            if (letterSelectedListener != null) {
+            if (letterSelectedListener != null && notice) {
                 letterSelectedListener.onLetterSelected(selectedTextView.getText().toString());
             }
         }
@@ -90,7 +93,7 @@ public class LetterIndexView extends LinearLayout {
         int index = indexOfChild(selectedTextView);
         index--;
         if (index < 0) index = 0;
-        selected(getChildAt(index));
+        selected(getChildAt(index), true);
     }
 
     public interface LetterSelectedListener {

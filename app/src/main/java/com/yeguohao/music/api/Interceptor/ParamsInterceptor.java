@@ -91,7 +91,7 @@ public class ParamsInterceptor implements Interceptor {
                 .addQueryParameter("inCharset", "utf-8")
                 .addQueryParameter("outCharset", "utf-8")
                 .addQueryParameter("notice", "0")
-                .addQueryParameter("format", "jsonp")
+                .addQueryParameter("timeStamp2Date", "jsonp")
                 .addQueryParameter("platform", "yqq")
                 .addQueryParameter("needNewCode", "0")
                 .addQueryParameter("hostUin", "0");
@@ -115,13 +115,14 @@ public class ParamsInterceptor implements Interceptor {
     }
 
     private void getDiscListParams(HttpUrl.Builder builder) {
-        builder.removeAllQueryParameters("format")
-                .addQueryParameter("format", "json")
+        builder.removeAllQueryParameters("timeStamp2Date")
+                .addQueryParameter("timeStamp2Date", "json")
                 .addQueryParameter("sin", "0")
                 .addQueryParameter("ein", "29")
                 .addQueryParameter("sortId", "5")
                 .addQueryParameter("categoryId", "10000000")
-                .addQueryParameter("rnd", "0.9889400562688042");
+                .addQueryParameter("rnd", "0.9889400562688042")
+                .addQueryParameter("jsonpCallback", JSONP_CALLBACK);
     }
 
     private void lyricParams(HttpUrl.Builder builder) {

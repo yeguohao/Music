@@ -9,6 +9,7 @@ import com.facebook.stetho.okhttp3.StethoInterceptor;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 
 import okhttp3.OkHttpClient;
@@ -40,12 +41,12 @@ public class MusicDown {
         }
     }
 
-    public void down(Context context, String url, String fileDir, String fileName, MusicDownListener listener) {
+    public void down(Context context, String url, String fileDir, String songMid, MusicDownListener listener) {
         try {
-            String key = hashKeyForDisk(url + fileName);
+            String key = hashKeyForDisk(url + songMid);
             DiskLruCache.Value value = lruCache.get(key);
             if (value == null) {
-                fetchDataFromNetwork(url, key, fileDir + "/" + fileName, listener);
+                fetchDataFromNetwork(url, key, fileDir + "/" + songMid, listener);
             } else {
                 fetchDataFromCache(value, listener);
             }
@@ -57,8 +58,16 @@ public class MusicDown {
     private void fetchDataFromCache(DiskLruCache.Value key, MusicDownListener listener) {
         if (listener != null) {
             File file = key.getFile(0);
-            Log.e(TAG, "fetchDataFromCache: " + file.getAbsolutePath() + File.pathSeparator + file.getName());
-            listener.downDone(file.getAbsolutePath() + "/" + file.getName());
+            char[] chars = new char[56];
+            try {
+                FileReader fileReader = new FileReader(file);
+                int n = fileReader.read(chars);
+                Log.e(TAG, "fetchDataFromCache: " + n );
+                Log.e(TAG, "fetchDataFromCache: " + new String(chars) );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            listener.downDone(new String(chars));
         }
     }
 
@@ -67,12 +76,14 @@ public class MusicDown {
                 .url(url)
                 .header("Range", "bytes=0-")
                 .build();
+        Log.e(TAG, "fetchDataFromNetwork: " + url);
         try {
             Response response = client.newCall(request).execute();
             int code = response.code();
             if (code == 200 || code == 206) {
                 String type = response.body().contentType().subtype();
-                File file = new File(fileName + "." + type);
+                fileName = fileName + "." + type;
+                File file = new File(fileName);
                 if (!file.exists()) {
                     try {
                         file.createNewFile();
@@ -93,7 +104,7 @@ public class MusicDown {
                 editor.commit();
 
                 if (listener != null) {
-                    listener.downDone(fileName + "." + type);
+                    listener.downDone(fileName );
                 }
             } else {
                 if (listener != null) {

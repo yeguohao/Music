@@ -59,9 +59,15 @@ public class RecyclerTitleItemDecoration1 extends RecyclerView.ItemDecoration {
                     }
                 } else if (i == 0) {
                     fixedTitle = title;
+                    if (listener != null) {
+                        listener.onChanged(fixedTitle);
+                    }
                 }
             } else if (i == 0) {
                 fixedTitle = titleAndView.getTitle(position);
+                if (listener != null) {
+                    listener.onChanged(fixedTitle);
+                }
             }
         }
     }
@@ -100,6 +106,17 @@ public class RecyclerTitleItemDecoration1 extends RecyclerView.ItemDecoration {
         canvas.drawRect(rectF, paint);
         paint.setColor(Color.BLACK);
         canvas.drawText(title, rectF.left + rectF.width() / 2, rectF.bottom - descent, paint);
+    }
+
+
+    private OnFixedTextChangedListener listener;
+
+    public void setListener(OnFixedTextChangedListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnFixedTextChangedListener {
+        void onChanged(String text);
     }
 
     private boolean isFullVisFirstItem(RecyclerView recyclerView) {

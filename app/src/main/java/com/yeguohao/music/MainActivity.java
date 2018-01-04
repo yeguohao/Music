@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.yeguohao.music.common.MediaPlayerUtil;
 import com.yeguohao.music.components.player.PlayerActivity;
 import com.yeguohao.music.view.FixedTextTabLayout;
 import com.yeguohao.music.view.MiniPlayer;
@@ -29,7 +30,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        MediaPlayerUtil.getPlayerUtil().restoreState();
         initView();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MediaPlayerUtil.getPlayerUtil().storeState();
     }
 
     private void initView() {
@@ -64,5 +72,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         miniPlayer.resume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        miniPlayer.pause();
     }
 }

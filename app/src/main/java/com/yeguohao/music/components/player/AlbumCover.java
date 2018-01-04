@@ -35,8 +35,13 @@ public class AlbumCover extends BaseFragment implements MediaPlayerListener {
     }
 
     @Override
-    public void songChanged(Song song) {
+    protected void fetch() {
+        Song song = playerUtil.getCurrentSong();
         Glide.with(this).load(String.format(ALBUM_IMG_URL, song.getAlbumMid())).apply(RequestOptions.circleCropTransform()).into(albumCover);
+    }
+
+    @Override
+    public void songChanged(Song song) {
     }
 
     @Override

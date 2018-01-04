@@ -3,6 +3,7 @@ package com.yeguohao.music.api;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.yeguohao.music.api.Interceptor.FilterJsonPInterceptor;
 import com.yeguohao.music.api.Interceptor.ParamsInterceptor;
+import com.yeguohao.music.api.Interceptor.UserAgentInterceptor;
 
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
@@ -12,6 +13,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Instance {
 
+    /**
+     * Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36
+     */
     private volatile OkHttpClient client;
 
     private OkHttpClient getClient() {
@@ -21,6 +25,7 @@ public class Instance {
                     client = new OkHttpClient.Builder()
                             .addInterceptor(new ParamsInterceptor())
                             .addInterceptor(new FilterJsonPInterceptor())
+                            .addInterceptor(new UserAgentInterceptor())
                             .addNetworkInterceptor(new StethoInterceptor())
                             .build();
                 }

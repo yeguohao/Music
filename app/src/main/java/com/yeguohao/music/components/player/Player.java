@@ -1,7 +1,6 @@
 package com.yeguohao.music.components.player;
 
 import android.graphics.Bitmap;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -27,10 +26,9 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 
 import static com.yeguohao.music.components.player.PlayerConstance.ALBUM_IMG_URL;
 import static com.yeguohao.music.components.player.PlayerConstance.LOOP;
-import static com.yeguohao.music.components.player.PlayerConstance.RANDOM;
 import static com.yeguohao.music.components.player.PlayerConstance.SEQUENCE;
 
-public class Player extends BaseFragment implements MediaPlayerUtil.OnStateListener, MediaPlayer.OnCompletionListener {
+public class Player extends BaseFragment implements MediaPlayerUtil.OnStateListener {
 
     @BindView(R.id.player_background)
     ImageView background;
@@ -117,7 +115,6 @@ public class Player extends BaseFragment implements MediaPlayerUtil.OnStateListe
         setBackgroundImage(songInfo.getAlbumMid());
 
         playerUtil.setStateListener(this);
-        playerUtil.setCompletionListener(this);
         viewPager.setAdapter(new PlayerPagerAdapter(getChildFragmentManager()));
         progress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -150,24 +147,12 @@ public class Player extends BaseFragment implements MediaPlayerUtil.OnStateListe
     void controlClicks(View view) {
         switch (view.getId()) {
             case R.id.player_mode: {
-                int mode;
-                if (playerUtil.getMode() == SEQUENCE) {
-                    mode = LOOP;
-                } else if (playerUtil.getMode() == LOOP) {
-                    mode = RANDOM;
-                } else {
-                    mode = SEQUENCE;
-                }
-                playerUtil.setMode(mode);
+                playerUtil.toggleMode();
                 setModeBitmapByMode();
                 break;
             }
             case R.id.player_prev: {
-                if (playerUtil.getMode() == LOOP) {
-                    loopSong();
-                } else {
-                    switchSong(playerUtil.prevSong());
-                }
+                playerUtil.prevSong();
                 break;
             }
             case R.id.player_play: {
@@ -181,11 +166,7 @@ public class Player extends BaseFragment implements MediaPlayerUtil.OnStateListe
                 break;
             }
             case R.id.player_next: {
-                if (playerUtil.getMode() == LOOP) {
-                    loopSong();
-                } else {
-                    switchSong(playerUtil.nextSong());
-                }
+                playerUtil.nextSong();
                 break;
             }
             case R.id.player_favorite: {
@@ -280,13 +261,13 @@ public class Player extends BaseFragment implements MediaPlayerUtil.OnStateListe
     }
 
     @Override
-    public void onPlayFailed() {
-        Toast.makeText(getActivity(), "播放错误", Toast.LENGTH_SHORT).show();
-        switchSong(playerUtil.nextSong());
+    public void onSwitchSong(Song newSong) {
+        switchSong(newSong);
     }
 
     @Override
-    public void onCompletion(MediaPlayer mp) {
-        switchSong(playerUtil.nextSong());
+    public void onPlayFailed() {
+        Toast.makeText(getActivity(), "播放错误", Toast.LENGTH_SHORT).show();
+        play.setImageBitmap(playBitmap);
     }
 }

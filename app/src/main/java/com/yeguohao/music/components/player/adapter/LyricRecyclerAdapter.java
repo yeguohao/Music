@@ -2,7 +2,6 @@ package com.yeguohao.music.components.player.adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import java.util.Map;
 
 public class LyricRecyclerAdapter extends RecyclerView.Adapter<LyricRecyclerAdapter.LyricHolder> {
 
-    private static final String TAG = "LyricRecyclerAdapter";
     private Map<String, String> data = new HashMap<>();
     private List<String> indexes = new ArrayList<>();
 
@@ -60,7 +58,6 @@ public class LyricRecyclerAdapter extends RecyclerView.Adapter<LyricRecyclerAdap
     @Override
     public void onBindViewHolder(LyricHolder holder, int position) {
         if (selectedPosition == position) {
-            Log.e(TAG, "onBindViewHolder: " + position );
             holder.textView.setTextColor(colorWhite);
         } else {
             holder.textView.setTextColor(colorDark);

@@ -19,7 +19,7 @@ public class PlayerConstance {
     public static final String ALBUM_IMG_URL = "https://y.gtimg.cn/music/photo_new/T002R300x300M000%s.jpg?max_age=2592000";
     public static final String SINGER_IMG_URL = "https://y.gtimg.cn/music/photo_new/T001R300x300M000%s.jpg?max_age=2592000";
     public static final String FROM_TAG = "999";
-    public static final String VKEY = "FD80C410FCB55AB2FD39E2B4E32A1CB8F45614C024ACD0BB32AC29038BA3F79E6D47E446F461C2B423BE49C73E9D621E2FBF7C2721B50BE5";
+    public static final String VKEY = "63BC55FD508D67C48A7FEDD211668C4F1B2E6D01FD288ED71509578BE6F6D5D097CA7D52D25923C8C74567350E9976DE96DE501D4E84067D";
     public static final String GUID = "8611705280";
     public static final String MUSIC_DOWN_BASE_URL = "http://dl.stream.qqmusic.qq.com/C400%s.m4a?fromtag=" + FROM_TAG + "&vkey=" + VKEY +"&guid=" + GUID;
 

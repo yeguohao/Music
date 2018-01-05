@@ -20,6 +20,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.yeguohao.music.components.player.PlayerConstance.LOOP;
 import static com.yeguohao.music.components.player.PlayerConstance.MUSIC_DOWN_BASE_URL;
 import static com.yeguohao.music.components.player.PlayerConstance.RANDOM;
 import static com.yeguohao.music.components.player.PlayerConstance.SEQUENCE;
@@ -51,7 +52,6 @@ public class MediaPlayerUtil implements MusicDown.MusicDownListener {
     private int curTime;
 
     private List<OnStateListener> stateListeners = new ArrayList<>();
-    private List<MediaPlayer.OnCompletionListener> completionListeners = new ArrayList<>();
 
     private Recently recently = new Recently();
     private CountDownTimer countDownTimer = new CountDownTimer(1000 * 60 * 60 * 24 * 7, 100) {
@@ -72,9 +72,7 @@ public class MediaPlayerUtil implements MusicDown.MusicDownListener {
         curTime = currentPosition;
 
         int percent = (int) ((double) currentPosition / (double) duration * 100);
-        for (OnStateListener stateListener : stateListeners) {
-            stateListener.onPlayProgress(percent, currentPosition);
-        }
+        forPlayProgress(percent, currentPosition);
     }
 
     private String absolutePath;
@@ -117,19 +115,14 @@ public class MediaPlayerUtil implements MusicDown.MusicDownListener {
         return playerUtil;
     }
 
-    public void setCompletionListener(MediaPlayer.OnCompletionListener listener) {
-        completionListeners.add(listener);
-    }
-
     public void setApplication(Application application) {
         this.application = application;
         preferences = application.getSharedPreferences("state", Context.MODE_PRIVATE);
         musicDown = new MusicDown(application);
-        player.setOnCompletionListener(mp -> mainThreadHandler.post(() -> {
-            for (MediaPlayer.OnCompletionListener listener : completionListeners) {
-                listener.onCompletion(mp);
-            }
-        }));
+        player.setOnCompletionListener(mp -> {
+            mainThreadHandler.postDelayed(this::nextSong, 120);
+            forCompletion();
+        });
         restoreState();
     }
 
@@ -144,6 +137,7 @@ public class MediaPlayerUtil implements MusicDown.MusicDownListener {
             player.seekTo(curTime);
             state = LOADED;
         } catch (IOException e) {
+            forPlayFailed();
             e.printStackTrace();
         }
     }
@@ -164,9 +158,7 @@ public class MediaPlayerUtil implements MusicDown.MusicDownListener {
         if (!path.contains(currentSong.getSongMid())) return;
         FileDescriptor finalFd = getFdByPath(path);
         if (finalFd == null) {
-            for (OnStateListener stateListener : stateListeners) {
-                stateListener.onPlayFailed();
-            }
+            forPlayFailed();
             return;
         }
 
@@ -177,11 +169,10 @@ public class MediaPlayerUtil implements MusicDown.MusicDownListener {
                 player.prepare();
                 state = LOADED;
                 currentSong.setDuration(player.getDuration());
-                for (OnStateListener stateListener : stateListeners) {
-                    stateListener.onLoaded();
-                }
+                forLoaded();
                 start();
             } catch (IOException e) {
+                Log.e(TAG, "报错了" );
                 e.printStackTrace();
             }
 
@@ -215,50 +206,84 @@ public class MediaPlayerUtil implements MusicDown.MusicDownListener {
         player.start();
         tick();
         countDownTimer.start();
+        forPlayStart();
     }
 
     public void pause() {
         if (player.isPlaying()) {
             player.pause();
             countDownTimer.cancel();
+            forPlayPause();
         }
     }
 
-    public Song nextSong() {
+    public void nextSong() {
+        if (checkLoop()) return;
         pause();
         state = NOT_LOADED;
         int inx = getIndex(NEXT);
-        load(inx);
-        return songs.get(inx);
+        Log.e(TAG, "nextSong: " + inx );
+        if (checkIndex(inx)) load(inx);
     }
 
-    public Song prevSong() {
+    public void prevSong() {
+        if (checkLoop()) return;
         pause();
         state = NOT_LOADED;
         int inx = getIndex(PREV);
-        load(inx);
-        return songs.get(inx);
+        Log.e(TAG, "prevSong: " + inx );
+        if (checkIndex(inx)) load(inx);
+    }
+
+    private boolean checkIndex(int inx) {
+        if (inx == curInx) {
+            seekTo(0);
+            forLoop();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkLoop() {
+        if (mode == LOOP) {
+            seekTo(0);
+            forLoop();
+            return true;
+        }
+        return false;
     }
 
     public void setMode(int mode) {
         this.mode = mode;
     }
 
+    public void toggleMode() {
+        if (mode == SEQUENCE) {
+            mode = LOOP;
+        } else if (mode == LOOP) {
+            mode = RANDOM;
+        } else {
+            mode = SEQUENCE;
+        }
+    }
+
     public void seekTo(int progress) {
         player.seekTo(progress);
+        if (!player.isPlaying()) start();
     }
 
     public void load(int index) {
         if (index < 0 || index >= songs.size() || (index == curInx && state == LOADED)) {
             return;
         }
-        pause();
         curInx = index;
         state = LOADING;
         currentSong = songs.get(index);
+        forSwitchSong(currentSong);
         absolutePath = application.getFilesDir().getAbsolutePath();
         String url = String.format(MUSIC_DOWN_BASE_URL, currentSong.getSongMid());
         String songMid = currentSong.getSongMid();
+        forLoading();
         new Thread() {
             @Override
             public void run() {
@@ -281,7 +306,7 @@ public class MediaPlayerUtil implements MusicDown.MusicDownListener {
     }
 
     public int getCurTime() {
-        Log.e(TAG, "getCurrentPosition: " + player.getCurrentPosition());
+        Log.e(TAG, "getCurrentPosition: " + curTime);
         return curTime;
     }
 
@@ -317,12 +342,88 @@ public class MediaPlayerUtil implements MusicDown.MusicDownListener {
         stateListeners.add(stateListener);
     }
 
+    private void forLoading() {
+        for (OnStateListener stateListener : stateListeners) {
+            stateListener.onLoading();
+        }
+    }
+
+    private void forLoaded() {
+        for (OnStateListener stateListener : stateListeners) {
+            stateListener.onLoaded();
+        }
+    }
+
+    private void forPlayStart() {
+        for (OnStateListener stateListener : stateListeners) {
+            stateListener.onPlayStart();
+        }
+    }
+
+    private void forPlayPause() {
+        for (OnStateListener stateListener : stateListeners) {
+            stateListener.onPlayPause();
+        }
+    }
+
+    private void forLoop() {
+        for (OnStateListener stateListener : stateListeners) {
+            stateListener.onLoop();
+        }
+    }
+
+    private void forSwitchSong(Song newSong) {
+        for (OnStateListener stateListener : stateListeners) {
+            stateListener.onSwitchSong(newSong);
+        }
+    }
+
+    private void forPlayProgress(int percent, int currentPosition) {
+        for (OnStateListener stateListener : stateListeners) {
+            stateListener.onPlayProgress(percent, currentPosition);
+        }
+    }
+
+    private void forPlayFailed() {
+        for (OnStateListener stateListener : stateListeners) {
+            stateListener.onPlayFailed();
+        }
+    }
+
+    private void forCompletion() {
+        for (OnStateListener stateListener : stateListeners) {
+            stateListener.onCompletion();
+        }
+    }
+
     public interface OnStateListener {
 
-        void onLoaded();
+        default void onLoading() {
+        }
 
-        void onPlayProgress(int percent, int currentPosition);
+        default void onLoaded() {
+        }
 
-        void onPlayFailed();
+        default void onPlayStart() {
+        }
+
+        default void onPlayPause() {
+        }
+
+        default void onLoop() {
+        }
+
+        default void onSwitchSong(Song newSong) {
+        }
+
+        default void onPlayProgress(int percent, int currentPosition) {
+        }
+
+        default void onCompletion() {
+
+        }
+
+        default void onPlayFailed() {
+        }
     }
 }

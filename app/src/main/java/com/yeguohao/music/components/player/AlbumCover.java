@@ -10,14 +10,13 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.yeguohao.music.R;
 import com.yeguohao.music.base.BaseFragment;
-import com.yeguohao.music.common.MediaPlayerListener;
 import com.yeguohao.music.common.MediaPlayerUtil;
 
 import butterknife.BindView;
 
 import static com.yeguohao.music.components.player.PlayerConstance.ALBUM_IMG_URL;
 
-public class AlbumCover extends BaseFragment implements MediaPlayerListener {
+public class AlbumCover extends BaseFragment implements MediaPlayerUtil.OnStateListener{
 
     @BindView(R.id.album_cover)
     ImageView albumCover;
@@ -32,25 +31,31 @@ public class AlbumCover extends BaseFragment implements MediaPlayerListener {
 
     @Override
     protected void initView(View root) {
+        playerUtil.setStateListener(this);
+        if (playerUtil.isPlay()) {
+            startRotate();
+        }
     }
 
     @Override
     protected void fetch() {
         Song song = playerUtil.getCurrentSong();
-        Glide.with(this).load(String.format(ALBUM_IMG_URL, song.getAlbumMid())).apply(RequestOptions.circleCropTransform()).into(albumCover);
+        RequestOptions options = RequestOptions.circleCropTransform().placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher);
+        Glide.with(this).load(String.format(ALBUM_IMG_URL, song.getAlbumMid())).apply(options).into(albumCover);
     }
 
     @Override
-    public void songChanged(Song song) {
+    public void onSwitchSong(Song newSong) {
+        fetch();
     }
 
     @Override
-    public void start() {
+    public void onPlayStart() {
         startRotate();
     }
 
     @Override
-    public void pause() {
+    public void onPlayPause() {
         stopRotate();
     }
 

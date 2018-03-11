@@ -6,11 +6,11 @@ import android.content.SharedPreferences;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.yeguohao.music.components.player.PlayerConstance.ALBUM_MID;
-import static com.yeguohao.music.components.player.PlayerConstance.SINGER;
-import static com.yeguohao.music.components.player.PlayerConstance.SONG;
-import static com.yeguohao.music.components.player.PlayerConstance.SONG_MID;
-import static com.yeguohao.music.components.player.PlayerConstance.STORE_FILE_NAME;
+import static com.yeguohao.music.player.PlayerConstance.ALBUM_MID;
+import static com.yeguohao.music.player.PlayerConstance.SINGER;
+import static com.yeguohao.music.player.PlayerConstance.SONG;
+import static com.yeguohao.music.player.PlayerConstance.SONG_MID;
+import static com.yeguohao.music.player.PlayerConstance.STORE_FILE_NAME;
 
 public class SongInfo {
 

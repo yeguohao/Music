@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import com.yeguohao.music.view.Banner;
+import com.yeguohao.music.views.Banner;
 
 public class RecommendBehavior extends CoordinatorLayout.Behavior {
 

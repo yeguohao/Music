@@ -29,6 +29,7 @@ android {
 }
 
 
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //noinspection GradleCompatible
@@ -62,4 +63,6 @@ dependencies {
     // 网络调试
     implementation 'com.facebook.stetho:stetho:1.5.0'
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
 }

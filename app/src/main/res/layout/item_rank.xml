@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:background="@color/textColorDark">
+    android:background="@color/rank_space_color">
 
     <ImageView
         android:id="@+id/rank_img"
@@ -13,35 +13,38 @@
         android:layout_marginStart="20dp"
         android:scaleType="fitXY" />
 
-    <com.yeguohao.music.view.OverHiddenTextView
+    <com.yeguohao.music.views.OverHiddenTextView
         android:id="@+id/rank_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="115dp"
         android:ellipsize="end"
         android:maxLines="1"
+        android:textColor="@color/textColorDark"
         app:layout_constraintBottom_toTopOf="@id/rank_2"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="凤凰于飞 (Live)-林俊杰" />
 
-    <com.yeguohao.music.view.OverHiddenTextView
+    <com.yeguohao.music.views.OverHiddenTextView
         android:id="@+id/rank_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="115dp"
         android:ellipsize="end"
         android:maxLines="1"
+        android:textColor="@color/textColorDark"
         app:layout_constraintBottom_toTopOf="@id/rank_3"
         app:layout_constraintTop_toBottomOf="@id/rank_1"
         tools:text="躲猫猫-TFBOYS" />
 
-    <com.yeguohao.music.view.OverHiddenTextView
+    <com.yeguohao.music.views.OverHiddenTextView
         android:id="@+id/rank_3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="115dp"
         android:ellipsize="end"
         android:maxLines="1"
+        android:textColor="@color/textColorDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rank_2"
         tools:text="一人饮酒醉 (Live)-华晨宇" />

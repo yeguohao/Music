@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="20dp" >
 
-    <com.yeguohao.music.view.TempTextView
+    <com.yeguohao.music.views.TempTextView
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:background="#f00"

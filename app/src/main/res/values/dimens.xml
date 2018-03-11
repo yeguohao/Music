@@ -8,4 +8,6 @@
     <dimen name="sp6">6sp</dimen>
     <dimen name="dp10">10dp</dimen>
     <dimen name="dp15">15dp</dimen>
+
+    <dimen name="flavour_border_width">1px</dimen>
 </resources>

@@ -12,23 +12,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".main.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".components.disc.DiscActivity" />
+        <activity android:name=".disc.activities.DiscActivity" />
         <activity
-            android:name=".components.player.PlayerActivity"
+            android:name=".player.activities.PlayerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <service android:name=".MediaPlayerService" />
+        <service android:name=".common.services.MediaPlayerService" />
 
         <activity
-            android:name=".components.song.SongActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:name=".song.activities.SongActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:theme="@style/AppTheme.NoActionBar"
+            android:name=".flavour.activities.FlavourActivity"/>
     </application>
 
 </manifest>

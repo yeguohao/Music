@@ -13,7 +13,9 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/search_edit_background"
         android:drawableStart="@drawable/search"
+        android:textColorHint="@color/textColorDark"
         android:hint="搜索歌手、歌曲"
+        android:textColor="@color/textColorDark"
         android:textSize="12sp" />
 
     <ImageView
@@ -36,16 +38,16 @@
         android:textColor="@color/textColorDark"
         app:layout_constraintTop_toBottomOf="@id/search_edit" />
 
-    <com.yeguohao.music.view.FlowLayout
+    <com.yeguohao.music.views.FlowLayout
         android:id="@+id/search_hot_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/search_hot">
 
-    </com.yeguohao.music.view.FlowLayout>
+    </com.yeguohao.music.views.FlowLayout>
 
-    <com.yeguohao.music.view.SearchHistory
+    <com.yeguohao.music.views.SearchHistory
         android:id="@+id/search_history"
         android:layout_width="0dp"
         android:layout_height="0dp"

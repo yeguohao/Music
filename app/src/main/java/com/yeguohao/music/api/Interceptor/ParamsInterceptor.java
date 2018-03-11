@@ -104,6 +104,7 @@ public class ParamsInterceptor implements Interceptor {
                 .addQueryParameter("key", "all_all_all")
                 .addQueryParameter("pagesize", "100")
                 .addQueryParameter("pagenum", "1")
+                .addQueryParameter("format", "jsonp")
                 .addQueryParameter("jsonpCallback", JSONP_CALLBACK);
     }
 

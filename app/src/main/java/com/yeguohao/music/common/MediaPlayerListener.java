@@ -1,7 +1,7 @@
 package com.yeguohao.music.common;
 
 
-import com.yeguohao.music.components.player.Song;
+import com.yeguohao.music.player.entities.Song;
 
 public interface MediaPlayerListener {
 

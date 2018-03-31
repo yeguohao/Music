@@ -1,5 +1,7 @@
 package com.yeguohao.music.api.Interceptor;
 
+import android.support.annotation.NonNull;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -10,11 +12,13 @@ import okhttp3.ResponseBody;
 public class FilterJsonPInterceptor implements Interceptor {
 
     @Override
-    public Response intercept(Chain chain) throws IOException {
+    public Response intercept(@NonNull Chain chain) throws IOException {
         Request request = chain.request();
         String jsonPCallBack = request.url().queryParameter("jsonpCallback");
         Response response = chain.proceed(request);
         ResponseBody body = response.body();
+        assert body != null;
+
         String result = body.string();
         if (request.url().toString().contains("getDiscList")) {
             result = result.replace("\\", "");
@@ -27,4 +31,5 @@ public class FilterJsonPInterceptor implements Interceptor {
         }
         return chain.proceed(request);
     }
+
 }

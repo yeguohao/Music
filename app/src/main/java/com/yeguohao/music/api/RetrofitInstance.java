@@ -13,6 +13,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitInstance {
 
+    private RetrofitInstance() {}
+
     private static OkHttpClient client = new OkHttpClient.Builder()
             .addInterceptor(new ParamsInterceptor())
             .addInterceptor(new FilterJsonPInterceptor())

@@ -11,9 +11,8 @@ import com.yeguohao.music.api.RetrofitInstance;
 import com.yeguohao.music.base.BaseFragment;
 import com.yeguohao.music.common.A;
 import com.yeguohao.music.common.decoration.RecyclerTitleItemDecoration1;
-import com.yeguohao.music.main.components.singer.adapters.SingerAdapter;
-import com.yeguohao.music.main.components.singer.adapters.SingerRecycler;
 import com.yeguohao.music.javabean.V8;
+import com.yeguohao.music.main.components.singer.adapters.SingerAdapter;
 import com.yeguohao.music.main.components.singer.apis.SingerApi;
 import com.yeguohao.music.views.LetterIndexView;
 
@@ -28,11 +27,8 @@ public class SingerFragment extends BaseFragment implements LetterIndexView.Lett
         RecyclerTitleItemDecoration1.OnFixedTextChangedListener {
 
     private static final String TAG = "SingerApi";
-    @BindView(R.id.singer_recycler)
-    RecyclerView recycler;
-
-    @BindView(R.id.singer_letter_index)
-    LetterIndexView letterIndex;
+    @BindView(R.id.singer_recycler) RecyclerView recycler;
+    @BindView(R.id.singer_letter_index) LetterIndexView letterIndex;
 
     private SingerApi singerApi = RetrofitInstance.Retrofit().create(SingerApi.class);
 

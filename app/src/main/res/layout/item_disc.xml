@@ -13,6 +13,8 @@
         android:id="@+id/disc_songname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textColor="@color/textColorWhite"
         tools:text="하루만 (就一天)" />
 

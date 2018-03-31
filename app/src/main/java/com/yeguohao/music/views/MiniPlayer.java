@@ -1,9 +1,10 @@
 package com.yeguohao.music.views;
 
+import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.view.ViewPropertyAnimator;
 import android.view.animation.LinearInterpolator;
@@ -15,46 +16,26 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.yeguohao.music.R;
-import com.yeguohao.music.common.player.MediaPlayerUtil;
-import com.yeguohao.music.player.entities.Song;
+import com.yeguohao.music.common.player.PlayerInstance;
+import com.yeguohao.music.common.player.impl.MusicItem;
+import com.yeguohao.music.common.player.impl.SongStore;
+import com.yeguohao.music.common.player.interfaces.MusicController;
+import com.yeguohao.music.main.components.playqueue.fragment.PlaySongQueue;
+import com.yeguohao.music.player.activities.PlayerActivity;
 
-import butterknife.BindBitmap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.yeguohao.music.player.PlayerConstance.ALBUM_IMG_URL;
-
 public class MiniPlayer extends RelativeLayout {
 
-    @BindBitmap(R.drawable.player_play)
-    Bitmap playBitmap;
+    @BindView(R.id.mini_player_play_icon) ImageView play;
+    @BindView(R.id.mini_player_playlist_icon) ImageView playList;
+    @BindView(R.id.mini_player_thumbnail) ImageView songThumbnail;
+    @BindView(R.id.mini_player_song) TextView songText;
+    @BindView(R.id.mini_player_singer) TextView singer;
 
-    @BindBitmap(R.drawable.player_pause)
-    Bitmap pauseBitmap;
-
-    @BindView(R.id.mini_player_play_icon)
-    ImageView play;
-
-    @BindView(R.id.mini_player_playlist_icon)
-    ImageView playList;
-
-    @BindView(R.id.mini_player_thumbnail)
-    ImageView songThumbnail;
-
-    @BindView(R.id.mini_player_song)
-    TextView songText;
-
-    @BindView(R.id.mini_player_singer)
-    TextView singer;
-
-    private String songStr;
-    private String singerStr;
-    private String albumMId;
-
-    private MiniPlayerListener miniPlayerListener;
     private ViewPropertyAnimator propertyAnimator;
-
-    private MediaPlayerUtil playerUtil = MediaPlayerUtil.getPlayerUtil();
+    private PlaySongQueue songQueue;
 
     public MiniPlayer(@NonNull Context context) {
         this(context, null);
@@ -75,66 +56,66 @@ public class MiniPlayer extends RelativeLayout {
     }
 
     public void resume() {
-        Song song = playerUtil.getCurrentSong();
-        if (song == null) {
-            play.setClickable(false);
-            playList.setClickable(false);
+        SongStore songStore = PlayerInstance.getSongStore();
+        if (songStore.songs().isEmpty()) {
+            setVisibility(GONE);
             return;
-        } else {
-            play.setClickable(true);
-            playList.setClickable(true);
         }
-        songStr = song.getSongName();
-        singerStr = song.getSingerName();
-        albumMId = song.getAlbumMid();
+        setVisibility(VISIBLE);
         updateView();
+
+        PlayerInstance.getUpdater().setCompletedCallback((this::completed));
+    }
+
+    private void completed() {
+        updateView();
+        if (songQueue != null && songQueue.isVisible()) {
+            songQueue.completed();
+        }
     }
 
     public void pause() {
         stopRotate();
+        PlayerInstance.getUpdater().setCompletedCallback(null);
     }
 
     private void updateView() {
-        songText.setText(songStr);
-        singer.setText(singerStr);
-        if (playerUtil.isPlay()) {
-            play.setImageBitmap(pauseBitmap);
+        SongStore songStore = PlayerInstance.getSongStore();
+
+        MusicItem song = songStore.song(songStore.currentIndex());
+        MusicItem.Description description = song.getDescription();
+        songText.setText(description.getSongName());
+        singer.setText(description.getSingerName());
+
+        play.setSelected(song.isPlaying());
+        if (song.isPlaying()) {
             startRotate();
-            if (miniPlayerListener != null) miniPlayerListener.onPlay();
         } else {
-            play.setImageBitmap(playBitmap);
             stopRotate();
-            if (miniPlayerListener != null) miniPlayerListener.onPause();
         }
 
         RequestOptions options = RequestOptions.circleCropTransform().error(R.drawable.player_play);
-        Glide.with(this).load(String.format(ALBUM_IMG_URL, albumMId)).apply(options).into(songThumbnail);
+        Glide.with(this).load(description.getIconUri()).apply(options).into(songThumbnail);
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        songText.setText(songStr);
-        singer.setText(singerStr);
-
-        RxView.clicks(playList).subscribe(view -> {
-            if (miniPlayerListener != null) miniPlayerListener.onOpenSongList();
-        });
-        RxView.clicks(songThumbnail).subscribe(view -> {
-            if (playerUtil.getCurrentSong() != null && miniPlayerListener != null) {
-                miniPlayerListener.onOpenPlayer();
-            }
-        });
+        RxView.clicks(playList).subscribe(view -> openSongList());
+        RxView.clicks(songThumbnail).subscribe(view -> PlayerActivity.startActivity((Activity) getContext(), null, 0));
         RxView.clicks(play).subscribe(view -> {
-            if (playerUtil.isPlay()) {
-                play.setImageBitmap(playBitmap);
-                playerUtil.pause();
+            SongStore songStore = PlayerInstance.getSongStore();
+            MusicController musicController = PlayerInstance.getMusicController();
+            MusicItem song = songStore.song(songStore.currentIndex());
+
+            if (song.isPlaying()) {
+                musicController.pause();
                 stopRotate();
             } else {
-                play.setImageBitmap(pauseBitmap);
-                playerUtil.start();
+                musicController.play();
                 startRotate();
             }
+            play.setSelected(song.isPlaying());
         });
     }
 
@@ -144,7 +125,7 @@ public class MiniPlayer extends RelativeLayout {
                     .animate()
                     .rotationBy(359)
                     .setInterpolator(new LinearInterpolator())
-                    .setDuration(6000).setStartDelay(0).withEndAction(() -> {
+                    .setDuration(16000).setStartDelay(0).withEndAction(() -> {
                         propertyAnimator = null;
                         startRotate();
                     });
@@ -158,18 +139,10 @@ public class MiniPlayer extends RelativeLayout {
         }
     }
 
-    public void setMiniPlayerListener(MiniPlayerListener miniPlayerListener) {
-        this.miniPlayerListener = miniPlayerListener;
+    private void openSongList() {
+        AppCompatActivity activity = (AppCompatActivity) getContext();
+        songQueue = PlaySongQueue.newInstance();
+        songQueue.show(activity.getFragmentManager(), "");
     }
 
-    public interface MiniPlayerListener {
-
-        void onPlay();
-
-        void onPause();
-
-        void onOpenSongList();
-
-        void onOpenPlayer();
-    }
 }

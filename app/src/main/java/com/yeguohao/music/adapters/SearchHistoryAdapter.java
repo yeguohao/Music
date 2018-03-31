@@ -1,7 +1,5 @@
 package com.yeguohao.music.adapters;
 
-import android.view.View;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.yeguohao.music.R;
@@ -32,4 +30,5 @@ public class SearchHistoryAdapter extends BaseQuickAdapter<String, BaseViewHolde
     public void setListener(SearchHistory.SearchKeySelectedListener listener) {
         this.listener = listener;
     }
+
 }

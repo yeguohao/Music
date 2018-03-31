@@ -1,18 +1,14 @@
 package com.yeguohao.music.main.components.rank.fragments;
 
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.yeguohao.music.R;
-import com.yeguohao.music.main.components.rank.adapters.RankAdapter;
-import com.yeguohao.music.main.components.rank.apis.RankApi;
 import com.yeguohao.music.api.RetrofitInstance;
 import com.yeguohao.music.base.BaseFragment;
-import com.yeguohao.music.base.BaseRecyclerAdapter;
 import com.yeguohao.music.common.decoration.RankSpaceItemDecoration;
-import com.yeguohao.music.main.components.rank.disposes.RankDispose;
+import com.yeguohao.music.main.components.rank.adapters.RankAdapter;
+import com.yeguohao.music.main.components.rank.apis.RankApi;
 
 import butterknife.BindColor;
 import butterknife.BindDimen;
@@ -21,14 +17,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class RankFragment extends BaseFragment {
 
-    @BindDimen(R.dimen.dp20)
-    int dp20;
-
-    @BindColor(R.color.colorPrimary)
-    int color;
-
-    @BindView(R.id.rank_recycler)
-    RecyclerView recycler;
+    @BindDimen(R.dimen.dp20) int dp20;
+    @BindColor(R.color.colorPrimary) int color;
+    @BindView(R.id.rank_recycler) RecyclerView recycler;
 
     private RankApi rankApi = RetrofitInstance.Retrofit().create(RankApi.class);
 
@@ -52,16 +43,12 @@ public class RankFragment extends BaseFragment {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(rank -> adapter.addData(rank.getData().getTopList()),
                         throwable -> {
-                            Log.e("tag", "fetch: ");
                             throwable.printStackTrace();
                         });
     }
 
     public static RankFragment newInstance() {
-        Bundle args = new Bundle();
-        RankFragment fragment = new RankFragment();
-        fragment.setArguments(args);
-        return fragment;
+        return new RankFragment();
     }
 
 }

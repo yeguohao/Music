@@ -14,7 +14,6 @@ import com.yeguohao.music.views.Banner;
 public class RecommendBehavior extends CoordinatorLayout.Behavior {
 
 
-    private static final String TAG = "RecommendBehavior";
     private int limit = -1;
 
     public RecommendBehavior() {

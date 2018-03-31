@@ -7,38 +7,37 @@
     android:background="@color/colorPrimary"
     tools:context="com.yeguohao.music.flavour.activities.FlavourActivity">
 
-    <View
+    <FrameLayout
         android:id="@+id/flavour_group"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/flavour_title__shape"
+        android:background="@drawable/flavour_title_shape"
         android:layout_width="242dp"
-        android:layout_height="37dp"/>
+        android:layout_height="37dp">
 
-    <TextView
-        android:id="@+id/title_flavour"
-        app:layout_constraintStart_toStartOf="@id/flavour_group"
-        android:layout_marginStart="@dimen/flavour_border_width"
-        android:layout_marginTop="@dimen/flavour_border_width"
-        android:layout_width="120dp"
-        android:layout_height="35dp"
-        android:text="我喜欢的"
-        android:gravity="center" />
+        <TextView
+            android:id="@+id/title_flavour"
+            android:layout_width="120dp"
+            android:layout_height="35dp"
+            android:text="我喜欢的"
+            android:layout_marginStart="@dimen/flavour_border_width"
+            android:layout_gravity="start|center"
+            android:background="@drawable/flavour_title_bg_selector"
+            android:textColor="@color/flavour_title_color_selector"
+            android:gravity="center" />
 
-    <!--
-     android:background="@color/flavour_title_bg_selector"
-        android:textColor="@color/flavour_title_color_selector"
-     -->
+        <TextView
+            android:id="@+id/title_recently"
+            android:layout_gravity="end|center"
+            android:layout_width="120dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="@dimen/flavour_border_width"
+            android:background="@drawable/recently_title_bg_selector"
+            android:textColor="@color/flavour_title_color_selector"
+            android:text="最近听的"
+            android:gravity="center" />
 
-    <TextView
-        android:id="@+id/title_recently"
-        app:layout_constraintEnd_toEndOf="@id/flavour_group"
-        android:layout_marginTop="@dimen/flavour_border_width"
-        android:layout_marginEnd="@dimen/flavour_border_width"
-        android:layout_width="120dp"
-        android:layout_height="35dp"
-        android:text="最近听的"
-        android:gravity="center" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/random_play"

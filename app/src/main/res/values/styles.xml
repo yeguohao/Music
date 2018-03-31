@@ -6,10 +6,16 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="PlaySongQueueDialog">
+        <item name="android:windowEnterAnimation">@anim/slide_in_from_bottom</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_to_bottom</item>
     </style>
 
     <style name="main_tab_item_textview">

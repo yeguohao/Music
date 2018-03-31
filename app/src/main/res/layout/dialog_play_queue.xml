@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.yeguohao.music.views.ScrollDownView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/title_group"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+
+    <ImageView
+        android:id="@+id/play_mode"
+        tools:src="@drawable/sequence"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="@null"
+        android:layout_width="30dp"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/play_mode_text"
+        tools:text="顺序播放"
+        android:textColor="@color/textColorDark"
+        android:textSize="16sp"
+        android:layout_marginStart="40dp"
+        android:layout_gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/clear_queue"
+        android:src="@drawable/delete"
+        android:contentDescription="@null"
+        android:layout_gravity="end|center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    </FrameLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/queue_recycler"
+        android:layout_below="@+id/title_group"
+        android:layout_above="@+id/add_queue"
+        app:layoutManager="LinearLayoutManager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/add_queue"
+        android:textColor="@color/textColorDark"
+        android:background="@drawable/flavour_random_shape"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:text="添加歌曲到队列"
+        android:textSize="12sp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="130dp"
+        android:layout_height="35dp" />
+
+    </RelativeLayout>
+
+</com.yeguohao.music.views.ScrollDownView>

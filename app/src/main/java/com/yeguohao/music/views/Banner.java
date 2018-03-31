@@ -152,4 +152,5 @@ public class Banner extends FrameLayout {
         }
 
     }
+
 }

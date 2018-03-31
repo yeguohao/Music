@@ -14,8 +14,10 @@
 
     <TextView
         android:id="@+id/mini_player_song"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:layout_alignTop="@id/mini_player_thumbnail"
         android:layout_marginStart="6dp"
         android:layout_toEndOf="@id/mini_player_thumbnail"
@@ -24,10 +26,12 @@
 
     <TextView
         android:id="@+id/mini_player_singer"
-        android:layout_width="wrap_content"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/mini_player_thumbnail"
         android:layout_marginStart="6dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:layout_toEndOf="@id/mini_player_thumbnail"
         android:textColor="@color/textColorDark"
         tools:text="BTS (防弹少年团)" />
@@ -48,6 +52,6 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="8dp"
         android:layout_toStartOf="@id/mini_player_playlist_icon"
-        android:src="@drawable/player_play" />
+        android:src="@drawable/player_play_selector" />
 
 </merge>

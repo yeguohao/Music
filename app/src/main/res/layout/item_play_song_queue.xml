@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="40dp">
+
+    <ImageView
+        android:id="@+id/playing"
+        android:src="@drawable/play_song_queue_selector"
+        android:contentDescription="@null"
+        android:layout_gravity="center_vertical|start"
+        android:layout_width="25dp"
+        android:layout_height="25dp" />
+
+    <TextView
+        android:id="@+id/song_name"
+        tools:text="一首歌的名字"
+        android:textSize="16sp"
+        android:textColor="@color/textColorDark"
+        android:lines="1"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="85dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/favorite"
+        android:layout_marginEnd="35dp"
+        android:src="@drawable/favorite_selector"
+        android:contentDescription="@null"
+        android:layout_gravity="end|center_vertical"
+        android:layout_width="25dp"
+        android:layout_height="25dp" />
+
+    <ImageView
+        android:id="@+id/remove"
+        android:src="@drawable/delete"
+        android:contentDescription="@null"
+        android:layout_gravity="end|center_vertical"
+        android:layout_width="25dp"
+        android:layout_height="25dp" />
+
+</FrameLayout>

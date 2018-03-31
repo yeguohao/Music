@@ -1,20 +1,15 @@
 package com.yeguohao.music.main.components.recommend.fragments;
 
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yeguohao.music.R;
 import com.yeguohao.music.api.RetrofitInstance;
 import com.yeguohao.music.base.BaseFragment;
-import com.yeguohao.music.base.BaseRecyclerAdapter;
 import com.yeguohao.music.main.components.recommend.adapters.RecommendAdapter;
 import com.yeguohao.music.main.components.recommend.adapters.RecommendPagerAdapter;
-import com.yeguohao.music.main.components.recommend.disposes.RecommendRecyclerDispose;
 import com.yeguohao.music.main.components.recommend.apis.RecommendApi;
 import com.yeguohao.music.views.Banner;
 import com.yeguohao.music.views.LoadingView;
@@ -22,31 +17,21 @@ import com.yeguohao.music.views.LoadingView;
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
+import static com.yeguohao.music.common.Util.log;
+
 public class RecommendFragment extends BaseFragment {
 
-    private static final String TAG = "RecommendApi";
-    @BindView(R.id.recommend_banner)
-    Banner banner;
-
-    @BindView(R.id.recommend_title)
-    TextView title;
-
-    @BindView(R.id.recommend_recycler)
-    RecyclerView recycler;
-
-    @BindView(R.id.recommend_loading)
-    LoadingView loadingView;
+    @BindView(R.id.recommend_banner) Banner banner;
+    @BindView(R.id.recommend_title) TextView title;
+    @BindView(R.id.recommend_recycler) RecyclerView recycler;
+    @BindView(R.id.recommend_loading) LoadingView loadingView;
 
     private RecommendApi recommendApi = RetrofitInstance.Retrofit().create(RecommendApi.class);
     private RecommendPagerAdapter pagerAdapter;
     private RecommendAdapter recyclerAdapter;
 
     public static RecommendFragment newInstance() {
-        Bundle args = new Bundle();
-
-        RecommendFragment fragment = new RecommendFragment();
-        fragment.setArguments(args);
-        return fragment;
+        return new RecommendFragment();
     }
 
     @Override
@@ -64,8 +49,10 @@ public class RecommendFragment extends BaseFragment {
         recyclerAdapter = new RecommendAdapter(R.layout.item_recommend);
         ((ViewGroup) root).removeView(banner);
         recyclerAdapter.addHeaderView(banner);
+
         ((ViewGroup) root).removeView(title);
         recyclerAdapter.addHeaderView(title);
+
         recycler.setAdapter(recyclerAdapter);
     }
 
@@ -77,32 +64,29 @@ public class RecommendFragment extends BaseFragment {
                     pagerAdapter.setSliders(bean.getData().getSlider());
                     banner.notifyDataSetChanged();
                 }, throwable -> {
-                    Log.e(TAG, "getRecommend: " + throwable );
+                    log("getRecommend: " + throwable );
                 });
         recommendApi.getDiscList()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(discList -> {
                     loadingView.cancel();
                     recycler.setVisibility(View.VISIBLE);
-                    recyclerAdapter.addData(discList.getData().getList());
+                    recyclerAdapter.replaceData(discList.getData().getList());
                 }, throwable -> {
-                    Log.e(TAG, "getDiscList: " + throwable );
+                    loadingView.cancel();
+                    log("getDiscList: " + throwable );
                 });
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (banner != null) {
-            banner.pause();
-        }
+        banner.pause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (banner != null) {
-            banner.resume();
-        }
+        banner.resume();
     }
 }

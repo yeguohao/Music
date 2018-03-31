@@ -1,11 +1,8 @@
 package com.yeguohao.music.player.entities;
 
 import android.content.SharedPreferences;
-import android.util.Log;
 
 public class Song {
-
-    private static final String TAG = "SongFragment";
 
     private String songName;
     private String singerName;
@@ -72,7 +69,6 @@ public class Song {
     public void get(SharedPreferences preferences) {
         String temp = preferences.getString(songMid, "");
         String[] strings = temp.split(",");
-        Log.e(TAG, "get: " + temp );
         songName = strings[0];
         singerName = strings[1];
         albumMid = strings[2];

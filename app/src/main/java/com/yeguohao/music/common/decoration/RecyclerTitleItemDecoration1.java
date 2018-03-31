@@ -8,7 +8,6 @@ import android.graphics.RectF;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.ArrayMap;
-import android.util.Log;
 import android.view.View;
 
 import com.yeguohao.music.common.TitleAndView;
@@ -147,4 +146,5 @@ public class RecyclerTitleItemDecoration1 extends RecyclerView.ItemDecoration {
         View child = recyclerView.getChildAt(position);
         return position == 0 && child.getTop() == 0;
     }
+
 }

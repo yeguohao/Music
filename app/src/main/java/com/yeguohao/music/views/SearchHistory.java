@@ -6,15 +6,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.yeguohao.music.R;
 import com.yeguohao.music.adapters.SearchHistoryAdapter;
-import com.yeguohao.music.base.BaseRecyclerAdapter;
-import com.yeguohao.music.base.RecyclerDispose;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +20,8 @@ import butterknife.ButterKnife;
 
 public class SearchHistory extends FrameLayout {
 
-    private static final String TAG = "SearchHistory";
-    @BindView(R.id.search_clear)
-    ImageView clear;
-
-    @BindView(R.id.search_history_recycler)
-    RecyclerView recycler;
+    @BindView(R.id.search_clear) ImageView clear;
+    @BindView(R.id.search_history_recycler) RecyclerView recycler;
 
     private SearchRecord record = SearchRecord.getSearchRecord();
     private SearchHistoryAdapter adapter;

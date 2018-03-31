@@ -16,6 +16,7 @@
         android:textColorHint="@color/textColorDark"
         android:hint="搜索歌手、歌曲"
         android:textColor="@color/textColorDark"
+        android:textCursorDrawable="@color/textColorLight"
         android:textSize="12sp" />
 
     <ImageView

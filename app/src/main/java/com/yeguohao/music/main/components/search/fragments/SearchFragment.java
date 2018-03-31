@@ -13,13 +13,11 @@ import android.widget.TextView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.yeguohao.music.R;
 import com.yeguohao.music.api.RetrofitInstance;
-import com.yeguohao.music.main.components.search.adapters.SearchAdapter;
-import com.yeguohao.music.main.components.search.apis.SearchApi;
 import com.yeguohao.music.base.BaseFragment;
-import com.yeguohao.music.base.BaseRecyclerAdapter;
-import com.yeguohao.music.main.components.search.disposes.SearchDispose;
 import com.yeguohao.music.javabean.HotKey;
 import com.yeguohao.music.javabean.SearchInfo;
+import com.yeguohao.music.main.components.search.adapters.SearchAdapter;
+import com.yeguohao.music.main.components.search.apis.SearchApi;
 import com.yeguohao.music.views.FlowLayout;
 import com.yeguohao.music.views.SearchHistory;
 

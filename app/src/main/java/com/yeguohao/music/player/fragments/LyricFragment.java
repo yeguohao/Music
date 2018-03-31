@@ -1,6 +1,5 @@
 package com.yeguohao.music.player.fragments;
 
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,13 +9,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.yeguohao.music.R;
-import com.yeguohao.music.player.apis.PlayerApi;
 import com.yeguohao.music.api.RetrofitInstance;
 import com.yeguohao.music.base.BaseFragment;
-import com.yeguohao.music.common.player.MediaPlayerUtil;
 import com.yeguohao.music.common.TimeFormat;
-import com.yeguohao.music.player.entities.Song;
+import com.yeguohao.music.common.player.PlayerInstance;
+import com.yeguohao.music.common.player.impl.MusicItem;
+import com.yeguohao.music.common.player.impl.SongStore;
 import com.yeguohao.music.player.adapters.LyricRecyclerAdapter;
+import com.yeguohao.music.player.apis.PlayerApi;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,16 +30,12 @@ import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_SETTLING;
 import static android.util.Base64.DEFAULT;
 
-public class LyricFragment extends BaseFragment implements MediaPlayerUtil.OnStateListener {
+public class LyricFragment extends BaseFragment {
 
-    @BindView(R.id.lyirc_recycler)
-    RecyclerView recycler;
-
-    @BindView(R.id.lyirc_tips)
-    TextView tips;
+    @BindView(R.id.lyirc_recycler) RecyclerView recycler;
+    @BindView(R.id.lyirc_tips) TextView tips;
 
     private PlayerApi playerApi = RetrofitInstance.Retrofit().create(PlayerApi.class);
-    private MediaPlayerUtil playerUtil = MediaPlayerUtil.getPlayerUtil();
     private TimeFormat timeFormat = new TimeFormat();
 
     private LinearLayoutManager layoutManager;
@@ -50,8 +46,9 @@ public class LyricFragment extends BaseFragment implements MediaPlayerUtil.OnSta
     private Map<String, Object[]> dataCache = new HashMap<>();
 
     private Handler handler = new Handler();
-
     private boolean isDrag;
+
+    private SongStore songStore = PlayerInstance.getSongStore();
 
     @Override
     protected int layout() {
@@ -75,17 +72,17 @@ public class LyricFragment extends BaseFragment implements MediaPlayerUtil.OnSta
                 }
             }
         });
-        playerUtil.setStateListener(this);
     }
 
     @Override
     protected void fetch() {
-        Song song = playerUtil.getCurrentSong();
+        MusicItem item = songStore.song(songStore.currentIndex());
+        MusicItem.Description description = item.getDescription();
         tips.setText("正在加载");
         tips.setVisibility(View.VISIBLE);
         recycler.setVisibility(View.INVISIBLE);
         adapter.clear();
-        playerApi.getLyric(song.getSongMid())
+        playerApi.getLyric(description.getSongMid())
                 .map(lyric -> {
                     String result = new String(Base64.decode(lyric.getLyric(), DEFAULT));
                     int index = result.indexOf("[00");
@@ -107,7 +104,7 @@ public class LyricFragment extends BaseFragment implements MediaPlayerUtil.OnSta
                     }
                     LyricFragment.this.getActivity().runOnUiThread(() -> {
                         Object[] objects = new Object[]{indexes, map};
-                        dataCache.put(song.getSongMid(), objects);
+                        dataCache.put(description.getSongMid(), objects);
                         recycler.setVisibility(View.VISIBLE);
                         tips.setVisibility(View.INVISIBLE);
                         adapter.setData(map, indexes);
@@ -115,9 +112,10 @@ public class LyricFragment extends BaseFragment implements MediaPlayerUtil.OnSta
                 });
     }
 
-    @Override
-    public void onSwitchSong(Song newSong) {
-        Object[] objects = dataCache.get(newSong.getSongMid());
+    public void switchSong() {
+        MusicItem item = songStore.song(songStore.currentIndex());
+        MusicItem.Description description = item.getDescription();
+        Object[] objects = dataCache.get(description.getSongMid());
         if (objects != null) {
             indexes = (List<String>) objects[0];
             map = (Map<String, String>) objects[1];
@@ -127,8 +125,7 @@ public class LyricFragment extends BaseFragment implements MediaPlayerUtil.OnSta
         }
     }
 
-    @Override
-    public void onPlayProgress(int percent, int currentPosition) {
+    public void progress(long currentPosition) {
         String time = timeFormat.timeStamp2Date(currentPosition);
         int position = indexes.indexOf(time);
         if (position != -1) {
@@ -166,9 +163,7 @@ public class LyricFragment extends BaseFragment implements MediaPlayerUtil.OnSta
     }
 
     public static LyricFragment newInstance() {
-        Bundle args = new Bundle();
-        LyricFragment fragment = new LyricFragment();
-        fragment.setArguments(args);
-        return fragment;
+        return new LyricFragment();
     }
+
 }

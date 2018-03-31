@@ -6,29 +6,42 @@
     android:layout_height="match_parent"
     android:background="@color/textColorDark">
 
-    <ImageView
+    <com.yeguohao.music.views.BlurImageView
         android:id="@+id/player_background"
+        android:contentDescription="@null"
+        android:scaleY="6"
+        android:scaleX="6"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY" />
+        android:layout_height="match_parent"/>
 
     <TextView
+        android:fitsSystemWindows="true"
         android:id="@+id/player_song"
-        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/textColorWhite"
         android:textSize="18sp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="하루만 (就一天)" />
 
     <TextView
         android:id="@+id/player_singer"
-        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:textColor="@color/textColorWhite"
         android:textSize="16sp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/player_song"
@@ -49,25 +62,29 @@
         android:layout_height="30dp"
         app:layout_constraintBottom_toTopOf="@id/player_control_group">
 
-        <TextView
+        <com.yeguohao.music.views.PositionTextView
             android:id="@+id/player_current_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/textColorWhite"
+            android:layout_centerVertical="true"
             android:text="@string/initial_time" />
 
-        <SeekBar
+        <com.yeguohao.music.views.MyProcess
             android:id="@+id/player_progress"
-            style="@android:style/Widget.DeviceDefault.SeekBar"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/player_current_time"
             android:layout_toStartOf="@id/player_total_time" />
 
-        <TextView
+        <com.yeguohao.music.views.PositionTextView
             android:id="@+id/player_total_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:textColor="@color/textColorWhite"
             android:text="@string/initial_time" />
@@ -84,6 +101,7 @@
         <ImageView
             android:id="@+id/player_mode"
             style="@style/player_control_icon"
+            android:contentDescription="@null"
             android:src="@drawable/sequence"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/player_prev"
@@ -93,6 +111,7 @@
         <ImageView
             android:id="@+id/player_prev"
             style="@style/player_control_icon"
+            android:contentDescription="@null"
             android:src="@drawable/player_prev"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/player_play"
@@ -101,10 +120,11 @@
 
         <ImageView
             android:id="@+id/player_play"
+            android:contentDescription="@null"
             style="@style/player_control_icon"
             android:layout_width="46dp"
             android:layout_height="46dp"
-            android:src="@drawable/player_play"
+            android:src="@drawable/player_play_selector"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/player_next"
             app:layout_constraintStart_toEndOf="@id/player_prev"
@@ -112,6 +132,7 @@
 
         <ImageView
             android:id="@+id/player_next"
+            android:contentDescription="@null"
             style="@style/player_control_icon"
             android:src="@drawable/player_next"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -121,8 +142,9 @@
 
         <ImageView
             android:id="@+id/player_favorite"
+            android:contentDescription="@null"
             style="@style/player_control_icon"
-            android:src="@drawable/player_favorite_border"
+            android:src="@drawable/favorite_selector"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/player_next"

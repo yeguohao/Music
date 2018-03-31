@@ -19,7 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".disc.activities.DiscActivity" />
+        <activity
+            android:name=".disc.activities.DiscActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".player.activities.PlayerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -30,8 +32,13 @@
             android:name=".song.activities.SongActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:theme="@style/AppTheme.NoActionBar"
-            android:name=".flavour.activities.FlavourActivity"/>
+            android:name=".flavour.activities.FlavourActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <service
+            android:name="com.yeguohao.music.common.player.MusicService"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>

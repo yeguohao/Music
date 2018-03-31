@@ -38,4 +38,5 @@ public class SongActivity extends AppCompatActivity {
                     .replace(R.id.song_replace, SongFragment.newInstance(type, topId, singerMid)).commit();
         }
     }
+
 }

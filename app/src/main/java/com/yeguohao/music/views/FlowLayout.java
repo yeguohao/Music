@@ -10,7 +10,6 @@ import com.yeguohao.music.R;
 
 public class FlowLayout extends ViewGroup {
 
-    private static final String TAG = "FlowLayout";
     private LeftTop[] viewLines;
     private int layoutChildCount;
 
@@ -122,4 +121,5 @@ public class FlowLayout extends ViewGroup {
             this.top = top;
         }
     }
+
 }

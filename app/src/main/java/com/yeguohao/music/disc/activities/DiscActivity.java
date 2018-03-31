@@ -1,12 +1,12 @@
 package com.yeguohao.music.disc.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.yeguohao.music.R;
+import com.yeguohao.music.base.NotStatusBarActivity;
 import com.yeguohao.music.disc.fragments.DiscFragment;
 
-public class DiscActivity extends AppCompatActivity {
+public class DiscActivity extends NotStatusBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,4 +18,5 @@ public class DiscActivity extends AppCompatActivity {
             getFragmentManager().beginTransaction().replace(R.id.disc_replace, disc).commit();
         }
     }
+
 }

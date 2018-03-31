@@ -4,12 +4,11 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.os.Bundle;
+import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -185,15 +184,46 @@ public class FixedTextTabLayout extends ViewGroup {
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
         super.onRestoreInstanceState(state);
-        currentPagePosition = ((Bundle) state).getInt("currentPagerPosition", 0);
+        currentPagePosition = ((SavedState) state).currentPagePosition;
     }
 
     @Nullable
     @Override
     protected Parcelable onSaveInstanceState() {
-        super.onSaveInstanceState();
-        Bundle bundle = new Bundle();
-        bundle.putInt("currentPagerPosition", currentPagePosition);
-        return bundle;
+        Parcelable parcelable = super.onSaveInstanceState();
+        SavedState savedState = new SavedState(parcelable);
+        savedState.currentPagePosition = currentPagePosition;
+        return savedState;
     }
+
+    static class SavedState extends BaseSavedState {
+
+        int currentPagePosition;
+
+        SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        private SavedState(Parcel in) {
+            super(in);
+            currentPagePosition = (int)in.readValue(getClass().getClassLoader());
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeValue(currentPagePosition);
+        }
+
+        public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
+            public SavedState createFromParcel(Parcel in) {
+                return new SavedState(in);
+            }
+
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
+    }
+
 }

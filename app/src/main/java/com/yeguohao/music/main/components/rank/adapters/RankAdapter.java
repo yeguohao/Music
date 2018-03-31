@@ -15,6 +15,10 @@ public class RankAdapter extends BaseQuickAdapter<Rank.DataBean.TopListBean, Bas
 
     public RankAdapter(int layoutResId) {
         super(layoutResId);
+        setOnItemClickListener((adapter, view, position) -> {
+            Rank.DataBean.TopListBean item = getItem(position);
+            SongActivity.start((Activity) view.getContext(), SongActivity.TYPE_RANK, item.getId() + "", "");
+        });
     }
 
     @Override
@@ -32,8 +36,6 @@ public class RankAdapter extends BaseQuickAdapter<Rank.DataBean.TopListBean, Bas
         rank1.setText("1 " + songListBean1.getSongname() + "-" + songListBean1.getSingername());
         rank2.setText("2 " + songListBean2.getSongname() + "-" + songListBean1.getSingername());
         rank3.setText("3 " + songListBean3.getSongname() + "-" + songListBean1.getSingername());
-
-        helper.itemView.setOnClickListener(view ->
-                SongActivity.start((Activity) view.getContext(), SongActivity.TYPE_RANK, item.getId() + "", ""));
     }
+
 }

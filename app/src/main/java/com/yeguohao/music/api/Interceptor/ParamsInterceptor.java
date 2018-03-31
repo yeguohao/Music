@@ -1,5 +1,7 @@
 package com.yeguohao.music.api.Interceptor;
 
+import android.support.annotation.NonNull;
+
 import java.io.IOException;
 
 import okhttp3.HttpUrl;
@@ -12,7 +14,7 @@ public class ParamsInterceptor implements Interceptor {
     private static final String JSONP_CALLBACK = "jp34";
 
     @Override
-    public Response intercept(Chain chain) throws IOException {
+    public Response intercept(@NonNull Chain chain) throws IOException {
         Request request = chain.request();
         String url = request.url().toString();
         HttpUrl.Builder builder = request.url().newBuilder();

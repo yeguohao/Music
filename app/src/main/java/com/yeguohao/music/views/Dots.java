@@ -78,4 +78,5 @@ public class Dots extends View {
     private void drawUnSelectedDot(Canvas canvas, int cx) {
         canvas.drawCircle(cx, dotRadius, dotRadius, unselectedPaint);
     }
+
 }

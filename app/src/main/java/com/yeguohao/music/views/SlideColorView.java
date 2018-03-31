@@ -3,7 +3,6 @@ package com.yeguohao.music.views;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.View;
 
 public class SlideColorView extends View {
@@ -67,4 +66,5 @@ public class SlideColorView extends View {
         this.showTitle = showTitle;
         this.showWidth = (int) paint.measureText(showTitle);
     }
+
 }

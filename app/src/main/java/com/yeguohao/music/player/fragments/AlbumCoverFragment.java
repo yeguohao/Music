@@ -1,6 +1,5 @@
 package com.yeguohao.music.player.fragments;
 
-import android.os.Bundle;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 import android.view.animation.LinearInterpolator;
@@ -10,20 +9,18 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.yeguohao.music.R;
 import com.yeguohao.music.base.BaseFragment;
-import com.yeguohao.music.common.player.MediaPlayerUtil;
-import com.yeguohao.music.player.entities.Song;
+import com.yeguohao.music.common.player.PlayerInstance;
+import com.yeguohao.music.common.player.impl.MusicItem;
+import com.yeguohao.music.common.player.impl.SongStore;
 
 import butterknife.BindView;
 
-import static com.yeguohao.music.player.PlayerConstance.ALBUM_IMG_URL;
+public class AlbumCoverFragment extends BaseFragment{
 
-public class AlbumCoverFragment extends BaseFragment implements MediaPlayerUtil.OnStateListener{
-
-    @BindView(R.id.album_cover)
-    ImageView albumCover;
+    @BindView(R.id.album_cover) ImageView albumCover;
 
     private ViewPropertyAnimator propertyAnimator;
-    private MediaPlayerUtil playerUtil = MediaPlayerUtil.getPlayerUtil();
+    private SongStore songStore = PlayerInstance.getSongStore();
 
     @Override
     protected int layout() {
@@ -32,32 +29,30 @@ public class AlbumCoverFragment extends BaseFragment implements MediaPlayerUtil.
 
     @Override
     protected void initView(View root) {
-        playerUtil.setStateListener(this);
-        if (playerUtil.isPlay()) {
+        MusicItem song = songStore.song(songStore.currentIndex());
+        if (song.isPlaying()) {
             startRotate();
         }
     }
 
     @Override
     protected void fetch() {
-        Song song = playerUtil.getCurrentSong();
+        MusicItem song = songStore.song(songStore.currentIndex());
+        MusicItem.Description description = song.getDescription();
         RequestOptions options = RequestOptions.circleCropTransform().placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher);
-        Glide.with(this).load(String.format(ALBUM_IMG_URL, song.getAlbumMid())).apply(options).into(albumCover);
+        Glide.with(this).load(description.getIconUri()).apply(options).into(albumCover);
     }
 
-    @Override
-    public void onSwitchSong(Song newSong) {
+    public void playBack(boolean playing) {
+        if (playing) {
+            startRotate();
+        } else {
+            stopRotate();
+        }
+    }
+
+    public void switchSong() {
         fetch();
-    }
-
-    @Override
-    public void onPlayStart() {
-        startRotate();
-    }
-
-    @Override
-    public void onPlayPause() {
-        stopRotate();
     }
 
     private void startRotate() {
@@ -66,11 +61,12 @@ public class AlbumCoverFragment extends BaseFragment implements MediaPlayerUtil.
                     .animate()
                     .rotationBy(359)
                     .setInterpolator(new LinearInterpolator())
-                    .setDuration(8000).setStartDelay(0).withEndAction(() -> {
+                    .setDuration(16000).setStartDelay(0).withEndAction(() -> {
                         propertyAnimator = null;
                         startRotate();
                     });
         }
+        propertyAnimator.start();
     }
 
     private void stopRotate() {
@@ -81,10 +77,7 @@ public class AlbumCoverFragment extends BaseFragment implements MediaPlayerUtil.
     }
 
     public static AlbumCoverFragment newInstance() {
-        Bundle args = new Bundle();
-        AlbumCoverFragment fragment = new AlbumCoverFragment();
-        fragment.setArguments(args);
-        return fragment;
+        return new AlbumCoverFragment();
     }
 
 }

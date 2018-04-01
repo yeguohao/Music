@@ -1,6 +1,7 @@
 package com.yeguohao.music.disc.adapters;
 
 import android.app.Activity;
+import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -18,6 +19,9 @@ public class DiscAdapter extends BaseQuickAdapter<CdInfo.CdlistBean.SonglistBean
 
     public DiscAdapter(int layoutResId) {
         super(layoutResId);
+        setOnItemClickListener((adapter, view, position) -> {
+
+        });
     }
 
     @Override

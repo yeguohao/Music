@@ -89,4 +89,5 @@ public class RecommendFragment extends BaseFragment {
         super.onResume();
         banner.resume();
     }
+
 }

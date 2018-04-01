@@ -9,8 +9,11 @@ import com.yeguohao.music.common.player.PlayerInstance;
 import com.yeguohao.music.common.player.impl.MusicItem;
 import com.yeguohao.music.common.player.impl.SongStore;
 import com.yeguohao.music.common.player.interfaces.MusicController;
+import com.yeguohao.music.main.components.playqueue.fragment.PlaySongQueue;
 
 public class PlaySongQueueAdapter extends BaseQuickAdapter<MusicItem, BaseViewHolder> {
+
+    private PlaySongQueue playSongQueue;
 
     public PlaySongQueueAdapter(int layoutResId) {
         super(layoutResId);
@@ -47,10 +50,16 @@ public class PlaySongQueueAdapter extends BaseQuickAdapter<MusicItem, BaseViewHo
     private void removeFromQueue(MusicItem item, int position) {
         SongStore songStore = PlayerInstance.getSongStore();
         songStore.removeSong(item);
-        if (item.isPlaying()) {
+        remove(position);
+        if (songStore.songs().isEmpty()) {
+            playSongQueue.dismiss();
+        } else if (item.isPlaying()) {
             PlayerInstance.getMusicController().next();
         }
-        remove(position);
+    }
+
+    public void setFeagment(PlaySongQueue playSongQueue) {
+        this.playSongQueue = playSongQueue;
     }
 
 }

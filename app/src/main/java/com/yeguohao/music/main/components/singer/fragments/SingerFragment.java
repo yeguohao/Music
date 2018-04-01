@@ -1,6 +1,5 @@
 package com.yeguohao.music.main.components.singer.fragments;
 
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -91,13 +90,6 @@ public class SingerFragment extends BaseFragment implements LetterIndexView.Lett
         }
     }
 
-    public static SingerFragment newInstance() {
-        Bundle args = new Bundle();
-        SingerFragment fragment = new SingerFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onLetterSelected(String letter) {
         LinearLayoutManager llm = (LinearLayoutManager) recycler.getLayoutManager();
@@ -125,4 +117,9 @@ public class SingerFragment extends BaseFragment implements LetterIndexView.Lett
         }
         letterIndex.setSelectedIndex(index);
     }
+
+    public static SingerFragment newInstance() {
+        return new SingerFragment();
+    }
+
 }

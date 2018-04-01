@@ -31,20 +31,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 public class SearchFragment extends BaseFragment implements View.OnClickListener {
 
     private static final String TAG = "SearchApi";
-    @BindView(R.id.search_hot_group)
-    FlowLayout hotGroup;
-
-    @BindView(R.id.search_recycler)
-    RecyclerView recycler;
-
-    @BindView(R.id.search_edit)
-    EditText editText;
-
-    @BindView(R.id.search_close)
-    ImageView close;
-
-    @BindView(R.id.search_history)
-    SearchHistory history;
+    @BindView(R.id.search_hot_group) FlowLayout hotGroup;
+    @BindView(R.id.search_recycler) RecyclerView recycler;
+    @BindView(R.id.search_edit) EditText editText;
+    @BindView(R.id.search_close) ImageView close;
+    @BindView(R.id.search_history) SearchHistory history;
 
     private SearchApi searchApi = RetrofitInstance.Retrofit().create(SearchApi.class);
     private SearchAdapter adapter;
@@ -60,6 +51,7 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
         adapter = new SearchAdapter(R.layout.item_search);
         recycler.setAdapter(adapter);
         recycler.setHasFixedSize(true);
+
         RecyclerView.LayoutManager layoutManager = recycler.getLayoutManager();
         layoutManager.setAutoMeasureEnabled(false);
 
@@ -77,6 +69,8 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
                         searchRecyclerVisible();
                         startSearch(encodeKey);
                     }
+                }, throwable -> {
+
                 });
 
         history.setListener(searchKey -> editText.setText(searchKey));
@@ -85,13 +79,17 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
     @Override
     protected void fetch() {
         searchApi.getHotKey()
-                .filter(hotKey -> hotKey.getCode() == 0)
+                .filter(this::isOk)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::hotKeyResult);
+                .subscribe(this::hotKeyResult, throwable -> {});
+    }
+
+    private boolean isOk(HotKey hotKey) {
+        return hotKey.getCode() == 0;
     }
 
     private void searchResult(SearchInfo searchInfo) {
-        adapter.addData(searchInfo.getData().getSong().getList());
+        adapter.replaceData(searchInfo.getData().getSong().getList());
     }
 
     private void hotKeyResult(HotKey hotKey) {
@@ -113,10 +111,7 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
     }
 
     public static SearchFragment newInstance() {
-        Bundle args = new Bundle();
-        SearchFragment fragment = new SearchFragment();
-        fragment.setArguments(args);
-        return fragment;
+        return new SearchFragment();
     }
 
     @Override
@@ -148,4 +143,5 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
     private void searchIconVisible() {
         close.setVisibility(View.VISIBLE);
     }
+
 }

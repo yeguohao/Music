@@ -1,0 +1,217 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:2:1-44:12
+INJECTED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:2:1-44:12
+INJECTED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:2:1-44:12
+INJECTED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:2:1-44:12
+MERGED from [com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:2.1.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/rxbinding-recyclerview-v7-2.1.1.aar/46ea396bcaabe49a30189e7c80d59592/AndroidManifest.xml:2:1-8:12
+MERGED from [com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/BaseRecyclerViewAdapterHelper-2.9.30.aar/e8402f19ecef990b319ba5c81d8394a7/AndroidManifest.xml:2:1-11:12
+MERGED from [com.github.Commit451:NativeStackBlur:1.0.5] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/NativeStackBlur-1.0.5.aar/c5425bcc5065496e591729561178fe41/AndroidManifest.xml:2:1-14:12
+MERGED from [com.android.support:support-v13:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-v13-27.1.0.aar/85c6850f0d234fdc106c1c30d64d6b02/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:design:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/design-27.1.0.aar/89f8ee71af1345b4922198cf0abacb9b/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-v4:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-v4-27.1.0.aar/f42e8726ba8ec50aee03e20819d66928/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:appcompat-v7:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.0.aar/12696bcc2edfa86332614f56d440e737/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:recyclerview-v7:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-27.1.0.aar/272571577a11804961b5e7ca14f1aea8/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/c1870a45a2e212550d29e05536517182/AndroidManifest.xml:2:1-11:12
+MERGED from [com.jakewharton.rxbinding2:rxbinding-support-v4:2.0.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/rxbinding-support-v4-2.0.0.aar/727b75decd1b37364d2ab92841cfc01e/AndroidManifest.xml:2:1-8:12
+MERGED from [com.jakewharton.rxbinding2:rxbinding:2.1.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/rxbinding-2.1.1.aar/08960991694af032764257025dd0c2cf/AndroidManifest.xml:2:1-8:12
+MERGED from [io.reactivex.rxjava2:rxandroid:2.0.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/rxandroid-2.0.0.aar/57e0fcc87e51f17eb00ccc800e22cf86/AndroidManifest.xml:15:1-21:12
+MERGED from [com.jakewharton:butterknife:8.8.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/butterknife-8.8.1.aar/d20aa2cb1cd428fefba42f02a4df86bd/AndroidManifest.xml:2:1-7:12
+MERGED from [jp.wasabeef:glide-transformations:3.0.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/glide-transformations-3.0.1.aar/30d2facb7fa454d527e62fa211d3c277/AndroidManifest.xml:2:1-12:12
+MERGED from [com.facebook.stetho:stetho-okhttp3:1.5.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/stetho-okhttp3-1.5.0.aar/b13a9c1e7a75cf3af4a573048e731e6a/AndroidManifest.xml:2:1-13:12
+MERGED from [com.facebook.stetho:stetho:1.5.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/stetho-1.5.0.aar/035f80cfea98b6cc210e4c9df0843c49/AndroidManifest.xml:2:1-13:12
+MERGED from [com.google.android.exoplayer:exoplayer:2.7.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/exoplayer-2.7.1.aar/fa71f85dc13147159b815c0a70558b4a/AndroidManifest.xml:17:1-25:12
+MERGED from [com.android.support:support-media-compat:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.1.0.aar/8e71ca2d6f6aa1febdc08f9efc79d681/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:animated-vector-drawable:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-27.1.0.aar/eae9e90aa30e78bdb361d34e6aabe90a/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-fragment:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-fragment-27.1.0.aar/820a569d72f8ba567636d6774b1ea50b/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-ui:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.1.0.aar/c1da67e718d815d16fb64cad0434a890/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-utils:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.1.0.aar/5eb2f81444790a96b0526ccbb3dd5a49/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-vector-drawable:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.1.0.aar/e89154e72957e675ae1642ef27e5cbde/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:transition:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/transition-27.1.0.aar/4c5c9d1a4e8611e91f45c2745e7ffe55/AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.android.exoplayer:exoplayer-dash:2.7.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/exoplayer-dash-2.7.1.aar/77139fb25dd97e7f0a257c02d3ac7434/AndroidManifest.xml:17:1-25:12
+MERGED from [com.google.android.exoplayer:exoplayer-hls:2.7.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/exoplayer-hls-2.7.1.aar/d09a1ccd9e2cde627b73bbed36214454/AndroidManifest.xml:17:1-25:12
+MERGED from [com.google.android.exoplayer:exoplayer-smoothstreaming:2.7.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/exoplayer-smoothstreaming-2.7.1.aar/edbff0a710813fe342f82f31ff1082ee/AndroidManifest.xml:17:1-25:12
+MERGED from [com.google.android.exoplayer:exoplayer-ui:2.7.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/exoplayer-ui-2.7.1.aar/b8fdce7c83c5f795cbfa3e982ef62c9c/AndroidManifest.xml:17:1-25:12
+MERGED from [com.google.android.exoplayer:exoplayer-core:2.7.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/exoplayer-core-2.7.1.aar/0f669d57dd7bc031aa80204f1ed06598/AndroidManifest.xml:17:1-25:12
+MERGED from [com.android.support:support-compat:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.0.aar/fd51cf0e0431f86928feaeec0013792d/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:runtime:1.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/4af7a448b98ad5fc40d32ce1d97242ee/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata-core:1.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.0.aar/fc9d18196e4ddbe7d0ab58a4cc5773c9/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.core:runtime:1.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/12d815895a039e87ba5d5646a321b43f/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:viewmodel:1.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.0.aar/55368aa2fa99a05bc5416792792ceff8/AndroidManifest.xml:17:1-22:12
+INJECTED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:2:1-44:12
+INJECTED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:2:1-44:12
+INJECTED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:2:1-44:12
+	package
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:3:5-33
+		INJECTED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:2:1-44:12
+		INJECTED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:2:1-44:12
+		INJECTED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.INTERNET
+ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:5:5-67
+	android:name
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:5:22-64
+application
+ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:7:5-42:19
+MERGED from [com.github.Commit451:NativeStackBlur:1.0.5] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/NativeStackBlur-1.0.5.aar/c5425bcc5065496e591729561178fe41/AndroidManifest.xml:12:5-20
+MERGED from [com.github.Commit451:NativeStackBlur:1.0.5] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/NativeStackBlur-1.0.5.aar/c5425bcc5065496e591729561178fe41/AndroidManifest.xml:12:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/c1870a45a2e212550d29e05536517182/AndroidManifest.xml:9:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/c1870a45a2e212550d29e05536517182/AndroidManifest.xml:9:5-20
+MERGED from [com.facebook.stetho:stetho-okhttp3:1.5.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/stetho-okhttp3-1.5.0.aar/b13a9c1e7a75cf3af4a573048e731e6a/AndroidManifest.xml:11:5-20
+MERGED from [com.facebook.stetho:stetho-okhttp3:1.5.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/stetho-okhttp3-1.5.0.aar/b13a9c1e7a75cf3af4a573048e731e6a/AndroidManifest.xml:11:5-20
+MERGED from [com.facebook.stetho:stetho:1.5.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/stetho-1.5.0.aar/035f80cfea98b6cc210e4c9df0843c49/AndroidManifest.xml:11:5-20
+MERGED from [com.facebook.stetho:stetho:1.5.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/stetho-1.5.0.aar/035f80cfea98b6cc210e4c9df0843c49/AndroidManifest.xml:11:5-20
+	android:supportsRtl
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:13:9-35
+	android:label
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:11:9-41
+	android:roundIcon
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:12:9-54
+	android:icon
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:10:9-43
+	android:allowBackup
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:9:9-35
+	android:theme
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:14:9-40
+	android:name
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:8:9-41
+activity#com.yeguohao.music.main.activities.MainActivity
+ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:15:9-21:20
+	android:name
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:15:19-63
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:16:13-20:29
+action#android.intent.action.MAIN
+ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:17:17-69
+	android:name
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:17:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:19:17-77
+	android:name
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:19:27-74
+activity#com.yeguohao.music.disc.activities.DiscActivity
+ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:22:9-24:59
+	android:theme
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:24:13-56
+	android:name
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:23:13-57
+activity#com.yeguohao.music.player.activities.PlayerActivity
+ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:25:9-27:59
+	android:theme
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:27:13-56
+	android:name
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:26:13-61
+service#com.yeguohao.music.common.services.MediaPlayerService
+ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:29:9-71
+	android:name
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:29:18-68
+activity#com.yeguohao.music.song.activities.SongActivity
+ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:31:9-33:59
+	android:theme
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:33:13-56
+	android:name
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:32:13-57
+activity#com.yeguohao.music.flavour.activities.FlavourActivity
+ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:34:9-36:59
+	android:theme
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:36:13-56
+	android:name
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:35:13-63
+service#com.yeguohao.music.common.player.MusicService
+ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:38:9-41:40
+	android:enabled
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:40:13-35
+	android:exported
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:41:13-37
+	android:name
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml:39:13-73
+uses-sdk
+INJECTED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml
+INJECTED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml
+MERGED from [com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:2.1.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/rxbinding-recyclerview-v7-2.1.1.aar/46ea396bcaabe49a30189e7c80d59592/AndroidManifest.xml:6:5-44
+MERGED from [com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:2.1.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/rxbinding-recyclerview-v7-2.1.1.aar/46ea396bcaabe49a30189e7c80d59592/AndroidManifest.xml:6:5-44
+MERGED from [com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/BaseRecyclerViewAdapterHelper-2.9.30.aar/e8402f19ecef990b319ba5c81d8394a7/AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/BaseRecyclerViewAdapterHelper-2.9.30.aar/e8402f19ecef990b319ba5c81d8394a7/AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.Commit451:NativeStackBlur:1.0.5] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/NativeStackBlur-1.0.5.aar/c5425bcc5065496e591729561178fe41/AndroidManifest.xml:8:5-10:41
+MERGED from [com.github.Commit451:NativeStackBlur:1.0.5] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/NativeStackBlur-1.0.5.aar/c5425bcc5065496e591729561178fe41/AndroidManifest.xml:8:5-10:41
+MERGED from [com.android.support:support-v13:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-v13-27.1.0.aar/85c6850f0d234fdc106c1c30d64d6b02/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v13:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-v13-27.1.0.aar/85c6850f0d234fdc106c1c30d64d6b02/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:design:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/design-27.1.0.aar/89f8ee71af1345b4922198cf0abacb9b/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:design:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/design-27.1.0.aar/89f8ee71af1345b4922198cf0abacb9b/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-v4-27.1.0.aar/f42e8726ba8ec50aee03e20819d66928/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-v4-27.1.0.aar/f42e8726ba8ec50aee03e20819d66928/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.0.aar/12696bcc2edfa86332614f56d440e737/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.0.aar/12696bcc2edfa86332614f56d440e737/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-27.1.0.aar/272571577a11804961b5e7ca14f1aea8/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-27.1.0.aar/272571577a11804961b5e7ca14f1aea8/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/c1870a45a2e212550d29e05536517182/AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/c1870a45a2e212550d29e05536517182/AndroidManifest.xml:5:5-7:41
+MERGED from [com.jakewharton.rxbinding2:rxbinding-support-v4:2.0.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/rxbinding-support-v4-2.0.0.aar/727b75decd1b37364d2ab92841cfc01e/AndroidManifest.xml:6:5-44
+MERGED from [com.jakewharton.rxbinding2:rxbinding-support-v4:2.0.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/rxbinding-support-v4-2.0.0.aar/727b75decd1b37364d2ab92841cfc01e/AndroidManifest.xml:6:5-44
+MERGED from [com.jakewharton.rxbinding2:rxbinding:2.1.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/rxbinding-2.1.1.aar/08960991694af032764257025dd0c2cf/AndroidManifest.xml:6:5-44
+MERGED from [com.jakewharton.rxbinding2:rxbinding:2.1.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/rxbinding-2.1.1.aar/08960991694af032764257025dd0c2cf/AndroidManifest.xml:6:5-44
+MERGED from [io.reactivex.rxjava2:rxandroid:2.0.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/rxandroid-2.0.0.aar/57e0fcc87e51f17eb00ccc800e22cf86/AndroidManifest.xml:19:5-43
+MERGED from [io.reactivex.rxjava2:rxandroid:2.0.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/rxandroid-2.0.0.aar/57e0fcc87e51f17eb00ccc800e22cf86/AndroidManifest.xml:19:5-43
+MERGED from [com.jakewharton:butterknife:8.8.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/butterknife-8.8.1.aar/d20aa2cb1cd428fefba42f02a4df86bd/AndroidManifest.xml:5:5-43
+MERGED from [com.jakewharton:butterknife:8.8.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/butterknife-8.8.1.aar/d20aa2cb1cd428fefba42f02a4df86bd/AndroidManifest.xml:5:5-43
+MERGED from [jp.wasabeef:glide-transformations:3.0.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/glide-transformations-3.0.1.aar/30d2facb7fa454d527e62fa211d3c277/AndroidManifest.xml:8:5-10:41
+MERGED from [jp.wasabeef:glide-transformations:3.0.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/glide-transformations-3.0.1.aar/30d2facb7fa454d527e62fa211d3c277/AndroidManifest.xml:8:5-10:41
+MERGED from [com.facebook.stetho:stetho-okhttp3:1.5.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/stetho-okhttp3-1.5.0.aar/b13a9c1e7a75cf3af4a573048e731e6a/AndroidManifest.xml:7:5-9:41
+MERGED from [com.facebook.stetho:stetho-okhttp3:1.5.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/stetho-okhttp3-1.5.0.aar/b13a9c1e7a75cf3af4a573048e731e6a/AndroidManifest.xml:7:5-9:41
+MERGED from [com.facebook.stetho:stetho:1.5.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/stetho-1.5.0.aar/035f80cfea98b6cc210e4c9df0843c49/AndroidManifest.xml:7:5-9:41
+MERGED from [com.facebook.stetho:stetho:1.5.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/stetho-1.5.0.aar/035f80cfea98b6cc210e4c9df0843c49/AndroidManifest.xml:7:5-9:41
+MERGED from [com.google.android.exoplayer:exoplayer:2.7.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/exoplayer-2.7.1.aar/fa71f85dc13147159b815c0a70558b4a/AndroidManifest.xml:21:5-23:41
+MERGED from [com.google.android.exoplayer:exoplayer:2.7.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/exoplayer-2.7.1.aar/fa71f85dc13147159b815c0a70558b4a/AndroidManifest.xml:21:5-23:41
+MERGED from [com.android.support:support-media-compat:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.1.0.aar/8e71ca2d6f6aa1febdc08f9efc79d681/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.1.0.aar/8e71ca2d6f6aa1febdc08f9efc79d681/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-27.1.0.aar/eae9e90aa30e78bdb361d34e6aabe90a/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-27.1.0.aar/eae9e90aa30e78bdb361d34e6aabe90a/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-fragment-27.1.0.aar/820a569d72f8ba567636d6774b1ea50b/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-fragment-27.1.0.aar/820a569d72f8ba567636d6774b1ea50b/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.1.0.aar/c1da67e718d815d16fb64cad0434a890/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.1.0.aar/c1da67e718d815d16fb64cad0434a890/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.1.0.aar/5eb2f81444790a96b0526ccbb3dd5a49/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.1.0.aar/5eb2f81444790a96b0526ccbb3dd5a49/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.1.0.aar/e89154e72957e675ae1642ef27e5cbde/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.1.0.aar/e89154e72957e675ae1642ef27e5cbde/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/transition-27.1.0.aar/4c5c9d1a4e8611e91f45c2745e7ffe55/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/transition-27.1.0.aar/4c5c9d1a4e8611e91f45c2745e7ffe55/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.exoplayer:exoplayer-dash:2.7.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/exoplayer-dash-2.7.1.aar/77139fb25dd97e7f0a257c02d3ac7434/AndroidManifest.xml:21:5-23:41
+MERGED from [com.google.android.exoplayer:exoplayer-dash:2.7.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/exoplayer-dash-2.7.1.aar/77139fb25dd97e7f0a257c02d3ac7434/AndroidManifest.xml:21:5-23:41
+MERGED from [com.google.android.exoplayer:exoplayer-hls:2.7.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/exoplayer-hls-2.7.1.aar/d09a1ccd9e2cde627b73bbed36214454/AndroidManifest.xml:21:5-23:41
+MERGED from [com.google.android.exoplayer:exoplayer-hls:2.7.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/exoplayer-hls-2.7.1.aar/d09a1ccd9e2cde627b73bbed36214454/AndroidManifest.xml:21:5-23:41
+MERGED from [com.google.android.exoplayer:exoplayer-smoothstreaming:2.7.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/exoplayer-smoothstreaming-2.7.1.aar/edbff0a710813fe342f82f31ff1082ee/AndroidManifest.xml:21:5-23:41
+MERGED from [com.google.android.exoplayer:exoplayer-smoothstreaming:2.7.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/exoplayer-smoothstreaming-2.7.1.aar/edbff0a710813fe342f82f31ff1082ee/AndroidManifest.xml:21:5-23:41
+MERGED from [com.google.android.exoplayer:exoplayer-ui:2.7.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/exoplayer-ui-2.7.1.aar/b8fdce7c83c5f795cbfa3e982ef62c9c/AndroidManifest.xml:21:5-23:41
+MERGED from [com.google.android.exoplayer:exoplayer-ui:2.7.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/exoplayer-ui-2.7.1.aar/b8fdce7c83c5f795cbfa3e982ef62c9c/AndroidManifest.xml:21:5-23:41
+MERGED from [com.google.android.exoplayer:exoplayer-core:2.7.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/exoplayer-core-2.7.1.aar/0f669d57dd7bc031aa80204f1ed06598/AndroidManifest.xml:21:5-23:41
+MERGED from [com.google.android.exoplayer:exoplayer-core:2.7.1] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/exoplayer-core-2.7.1.aar/0f669d57dd7bc031aa80204f1ed06598/AndroidManifest.xml:21:5-23:41
+MERGED from [com.android.support:support-compat:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.0.aar/fd51cf0e0431f86928feaeec0013792d/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:27.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.0.aar/fd51cf0e0431f86928feaeec0013792d/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/4af7a448b98ad5fc40d32ce1d97242ee/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/4af7a448b98ad5fc40d32ce1d97242ee/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.0.aar/fc9d18196e4ddbe7d0ab58a4cc5773c9/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.0.aar/fc9d18196e4ddbe7d0ab58a4cc5773c9/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/12d815895a039e87ba5d5646a321b43f/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/12d815895a039e87ba5d5646a321b43f/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.0.aar/55368aa2fa99a05bc5416792792ceff8/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.0] /Users/yeguohao/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.0.aar/55368aa2fa99a05bc5416792792ceff8/AndroidManifest.xml:20:5-44
+INJECTED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml
+INJECTED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml
+		ADDED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/AndroidManifest.xml

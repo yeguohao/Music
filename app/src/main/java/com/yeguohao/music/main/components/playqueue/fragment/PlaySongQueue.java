@@ -83,8 +83,8 @@ public class PlaySongQueue extends DialogFragment {
 
     private void initView() {
         adapter = new PlaySongQueueAdapter(R.layout.item_play_song_queue);
+        adapter.setFeagment(this);
         recycler.setAdapter(adapter);
-//        RxRecyclerView.scrollEvents(recycler).subscribe(this::checkDy);
 
         List<MusicItem> source = songStore.songs();
         List<MusicItem> dest = new ArrayList<>(source.size());

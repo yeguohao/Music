@@ -109,7 +109,7 @@ public class LyricFragment extends BaseFragment {
                         tips.setVisibility(View.INVISIBLE);
                         adapter.setData(map, indexes);
                     });
-                });
+                }, throwable -> {});
     }
 
     public void switchSong() {

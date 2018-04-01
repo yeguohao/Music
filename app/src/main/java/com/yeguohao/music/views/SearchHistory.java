@@ -166,4 +166,5 @@ public class SearchHistory extends FrameLayout {
     public interface SearchKeySelectedListener {
         void onSelected(String searchKey);
     }
+
 }

@@ -48,6 +48,8 @@ public class DiscFragment extends BaseFragment {
                     toolbar.setTitle(cdlistBean.getDissname());
                     adapter.replaceData(cdlistBean.getSonglist());
                     Glide.with(getActivity()).load(cdlistBean.getLogo()).into(backdrop);
+                }, throwable -> {
+
                 });
     }
 

@@ -2,14 +2,17 @@ package com.yeguohao.music.common.player.impl;
 
 import java.util.Random;
 
-class RecentlyPlaySongs {
+public class RecentlyPlaySongs {
 
     private int[] recently = new int[5];
     private int recent;
 
-    int random(int size) {
+    public int random(int size) {
         Random random = new Random();
         int n = random.nextInt(size);
+        if (n < size) {
+            return n;
+        }
         while (in(n)) n = random.nextInt(size);
         recently[recent % 5] = n;
         recent++;

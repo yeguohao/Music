@@ -18,7 +18,6 @@ public class MusicService extends Service {
         SongStore songStore = new SongStore();
         PlayerImpl player = new PlayerImpl(songStore, this);
         MusicController musicController = new MusicControllerImpl(player, songStore);
-        songStore.setMusicController(musicController);
         PlayerInstance.musicController = musicController;
         PlayerInstance.songStore = songStore;
         PlayerInstance.updater = player.getUpdater();

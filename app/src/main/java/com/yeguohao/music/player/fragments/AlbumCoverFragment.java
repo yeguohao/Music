@@ -2,13 +2,13 @@ package com.yeguohao.music.player.fragments;
 
 import android.view.View;
 import android.view.ViewPropertyAnimator;
-import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.yeguohao.music.R;
 import com.yeguohao.music.base.BaseFragment;
+import com.yeguohao.music.common.XHAnimator;
 import com.yeguohao.music.common.player.PlayerInstance;
 import com.yeguohao.music.common.player.impl.MusicItem;
 import com.yeguohao.music.common.player.impl.SongStore;
@@ -21,6 +21,7 @@ public class AlbumCoverFragment extends BaseFragment{
 
     private ViewPropertyAnimator propertyAnimator;
     private SongStore songStore = PlayerInstance.getSongStore();
+    private XHAnimator xhAnimator;
 
     @Override
     protected int layout() {
@@ -29,9 +30,10 @@ public class AlbumCoverFragment extends BaseFragment{
 
     @Override
     protected void initView(View root) {
+        xhAnimator = XHAnimator.instance(albumCover);
         MusicItem song = songStore.song(songStore.currentIndex());
         if (song.isPlaying()) {
-            startRotate();
+            xhAnimator.start();
         }
     }
 
@@ -45,35 +47,14 @@ public class AlbumCoverFragment extends BaseFragment{
 
     public void playBack(boolean playing) {
         if (playing) {
-            startRotate();
+            xhAnimator.start();
         } else {
-            stopRotate();
+            xhAnimator.stop();
         }
     }
 
     public void switchSong() {
         fetch();
-    }
-
-    private void startRotate() {
-        if (propertyAnimator == null) {
-            propertyAnimator = albumCover
-                    .animate()
-                    .rotationBy(359)
-                    .setInterpolator(new LinearInterpolator())
-                    .setDuration(16000).setStartDelay(0).withEndAction(() -> {
-                        propertyAnimator = null;
-                        startRotate();
-                    });
-        }
-        propertyAnimator.start();
-    }
-
-    private void stopRotate() {
-        if (propertyAnimator != null) {
-            propertyAnimator.cancel();
-            propertyAnimator = null;
-        }
     }
 
     public static AlbumCoverFragment newInstance() {

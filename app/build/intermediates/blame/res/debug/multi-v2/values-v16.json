@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/yeguohao/Desktop/code/AndroidCode/Music/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v16/values-v16.xml",
+            "outputFile": "C:\\Users\\Administrator\\Desktop\\code\\Music\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v16\\values-v16.xml",
             "map": [
                 {
-                    "source": "/Users/yeguohao/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.0.aar/12696bcc2edfa86332614f56d440e737/res/values-v16/values-v16.xml",
+                    "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-27.1.0.aar\\3bdb99a9ba7a057b798f39282de6623c\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "/Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.0.aar/fd51cf0e0431f86928feaeec0013792d/res/values-v16/values-v16.xml",
+                    "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.1.0.aar\\368797de60c573d58380f4e1eaefd6e2\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

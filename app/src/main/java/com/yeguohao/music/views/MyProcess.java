@@ -93,6 +93,11 @@ public class MyProcess extends View {
     }
 
     public  void setProgress(long progress) {
+        if (progress < 0) {
+            progress = 0;
+        } else if (progress > getMax()) {
+            progress = getMax();
+        }
         this.progress = progress;
         if (changeListener != null) {
             changeListener.onProgressChanged(this, progress, fromUser);

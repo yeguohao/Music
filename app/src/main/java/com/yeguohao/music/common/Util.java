@@ -37,4 +37,9 @@ public class Util {
         window.setAttributes(params);
     }
 
+    public static int randomRange(int start, int end) {
+        double n = (end - start + 1) * Math.random();
+        return (int) Math.floor(start + n);
+    }
+
 }

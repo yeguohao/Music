@@ -84,15 +84,15 @@ public final class R {
         public static final int fixed_height = 0x7f08006a;
         public static final int fixed_width = 0x7f08006b;
         public static final int none = 0x7f080098;
-        public static final int surface_view = 0x7f080109;
-        public static final int texture_view = 0x7f080113;
-        public static final int zoom = 0x7f08012c;
+        public static final int surface_view = 0x7f08010d;
+        public static final int texture_view = 0x7f080117;
+        public static final int zoom = 0x7f080131;
     }
     public static final class layout {
-        public static final int exo_playback_control_view = 0x7f0a0030;
-        public static final int exo_player_control_view = 0x7f0a0031;
-        public static final int exo_player_view = 0x7f0a0032;
-        public static final int exo_simple_player_view = 0x7f0a0033;
+        public static final int exo_playback_control_view = 0x7f0a0031;
+        public static final int exo_player_control_view = 0x7f0a0032;
+        public static final int exo_player_view = 0x7f0a0033;
+        public static final int exo_simple_player_view = 0x7f0a0034;
     }
     public static final class string {
         public static final int exo_controls_fastforward_description = 0x7f0d0021;

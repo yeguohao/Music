@@ -16,9 +16,9 @@ import java.lang.Override;
 public class FlavourActivity_ViewBinding implements Unbinder {
   private FlavourActivity target;
 
-  private View view2131230999;
+  private View view2131231003;
 
-  private View view2131231001;
+  private View view2131231005;
 
   private View view2131230906;
 
@@ -35,7 +35,7 @@ public class FlavourActivity_ViewBinding implements Unbinder {
     target.recycler = Utils.findRequiredViewAsType(source, R.id.flavour_recycler, "field 'recycler'", RecyclerView.class);
     view = Utils.findRequiredView(source, R.id.title_flavour, "field 'flavour' and method 'choose'");
     target.flavour = Utils.castView(view, R.id.title_flavour, "field 'flavour'", TextView.class);
-    view2131230999 = view;
+    view2131231003 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -44,7 +44,7 @@ public class FlavourActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.title_recently, "field 'recently' and method 'choose'");
     target.recently = Utils.castView(view, R.id.title_recently, "field 'recently'", TextView.class);
-    view2131231001 = view;
+    view2131231005 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -72,10 +72,10 @@ public class FlavourActivity_ViewBinding implements Unbinder {
     target.flavour = null;
     target.recently = null;
 
-    view2131230999.setOnClickListener(null);
-    view2131230999 = null;
-    view2131231001.setOnClickListener(null);
-    view2131231001 = null;
+    view2131231003.setOnClickListener(null);
+    view2131231003 = null;
+    view2131231005.setOnClickListener(null);
+    view2131231005 = null;
     view2131230906.setOnClickListener(null);
     view2131230906 = null;
   }

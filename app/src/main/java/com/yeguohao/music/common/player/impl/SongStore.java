@@ -1,8 +1,7 @@
 package com.yeguohao.music.common.player.impl;
 
-import com.yeguohao.music.common.player.interfaces.MusicController;
-
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class SongStore {
@@ -12,16 +11,10 @@ public class SongStore {
     private List<MusicItem> flavourSongs;
     private int currentIndex = -1;
 
-    private MusicController musicController;
-
     public SongStore() {
         songs = new ArrayList<>();
-        recentlySongs = new ArrayList<>();
-        flavourSongs = new ArrayList<>();
-    }
-
-    public void setMusicController(MusicController musicController) {
-        this.musicController = musicController;
+        recentlySongs = new LinkedList<>();
+        flavourSongs = new LinkedList<>();
     }
 
     public int currentIndex() {
@@ -37,11 +30,7 @@ public class SongStore {
     }
 
     public void removeSong(MusicItem item) {
-        int i = songs.indexOf(item);
-        if (i == -1) {
-            return;
-        }
-        songs.remove(i);
+        songs.remove(item);
     }
 
     void add(MusicItem item) {

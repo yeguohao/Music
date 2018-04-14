@@ -27,6 +27,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.google.android.exoplayer2.Player.STATE_ENDED;
+import static com.google.android.exoplayer2.Player.STATE_READY;
 
 public class PlayerImpl implements Player {
 
@@ -67,6 +68,8 @@ public class PlayerImpl implements Player {
         MediaSource mediaSource = createMediaSource(description.getStreamUri());
         simpleExoPlayer.prepare(mediaSource);
         simpleExoPlayer.setPlayWhenReady(true);
+
+        songStore.addRecentlySong(item);
     }
 
     private void reset() {
@@ -147,6 +150,8 @@ public class PlayerImpl implements Player {
                         completedCallback.completed();
                     }
                 }, 1000);
+            } else if (playbackState == STATE_READY) {
+                update();
             }
         }
 

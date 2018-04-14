@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.view.ViewPropertyAnimator;
-import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,11 +15,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.yeguohao.music.R;
+import com.yeguohao.music.common.XHAnimator;
 import com.yeguohao.music.common.player.PlayerInstance;
 import com.yeguohao.music.common.player.impl.MusicItem;
 import com.yeguohao.music.common.player.impl.SongStore;
 import com.yeguohao.music.common.player.interfaces.MusicController;
-import com.yeguohao.music.main.components.playqueue.fragment.PlaySongQueue;
+import com.yeguohao.music.main.components.playqueue.fragments.PlaySongQueue;
 import com.yeguohao.music.player.activities.PlayerActivity;
 
 import butterknife.BindView;
@@ -36,6 +36,7 @@ public class MiniPlayer extends RelativeLayout {
 
     private ViewPropertyAnimator propertyAnimator;
     private PlaySongQueue songQueue;
+    private XHAnimator xhAnimator;
 
     public MiniPlayer(@NonNull Context context) {
         this(context, null);
@@ -49,6 +50,7 @@ public class MiniPlayer extends RelativeLayout {
         super(context, attrs, defStyleAttr);
         initLayout(context);
         ButterKnife.bind(this);
+        xhAnimator = XHAnimator.instance(songThumbnail);
     }
 
     private void initLayout(Context context) {
@@ -75,7 +77,7 @@ public class MiniPlayer extends RelativeLayout {
     }
 
     public void pause() {
-        stopRotate();
+        xhAnimator.stop();
         PlayerInstance.getUpdater().setCompletedCallback(null);
     }
 
@@ -89,9 +91,9 @@ public class MiniPlayer extends RelativeLayout {
 
         play.setSelected(song.isPlaying());
         if (song.isPlaying()) {
-            startRotate();
+            xhAnimator.start();
         } else {
-            stopRotate();
+            xhAnimator.stop();
         }
 
         RequestOptions options = RequestOptions.circleCropTransform().error(R.drawable.player_play);
@@ -110,39 +112,24 @@ public class MiniPlayer extends RelativeLayout {
 
             if (song.isPlaying()) {
                 musicController.pause();
-                stopRotate();
+                xhAnimator.stop();
             } else {
                 musicController.play();
-                startRotate();
+                xhAnimator.start();
             }
             play.setSelected(song.isPlaying());
         });
     }
 
-    private void startRotate() {
-        if (propertyAnimator == null) {
-            propertyAnimator = songThumbnail
-                    .animate()
-                    .rotationBy(359)
-                    .setInterpolator(new LinearInterpolator())
-                    .setDuration(16000).setStartDelay(0).withEndAction(() -> {
-                        propertyAnimator = null;
-                        startRotate();
-                    });
-        }
-    }
-
-    private void stopRotate() {
-        if (propertyAnimator != null) {
-            propertyAnimator.cancel();
-            propertyAnimator = null;
-        }
-    }
-
     private void openSongList() {
         AppCompatActivity activity = (AppCompatActivity) getContext();
         songQueue = PlaySongQueue.newInstance();
+        songQueue.setMiniPlayer(this);
         songQueue.show(activity.getFragmentManager(), "");
+    }
+
+    public void switchSong() {
+        updateView();
     }
 
 }

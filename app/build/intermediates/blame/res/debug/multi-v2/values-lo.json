@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/yeguohao/Desktop/code/AndroidCode/Music/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-lo/values-lo.xml",
+            "outputFile": "C:\\Users\\Administrator\\Desktop\\code\\Music\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-lo\\values-lo.xml",
             "map": [
                 {
-                    "source": "/Users/yeguohao/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.0.aar/12696bcc2edfa86332614f56d440e737/res/values-lo/values-lo.xml",
+                    "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-27.1.0.aar\\3bdb99a9ba7a057b798f39282de6623c\\res\\values-lo\\values-lo.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "/Users/yeguohao/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.0.aar/fd51cf0e0431f86928feaeec0013792d/res/values-lo/values-lo.xml",
+                    "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.1.0.aar\\368797de60c573d58380f4e1eaefd6e2\\res\\values-lo\\values-lo.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

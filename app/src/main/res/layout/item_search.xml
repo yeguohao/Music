@@ -11,6 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawablePadding="10dp"
+        android:lines="1"
+        android:ellipsize="end"
         android:drawableStart="@drawable/search_result_music_icon"
         android:textColor="@color/textColorDark"
         tools:text="从前慢 (Live)-叶炫清" />

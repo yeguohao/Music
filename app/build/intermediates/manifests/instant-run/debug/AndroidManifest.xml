@@ -20,7 +20,9 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
-        <activity android:name="com.yeguohao.music.main.activities.MainActivity" >
+        <activity
+            android:name="com.yeguohao.music.main.activities.MainActivity"
+            android:windowSoftInputMode="adjustNothing" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,6 +49,10 @@
             android:name="com.yeguohao.music.common.player.MusicService"
             android:enabled="true"
             android:exported="false" />
+
+        <activity
+            android:name="com.yeguohao.music.main.components.playqueue.activities.AppendQueueActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <provider
             android:name="com.android.tools.ir.server.InstantRunContentProvider"

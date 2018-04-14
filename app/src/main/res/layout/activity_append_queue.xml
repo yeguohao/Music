@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:gravity="center"
+        android:text="添加歌曲到队列"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <FrameLayout
+        android:id="@+id/flavour_group"
+        android:layout_marginTop="110dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/flavour_title_shape"
+        android:layout_width="242dp"
+        android:layout_height="37dp">
+
+        <TextView
+            android:id="@+id/title_recently"
+            android:layout_width="120dp"
+            android:layout_height="35dp"
+            android:text="最近听的"
+            android:layout_marginStart="@dimen/flavour_border_width"
+            android:layout_gravity="start|center"
+            android:background="@drawable/flavour_title_bg_selector"
+            android:textColor="@color/flavour_title_color_selector"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/title_search"
+            android:layout_gravity="end|center"
+            android:layout_width="120dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="@dimen/flavour_border_width"
+            android:background="@drawable/recently_title_bg_selector"
+            android:textColor="@color/flavour_title_color_selector"
+            android:text="搜索历史"
+            android:gravity="center" />
+
+    </FrameLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_recently"
+        android:layout_marginTop="150dp"
+        app:layoutManager="LinearLayoutManager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_search_history"
+        android:layout_marginTop="150dp"
+        android:visibility="invisible"
+        app:layoutManager="LinearLayoutManager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.yeguohao.music.views.SearchView
+        android:id="@+id/search"
+        android:layout_marginTop="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</FrameLayout>

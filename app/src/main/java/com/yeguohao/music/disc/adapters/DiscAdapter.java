@@ -1,7 +1,7 @@
 package com.yeguohao.music.disc.adapters;
 
 import android.app.Activity;
-import android.view.View;
+import android.content.Context;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -15,30 +15,30 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.yeguohao.music.common.Util.log;
+
 public class DiscAdapter extends BaseQuickAdapter<CdInfo.CdlistBean.SonglistBean, BaseViewHolder> {
 
     public DiscAdapter(int layoutResId) {
         super(layoutResId);
-        setOnItemClickListener((adapter, view, position) -> {
-
-        });
+        setOnItemClickListener((adapter, view, position) -> click(position, view.getContext()));
     }
 
     @Override
     protected void convert(BaseViewHolder helper, CdInfo.CdlistBean.SonglistBean item) {
         helper.setText(R.id.disc_songname, item.getSongname());
         helper.setText(R.id.disc_albumname, item.getSinger().get(0).getName() + "-" + item.getAlbumname());
+    }
 
-        helper.itemView.setOnClickListener(
-                view -> RxArrays.fill(Observable.fromIterable(getData()), this::bean2MusicItem)
+    private void click(int position, Context context) {
+        RxArrays.fill(Observable.fromIterable(getData()), this::bean2MusicItem)
                 .toList()
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(musicItems -> {
-                    Activity activity = (Activity) helper.itemView.getContext();
-                    int position = helper.getLayoutPosition();
+                    Activity activity = (Activity) context;
                     PlayerActivity.startActivity(activity, musicItems, position);
-                }));
+                });
     }
 
     private MusicItem bean2MusicItem(CdInfo.CdlistBean.SonglistBean bean) {

@@ -1,44 +1,34 @@
 package com.yeguohao.music.main.components.search.fragments;
 
-import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.yeguohao.music.R;
 import com.yeguohao.music.api.RetrofitInstance;
 import com.yeguohao.music.base.BaseFragment;
+import com.yeguohao.music.common.player.PlayerInstance;
+import com.yeguohao.music.common.player.impl.SongStore;
+import com.yeguohao.music.common.player.interfaces.MusicController;
 import com.yeguohao.music.javabean.HotKey;
-import com.yeguohao.music.javabean.SearchInfo;
-import com.yeguohao.music.main.components.search.adapters.SearchAdapter;
 import com.yeguohao.music.main.components.search.apis.SearchApi;
+import com.yeguohao.music.player.activities.PlayerActivity;
 import com.yeguohao.music.views.FlowLayout;
 import com.yeguohao.music.views.SearchHistory;
+import com.yeguohao.music.views.SearchView;
 
-import java.net.URLEncoder;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class SearchFragment extends BaseFragment implements View.OnClickListener {
 
-    private static final String TAG = "SearchApi";
     @BindView(R.id.search_hot_group) FlowLayout hotGroup;
-    @BindView(R.id.search_recycler) RecyclerView recycler;
-    @BindView(R.id.search_edit) EditText editText;
-    @BindView(R.id.search_close) ImageView close;
     @BindView(R.id.search_history) SearchHistory history;
+    @BindView(R.id.search) SearchView searchView;
 
     private SearchApi searchApi = RetrofitInstance.Retrofit().create(SearchApi.class);
-    private SearchAdapter adapter;
 
     @Override
     protected int layout() {
@@ -47,33 +37,16 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     protected void initView(View root) {
-        close.setOnClickListener(view -> editText.setText(""));
-        adapter = new SearchAdapter(R.layout.item_search);
-        recycler.setAdapter(adapter);
-        recycler.setHasFixedSize(true);
+        searchView.setListener(item -> {
+            SongStore songStore = PlayerInstance.getSongStore();
+            MusicController musicController = PlayerInstance.getMusicController();
+            musicController.add(item);
 
-        RecyclerView.LayoutManager layoutManager = recycler.getLayoutManager();
-        layoutManager.setAutoMeasureEnabled(false);
-
-        RxTextView.textChanges(editText)
-                .debounce(300, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(key -> {
-                    if (TextUtils.isEmpty(key)) {
-                        searchIconGone();
-                        searchRecyclerInvisible();
-                    } else {
-                        SearchHistory.SearchRecord.getSearchRecord().push(key.toString());
-                        String encodeKey = URLEncoder.encode(key.toString(), "utf-8");
-                        searchIconVisible();
-                        searchRecyclerVisible();
-                        startSearch(encodeKey);
-                    }
-                }, throwable -> {
-
-                });
-
-        history.setListener(searchKey -> editText.setText(searchKey));
+            int index = songStore.songs().indexOf(item);
+            musicController.switchSong(index);
+            PlayerActivity.startActivity(getActivity());
+        });
+        history.setListener(searchKey -> searchView.setText(searchKey));
     }
 
     @Override
@@ -86,10 +59,6 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
 
     private boolean isOk(HotKey hotKey) {
         return hotKey.getCode() == 0;
-    }
-
-    private void searchResult(SearchInfo searchInfo) {
-        adapter.replaceData(searchInfo.getData().getSong().getList());
     }
 
     private void hotKeyResult(HotKey hotKey) {
@@ -110,38 +79,15 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
         history.pause();
     }
 
-    public static SearchFragment newInstance() {
-        return new SearchFragment();
-    }
-
     @Override
     public void onClick(View view) {
         TextView textView = (TextView) view;
         String key = textView.getText().toString();
-        editText.setText(key);
+        searchView.setText(key);
     }
 
-    private void startSearch(String encodeKey) {
-        searchApi.search(encodeKey)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::searchResult, throwable -> Log.e(TAG, "searchOpen: " + throwable));
-    }
-
-    private void searchRecyclerVisible() {
-        recycler.setVisibility(View.VISIBLE);
-    }
-
-
-    private void searchRecyclerInvisible() {
-        recycler.setVisibility(View.INVISIBLE);
-    }
-
-    private void searchIconGone() {
-        close.setVisibility(View.GONE);
-    }
-
-    private void searchIconVisible() {
-        close.setVisibility(View.VISIBLE);
+    public static SearchFragment newInstance() {
+        return new SearchFragment();
     }
 
 }

@@ -13,17 +13,24 @@ public class SearchHistoryAdapter extends BaseQuickAdapter<String, BaseViewHolde
     public SearchHistoryAdapter(int layoutResId, SearchHistory.SearchRecord record) {
         super(layoutResId);
         this.record = record;
+        itemClick();
     }
 
     @Override
     protected void convert(BaseViewHolder helper, String item) {
-        helper.setText(R.id.search_key, item);
-        helper.getView(R.id.search_history_delete).setOnClickListener(view -> record.delete(item));
+        helper.setText(R.id.search_key, item)
+                .addOnClickListener(R.id.search_history_delete);
+    }
 
+    private void itemClick() {
         setOnItemClickListener((adapter, view, position) -> {
             if (listener != null) {
                 listener.onSelected(getItem(position));
             }
+        });
+        setOnItemChildClickListener((adapter, view, position) -> {
+            record.delete(getItem(position));
+            remove(position);
         });
     }
 

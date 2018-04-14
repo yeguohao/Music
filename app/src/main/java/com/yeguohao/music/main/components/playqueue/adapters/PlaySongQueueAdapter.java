@@ -9,7 +9,7 @@ import com.yeguohao.music.common.player.PlayerInstance;
 import com.yeguohao.music.common.player.impl.MusicItem;
 import com.yeguohao.music.common.player.impl.SongStore;
 import com.yeguohao.music.common.player.interfaces.MusicController;
-import com.yeguohao.music.main.components.playqueue.fragment.PlaySongQueue;
+import com.yeguohao.music.main.components.playqueue.fragments.PlaySongQueue;
 
 public class PlaySongQueueAdapter extends BaseQuickAdapter<MusicItem, BaseViewHolder> {
 
@@ -25,8 +25,14 @@ public class PlaySongQueueAdapter extends BaseQuickAdapter<MusicItem, BaseViewHo
         MusicItem.Description description = item.getDescription();
         helper.setText(R.id.song_name, description.getSongName());
         helper.getView(R.id.favorite).setSelected(item.isFavorite());
-        helper.getView(R.id.playing).setSelected(item.isPlaying());
+        helper.getView(R.id.playing).setSelected(isPlaying(item));
         helper.addOnClickListener(R.id.favorite).addOnClickListener(R.id.remove);
+    }
+
+    private boolean isPlaying(MusicItem item) {
+        SongStore songStore = PlayerInstance.getSongStore();
+        String curSongMid = songStore.song(songStore.currentIndex()).getDescription().getSongMid();
+        return curSongMid.equals(item.getDescription().getSongMid());
     }
 
     private void setListener() {
@@ -37,6 +43,17 @@ public class PlaySongQueueAdapter extends BaseQuickAdapter<MusicItem, BaseViewHo
                 favorite(item, view);
             } else if (id == R.id.remove) {
                 removeFromQueue(item, position);
+            }
+        });
+        setOnItemClickListener((adapter, view, position) -> {
+            MusicItem item = getItem(position);
+            assert item != null;
+
+            if (!item.isPlaying()) {
+                MusicController musicController = PlayerInstance.getMusicController();
+                musicController.switchSong(position);
+                playSongQueue.switchSong();
+                notifyDataSetChanged();
             }
         });
     }
@@ -54,11 +71,13 @@ public class PlaySongQueueAdapter extends BaseQuickAdapter<MusicItem, BaseViewHo
         if (songStore.songs().isEmpty()) {
             playSongQueue.dismiss();
         } else if (item.isPlaying()) {
-            PlayerInstance.getMusicController().next();
+            MusicController musicController = PlayerInstance.getMusicController();
+            musicController.switchSong(position);
+            musicController.play();
         }
     }
 
-    public void setFeagment(PlaySongQueue playSongQueue) {
+    public void setFragment(PlaySongQueue playSongQueue) {
         this.playSongQueue = playSongQueue;
     }
 

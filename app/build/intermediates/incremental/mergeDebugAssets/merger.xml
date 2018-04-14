@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/main/assets"/><source path="/Users/yeguohao/Desktop/code/AndroidCode/Music/app/build/generated/assets/shaders/debug"/></dataSet><dataSet config="debug"><source path="/Users/yeguohao/Desktop/code/AndroidCode/Music/app/src/debug/assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="C:\Users\Administrator\Desktop\code\Music\app\src\main\assets"/><source path="C:\Users\Administrator\Desktop\code\Music\app\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="C:\Users\Administrator\Desktop\code\Music\app\src\debug\assets"/></dataSet></merger>

@@ -89,7 +89,7 @@ public class SearchHistory extends FrameLayout {
 
         private static final String SEARCH_HISTORY_FILE = "search_history_file";
 
-        private final List<String> searchKeys = new ArrayList<>();
+        public final List<String> searchKeys = new ArrayList<>();
 
         private static SearchRecord searchRecord;
 
@@ -135,27 +135,33 @@ public class SearchHistory extends FrameLayout {
                 searchKeys.remove(searchKey);
                 searchKeys.add(searchKeys.size(), searchKey);
             }
-            listener.onDataChanged();
+            if (listener != null) {
+                listener.onDataChanged();
+            }
         }
 
         public void delete(int index) {
             searchKeys.remove(index);
-            listener.onDataChanged();
+            if (listener != null) {
+                listener.onDataChanged();
+            }
         }
 
         public void delete(String val) {
-            if (searchKeys.remove(val)) {
+            if (searchKeys.remove(val) && listener != null) {
                 listener.onDataChanged();
             }
         }
 
         public void clear() {
             searchKeys.clear();
-            listener.onDataChanged();
+            if (listener != null) {
+                listener.onDataChanged();
+            }
         }
 
         public boolean isEmpty() {
-            return searchKeys.size() == 0;
+            return searchKeys.isEmpty();
         }
 
         public void setListener(OnDataChangedListener listener) {
